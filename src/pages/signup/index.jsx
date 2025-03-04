@@ -1,5 +1,11 @@
-const index = () => {
-  return <div></div>;
+import SignupForm from '../../components/signup/SignupForm';
+
+const Signup = () => {
+  return (
+    <>
+      <SignupForm />
+    </>
+  );
 };
 
-export default index;
+export default Signup;
