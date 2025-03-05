@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :lang(en) {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  :lang(ko) {
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+}
+@layer utilities {
+  .noto-only {
+    font-family: 'Noto Sans KR', sans-serif !important;
+  }
+  .jetbrains-only {
+    font-family: 'JetBrains Mono', monospace !important;
+  }
+}

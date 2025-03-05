@@ -1,0 +1,98 @@
+:root {
+  --font-heading: 3.75rem;
+  --font-display: 3rem;
+  --font-title1: 1.875rem;
+  --font-title2: 1.875rem;
+  --font-subtitle1: 1.5rem;
+  --font-subtitle2: 1.25rem;
+  --font-body1: 1rem;
+  --font-body2: 1rem;
+  --font-button: 0.875rem;
+  --font-label: 0.875rem;
+  --font-caption: 0.75rem;
+
+  --weight-heading: 700;
+  --weight-display: 700;
+  --weight-title1: 700;
+  --weight-title2: 600;
+  --weight-subtitle1: 400;
+  --weight-subtitle2: 400;
+  --weight-body1: 400;
+  --weight-body2: 700;
+  --weight-button: 500;
+  --weight-label: 300;
+  --weight-caption: 300;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --font-label: 0.75rem;
+    --weight-label: 400;
+  }
+}
+
+.text-heading {
+  font-size: var(--font-heading);
+  font-weight: var(--weight-heading);
+}
+
+.text-display {
+  font-size: var(--font-display);
+  font-weight: var(--weight-display);
+}
+
+.text-title1 {
+  font-size: var(--font-title1);
+  font-weight: var(--weight-title1);
+}
+
+.text-title2 {
+  font-size: var(--font-title2);
+  font-weight: var(--weight-title2);
+}
+
+.text-subtitle1 {
+  font-size: var(--font-subtitle1);
+  font-weight: var(--weight-subtitle1);
+}
+
+.text-subtitle2 {
+  font-size: var(--font-subtitle2);
+  font-weight: var(--weight-subtitle2);
+}
+
+.text-body1 {
+  font-size: var(--font-body1);
+  font-weight: var(--weight-body1);
+}
+
+.text-body2 {
+  font-size: var(--font-body2);
+  font-weight: var(--weight-body2);
+}
+
+.text-button {
+  font-size: var(--font-button);
+  font-weight: var(--weight-button);
+}
+
+.text-label {
+  font-size: var(--font-label);
+  font-weight: var(--weight-label);
+}
+
+.text-caption {
+  font-size: var(--font-caption);
+  font-weight: var(--weight-caption);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: unset;
+  font-weight: unset;
+  margin: 0;
+}

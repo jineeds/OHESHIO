@@ -1,5 +1,5 @@
-const index = () => {
+const MyPage = () => {
   return <div></div>;
 };
 
-export default index;
+export default MyPage;

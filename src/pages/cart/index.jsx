@@ -1,5 +1,5 @@
-const index = () => {
+const Cart = () => {
   return <div></div>;
 };
 
-export default index;
+export default Cart;
