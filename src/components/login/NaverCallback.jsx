@@ -19,12 +19,12 @@ const NaverCallback = () => {
     sessionStorage.removeItem('naverState');
 
     if (!accessToken) {
-      navigate('/login');
+      navigate('/');
       return;
     }
 
     if (state !== savedState) {
-      navigate('/login');
+      navigate('/');
       return;
     }
     dispatch(
@@ -38,8 +38,19 @@ const NaverCallback = () => {
         },
       })
     );
+    if (window.opener) {
+      window.opener.postMessage(
+        {
+          type: 'naver-login-success',
+          data: {},
+        },
+        window.location.origin
+      );
 
-    navigate('/main');
+      window.close();
+    } else {
+      navigate('/main');
+    }
   }, [dispatch, navigate]);
 
   return (
