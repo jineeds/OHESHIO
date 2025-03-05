@@ -143,7 +143,7 @@ const LoginForm = () => {
             >
               Login
             </button>
-
+            <SocialLoginButtons />
             <div className='border-t border-gray-300 my-6 transition-all duration-300'></div>
 
             <Link to='/signup'>
@@ -152,7 +152,6 @@ const LoginForm = () => {
               </button>
             </Link>
           </form>
-          <SocialLoginButtons />
         </div>
       </div>
     </div>
