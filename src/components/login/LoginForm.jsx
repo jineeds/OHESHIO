@@ -3,6 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import SocialLoginButtons from './SocialLoginButtons';
 import { useDispatch, useSelector } from 'react-redux';
 import { authActins } from '../../store/modules/authSlice';
+import Checkbox from '../../ui/Checkbox';
+import InputCustom from '../../ui/InputCustom';
+import Buttons from '../../ui/Buttons';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -17,7 +20,12 @@ const LoginForm = () => {
   });
   const [rememberMe, setRememberMe] = useState(false);
   const [formError, setFormError] = useState('');
+  const [isFormValid, setIsFormValid] = useState(false);
 
+  useEffect(() => {
+    const isValid = loginData.userId.trim() !== '' && loginData.password.trim() !== '';
+    setIsFormValid(isValid);
+  }, [loginData]);
   useEffect(() => {
     if (authed) {
       navigate('/');
@@ -63,11 +71,11 @@ const LoginForm = () => {
   };
   return (
     <div className='flex justify-center min-h-screen w-full  mx-auto transition-all duration-500 ease-in-out'>
-      <div className='hidden md:flex md:w-1/2 md:justify-center md:items-center transition-all duration-500 ease-in-out'>
+      <div className='hidden md:flex md:w-1/2 h-screen  transition-all duration-500 ease-in-out'>
         <img
           src='/images/login-bg.jpg'
           alt='login 배경이미지'
-          className='w-[480px] object-contain transition-transform duration-500 ease-in-out'
+          className='w-full object-cover mt-[-120px] object-top transition-transform duration-500 ease-in-out'
         />
       </div>
 
@@ -88,68 +96,65 @@ const LoginForm = () => {
           <form
             onSubmit={handleSubmit}
             className='bg-white rounded-lg shadow-sm p-12 border w-full transition-all duration-300'
-            style={{ boxShadow: '10px 10px 4px 0 rgba(0, 0, 0, 0.25)' }}
+            style={{ boxShadow: '5px 5px 7px 0 rgba(0, 0, 0, 0.25)' }}
           >
             <div className='mb-4'>
-              <input
+              <InputCustom
                 ref={inputRefId}
                 type='text'
                 name='userId'
                 value={loginData.userId}
                 onChange={handleChange}
-                placeholder='아이디'
-                className='w-full px-4 py-3 rounded bg-primary-100 border-0 transition-all duration-200'
+                placeholder='ID'
+                className='font-korean'
               />
             </div>
 
             <div className='mb-4'>
-              <input
+              <InputCustom
                 ref={inputRefPw}
                 type='password'
                 name='password'
                 value={loginData.password}
                 onChange={handleChange}
                 placeholder='비밀번호'
-                className='w-full px-4 py-3 rounded bg-primary-100 border-0 transition-all duration-200'
+                className='font-korean'
               />
+              <p className='text-xs font-korean select-none text-gray-600 text-right -mt-2 mb-4'>
+                영어 대/소문자 6-10, 특수문자 조합
+              </p>
             </div>
 
             <div className='flex justify-between items-center mb-6 transition-all duration-200'>
-              <div className='flex items-center'>
-                <input
-                  type='checkbox'
-                  id='remember'
+              <div className='flex items-center font-korean'>
+                <Checkbox
+                  label={'아이디 저장'}
                   checked={rememberMe}
+                  id={'remember'}
                   onChange={() => setRememberMe(!rememberMe)}
-                  className='rounded text-blue-500 mr-2 transition-colors duration-200'
                 />
-                <label htmlFor='remember' className='text-sm font-korean'>
-                  아이디 저장
-                </label>
               </div>
               <div>
                 <Link
-                  to='/find-account'
-                  className='text-sm font-korean text-gray-600 hover:text-gray-900 transition-colors duration-200'
+                  to=''
+                  className='text-sm font-korean text-gray-500 hover:text-gray-600 transition-colors duration-200'
                 >
-                  아이디 / 비밀번호 찾기
+                  아이디 / 패스워드 찾기
                 </Link>
               </div>
             </div>
 
-            <button
-              type='submit'
-              className='w-full bg-gray-500 hover:bg-gray-600 text-white py-3 rounded-full transition-all duration-300 mb-4'
-            >
+            <Buttons className='w-full mb-4' state={isFormValid ? 'active' : 'disabled'}>
               Login
-            </button>
+            </Buttons>
             <SocialLoginButtons />
-            <div className='border-t border-gray-300 my-6 transition-all duration-300'></div>
+
+            <div className='border-t border-gray-700 my-8 transition-all duration-300'></div>
 
             <Link to='/signup'>
-              <button className='w-full border border-gray-300 text-gray-700 py-3 rounded-full hover:bg-gray-50 transition-all duration-300'>
+              <Buttons className='w-full flex-1' state={'default'}>
                 Sign Up
-              </button>
+              </Buttons>
             </Link>
           </form>
         </div>
