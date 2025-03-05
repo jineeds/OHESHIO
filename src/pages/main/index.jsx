@@ -200,7 +200,7 @@ function App() {
     ];
 
     return (
-        <div className='w-full max-w-[1920px] h-full mx-auto '>
+        <div className='w-full max-w-[1920px] h-full mx-auto'>
             {/* 인라인 스타일 추가 */}
             <style>{youtubeStyles}</style>
 
@@ -238,7 +238,7 @@ function App() {
 
                         {/* 토글되는 드롭다운 메뉴 */}
                         <div
-                            className={`absolute right-0 top-full mt-2 /90 transition-all duration-300 overflow-hidden z-10 w-[120px]
+                            className={`absolute right-0 top-full mt-2 transition-all duration-300 overflow-hidden z-10 w-[120px]
                             ${isMenuVisible ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`}
                         >
                             <div className='py-2 text-right pr-4'>
@@ -284,8 +284,6 @@ function App() {
                             </div>
                         </div>
                     </div>
-
-                    {/* SideMenuBar 컴포넌트를 여기서 제거하고 아래에서 별도로 추가합니다 */}
                 </div>
             </header>
 
@@ -318,20 +316,11 @@ function App() {
                 ))}
             </div>
 
-            {/* 사이드메뉴바와 라이브챗 컴포넌트 */}
+            {/* 사이드메뉴바 - 원래 위치로 복원 */}
             <SideMenuBar isChatOpen={isChatOpen} setIsChatOpen={toggleChat} />
 
-            <div className='relative'>
-                {/* Other content of your main component */}
-
-                {/* 사이드메뉴바와 라이브챗 컴포넌트 - 항상 같은 위치에 있도록 배치 */}
-                <div className='relative z-30'>
-                    <SideMenuBar isChatOpen={isChatOpen} setIsChatOpen={toggleChat} />
-                </div>
-
-                {/* 라이브챗 컴포넌트 - isChatOpen 상태에 따라 조건부 렌더링 */}
-                {isChatOpen && <LiveChat isOpen={isChatOpen} onClose={toggleChat} />}
-            </div>
+            {/* 채팅 컴포넌트 */}
+            {isChatOpen && <LiveChat isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />}
         </div>
     );
 }

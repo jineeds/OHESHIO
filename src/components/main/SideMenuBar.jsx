@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const SideMenuBar = ({ isChatOpen, setIsChatOpen }) => {
+const SideMenuBar = ({ setIsChatOpen }) => {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
