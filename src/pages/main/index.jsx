@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SideMenuBar from '../../components/main/SideMenuBar';
+import LiveChat from '../../components/main/LiveChatBot';
 
 // YouTube 비디오 스타일
 const youtubeStyles = `
@@ -42,9 +43,14 @@ const youtubeStyles = `
 
 function App() {
     const [isMenuVisible, setIsMenuVisible] = useState(false);
+    const [isChatOpen, setIsChatOpen] = useState(false);
 
     const toggleMenu = () => {
         setIsMenuVisible(!isMenuVisible);
+    };
+
+    const toggleChat = () => {
+        setIsChatOpen(!isChatOpen);
     };
 
     // YouTube API 로드 및 초기화
@@ -278,7 +284,8 @@ function App() {
                             </div>
                         </div>
                     </div>
-                    <SideMenuBar />
+
+                    {/* SideMenuBar 컴포넌트를 여기서 제거하고 아래에서 별도로 추가합니다 */}
                 </div>
             </header>
 
@@ -301,14 +308,29 @@ function App() {
                                     alt={product.name}
                                 />
                             </div>
-                            <div className='text-center text-sm text-gray-800 leading-relaxed'>
-                                <p>{product.name}</p>
-                                <p>{product.price}</p>
-                                <p>{product.sizes}</p>
+                            <div className='text-center text-sm text-gray-700 leading-relaxed'>
+                                <p className='text-[16px]'>{product.name}</p>
+                                <p className='text-[16px]'>{product.price}</p>
+                                <p className='text-[14px] text-[#9CA3AF] mt-3'>{product.sizes}</p>
                             </div>
                         </div>
                     </div>
                 ))}
+            </div>
+
+            {/* 사이드메뉴바와 라이브챗 컴포넌트 */}
+            <SideMenuBar isChatOpen={isChatOpen} setIsChatOpen={toggleChat} />
+
+            <div className='relative'>
+                {/* Other content of your main component */}
+
+                {/* 사이드메뉴바와 라이브챗 컴포넌트 - 항상 같은 위치에 있도록 배치 */}
+                <div className='relative z-30'>
+                    <SideMenuBar isChatOpen={isChatOpen} setIsChatOpen={toggleChat} />
+                </div>
+
+                {/* 라이브챗 컴포넌트 - isChatOpen 상태에 따라 조건부 렌더링 */}
+                {isChatOpen && <LiveChat isOpen={isChatOpen} onClose={toggleChat} />}
             </div>
         </div>
     );

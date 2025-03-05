@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const SideMenuBar = () => {
+const SideMenuBar = ({ isChatOpen, setIsChatOpen }) => {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
@@ -26,7 +26,7 @@ const SideMenuBar = () => {
 
     return (
         <div
-            className={`fixed right-4 bottom-4 bg-[#64748B] rounded-lg p-3 flex flex-col gap-3 transition-all duration-300 z-50 ${
+            className={`fixed right-4 bottom-4 bg-[#64748B] rounded-lg p-3 flex flex-col gap-3 transition-all duration-300 z-40 ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
             }`}
         >
@@ -46,8 +46,11 @@ const SideMenuBar = () => {
                 </svg>
             </button>
 
-            {/* History / Chat */}
-            <button className='w-12 h-12 bg-[#F1F5F9] rounded-full flex justify-center items-center  hover:bg-white transition-colors duration-200 cursor-pointer'>
+            {/* Chat Button - 이벤트 핸들러 추가 */}
+            <button
+                onClick={setIsChatOpen}
+                className='w-12 h-12 bg-[#F1F5F9] rounded-full flex justify-center items-center hover:bg-white transition-colors duration-200 cursor-pointer'
+            >
                 <svg
                     xmlns='http://www.w3.org/2000/svg'
                     className='h-6 w-6'
@@ -65,7 +68,7 @@ const SideMenuBar = () => {
             </button>
 
             {/* Instagram */}
-            <button className='w-12 h-12 bg-[#F1F5F9] rounded-full flex justify-center items-center  hover:bg-white transition-colors duration-200 cursor-pointer'>
+            <button className='w-12 h-12 bg-[#F1F5F9] rounded-full flex justify-center items-center hover:bg-white transition-colors duration-200 cursor-pointer'>
                 <svg
                     xmlns='http://www.w3.org/2000/svg'
                     className='h-6 w-6'
@@ -80,7 +83,7 @@ const SideMenuBar = () => {
             </button>
 
             {/* Clock / History */}
-            <button className='w-12 h-12 bg-[#F1F5F9] rounded-full flex justify-center items-center  hover:bg-white transition-colors duration-200 cursor-pointer'>
+            <button className='w-12 h-12 bg-[#F1F5F9] rounded-full flex justify-center items-center hover:bg-white transition-colors duration-200 cursor-pointer'>
                 <svg
                     xmlns='http://www.w3.org/2000/svg'
                     className='h-6 w-6'
