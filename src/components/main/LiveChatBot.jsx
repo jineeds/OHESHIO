@@ -34,7 +34,7 @@ const LiveChat = ({ isOpen, onClose }) => {
         {
             id: 2,
             sender: 'agent',
-            text: '제품 정보, 배송, 교환/반품 등에 관해 질문해주세요.',
+            text: '운영시간은 월-금 09:00시 ~ 18:00시 점심시간은 13:00 ~ 14:00 시 입니다 문의를 남겨주시면 확인 후 순차적으로 답변 드리겠습니다.',
             time: getCurrentTime(),
         },
     ]);
@@ -144,20 +144,18 @@ const LiveChat = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
 
     return (
-        <div className='fixed top-0 right-16 z-40 h-screen flex items-center'>
+        <div className='fixed bottom-4 right-24 z-40 max-h-[90vh]'>
             <div
-                className='bg-white/85 rounded-lg shadow-xl flex flex-col overflow-hidden border border-gray-200 mr-10 mt-56'
-                style={{ width: '400px', height: '700px' }}
+                className='bg-white/85 rounded-lg shadow-xl flex flex-col overflow-hidden border border-gray-200'
+                style={{ width: '400px', maxHeight: '90vh', height: 'auto' }}
             >
                 {/* 채팅 헤더 */}
                 <div className='flex items-center justify-between p-4 border-b'>
                     <div className='flex items-center space-x-2'>
-                        <span className='text-gray-500 font-bold'>•••</span>
-                        <span className='text-sm font-medium text-gray-700'>Chat with us!</span>
+                        <img src='/public/images/logo.png' width={100} alt='logo' />
                     </div>
                     <div className='flex items-center space-x-4'>
-                        <div className='w-5 h-0.5 bg-gray-300'></div>
-                        <button onClick={onClose} className='text-gray-500'>
+                        <button onClick={onClose} className='text-primary-500'>
                             ✕
                         </button>
                     </div>
@@ -166,7 +164,7 @@ const LiveChat = ({ isOpen, onClose }) => {
                 {/* Chat Agent Info */}
                 <div className='flex items-center p-4 border-b'>
                     <div className='flex items-center'>
-                        <div className='w-6 h-6 rounded-md bg-indigo-800 flex items-center justify-center text-white mr-2'>
+                        <div className='w-6 h-6 rounded-md bg-primary-500 flex items-center justify-center text-white mr-2'>
                             {/* 챗봇 아이콘 */}
                             <svg
                                 xmlns='http://www.w3.org/2000/svg'
@@ -184,61 +182,25 @@ const LiveChat = ({ isOpen, onClose }) => {
                             </svg>
                         </div>
                         <div>
-                            <div className='text-sm font-medium'>Chatbot</div>
-                            <div className='text-xs text-gray-400'>Support Agent</div>
-                        </div>
-                    </div>
-                    <div className='ml-auto flex'>
-                        <div className='mx-1 text-gray-400'>
-                            {/* 좋아요 아이콘 */}
-                            <svg
-                                xmlns='http://www.w3.org/2000/svg'
-                                className='h-4 w-4'
-                                fill='none'
-                                viewBox='0 0 24 24'
-                                stroke='currentColor'
-                            >
-                                <path
-                                    strokeLinecap='round'
-                                    strokeLinejoin='round'
-                                    strokeWidth={2}
-                                    d='M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5'
-                                />
-                            </svg>
-                        </div>
-                        <div className='mx-1 text-gray-400'>
-                            {/* 싫어요 아이콘 */}
-                            <svg
-                                xmlns='http://www.w3.org/2000/svg'
-                                className='h-4 w-4'
-                                fill='none'
-                                viewBox='0 0 24 24'
-                                stroke='currentColor'
-                            >
-                                <path
-                                    strokeLinecap='round'
-                                    strokeLinejoin='round'
-                                    strokeWidth={2}
-                                    d='M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.095c.5 0 .905-.405.905-.905 0-.714.211-1.412.608-2.006L17 13v-9m-7 10h2m-2-10v5a2 2 0 01-2 2h-2.5'
-                                />
-                            </svg>
+                            <div className='text-sm font-medium font-korean'>오헤시오에 문의하기</div>
+                            <div className='text-xs text-gray-400'>몇 분 내 답변 받으실 수 있어요</div>
                         </div>
                     </div>
                 </div>
 
                 {/* Chat Messages */}
-                <div className='flex-1 overflow-y-auto p-4 space-y-8'>
+                <div className='flex-1 overflow-y-auto p-4 space-y-8' style={{ maxHeight: '50vh' }}>
                     {chatMessages.map((msg) =>
                         msg.sender === 'agent' ? (
                             // 에이전트 메시지
                             <div key={msg.id} className='flex items-start'>
-                                <div className='w-3 h-3 rounded-full bg-indigo-800 flex items-center justify-center text-white mr-2 mt-1'>
+                                <div className='w-3 h-3 rounded-full bg-primary-500 flex items-center justify-center text-white mr-2 mt-1'>
                                     {/* 작은 점 */}
                                 </div>
                                 <div>
                                     <div className='text-xs text-gray-500 mb-1'>Oheshio CS {msg.time}</div>
                                     <div className='bg-gray-100 p-3 rounded-lg inline-block max-w-xs'>
-                                        <p className='text-sm text-gray-700'>{msg.text}</p>
+                                        <p className='text-xs text-gray-700'>{msg.text}</p>
                                     </div>
                                 </div>
                             </div>
@@ -283,13 +245,13 @@ const LiveChat = ({ isOpen, onClose }) => {
                 {/* 추천 질문 섹션 */}
                 {showSuggestions && (
                     <div className='p-4 border-t'>
-                        <div className='text-xs text-gray-500 mb-2'>Question</div>
+                        <div className='text-xs text-gray-500 mb-2'>자주 하는 질문</div>
                         <div className='flex flex-wrap gap-2'>
                             {SUGGESTED_QUESTIONS.map((question, index) => (
                                 <button
                                     key={index}
                                     onClick={() => handleSuggestedQuestion(question)}
-                                    className='text-xs bg-gray-100 hover:bg-gray-200 rounded-full px-3 py-1 transition-colors'
+                                    className='text-xs bg-gray-100 hover:bg-primary-300 rounded-full px-3 py-1 transition-colors'
                                 >
                                     {question}
                                 </button>
@@ -314,7 +276,7 @@ const LiveChat = ({ isOpen, onClose }) => {
                             onClick={handleSendMessage}
                             disabled={!message.trim() || isLoading}
                             className={`ml-2 rounded-full p-1 ${
-                                !message.trim() || isLoading ? 'text-gray-400' : 'text-indigo-600 hover:bg-indigo-100'
+                                !message.trim() || isLoading ? 'text-gray-400' : 'text-primary-500 hover:bg-indigo-100'
                             }`}
                         >
                             {/* 전송 아이콘 */}

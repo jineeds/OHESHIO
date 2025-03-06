@@ -1,16 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import SideMenuBar from '../../components/main/SideMenuBar';
 import LiveChat from '../../components/main/LiveChatBot';
-import ProductCharacter from '../../components/product/ProductCharacter';
-import ProductDetail from '../../components/product/ProductDetail';
 
-// YouTube 비디오 스타일
+// YouTube 비디오 스타일 - 원래 방식을 유지하되 반응형으로 조정
 const youtubeStyles = `
   .youtube {
     position: relative;
-    height: 600px;
+    height: 300px;
     overflow: hidden;
   }
+  
+  @media (min-width: 768px) {
+    .youtube {
+      height: 400px;
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .youtube {
+      height: 500px;
+    }
+  }
+  
+  @media (min-width: 1536px) {
+    .youtube {
+      height: 600px;
+    }
+  }
+  
   .youtube__area {
     width: 1920px;
     position: absolute;
@@ -19,6 +36,7 @@ const youtubeStyles = `
     top: 50%;
     margin-top: -540px;
   }
+  
   .youtube__area::before {
     content: "";
     display: block;
@@ -26,6 +44,7 @@ const youtubeStyles = `
     height: 0;
     padding-top: 56.25%;
   }
+  
   .youtube__cover {
     position: absolute;
     top: 0;
@@ -34,6 +53,7 @@ const youtubeStyles = `
     height: 100%;
     background-color: rgba(0, 0, 0, 0.3);
   }
+  
   .player {
     width: 100%;
     height: 100%;
@@ -46,6 +66,7 @@ const youtubeStyles = `
 function App() {
     const [isMenuVisible, setIsMenuVisible] = useState(false);
     const [isChatOpen, setIsChatOpen] = useState(false);
+    const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
 
     const toggleMenu = () => {
         setIsMenuVisible(!isMenuVisible);
@@ -54,6 +75,18 @@ function App() {
     const toggleChat = () => {
         setIsChatOpen(!isChatOpen);
     };
+
+    // 창 크기 변경 감지
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     // YouTube API 로드 및 초기화
     useEffect(() => {
@@ -76,6 +109,8 @@ function App() {
                     rel: 0, // 관련 영상 숨김
                     disablekb: 1, // 키보드 컨트롤 비활성화
                     iv_load_policy: 3, // 주석 숨김
+                    start: 66,
+                    end: 90,
                 },
                 events: {
                     onReady: (event) => {
@@ -91,6 +126,19 @@ function App() {
             window.onYouTubePlayerAPIReady = null;
         };
     }, []);
+
+    // 그리드 열 수 계산 (반응형)
+    const getGridColumnClass = () => {
+        if (windowWidth < 768) {
+            return 'w-1/2'; // 모바일: 2열
+        } else if (windowWidth < 1280) {
+            return 'w-1/3'; // 태블릿: 3열
+        } else if (windowWidth < 1536) {
+            return 'w-1/4'; // 작은 데스크탑: 4열
+        } else {
+            return 'w-1/5'; // 큰 데스크탑: 5열
+        }
+    };
 
     // Sample product data - you could replace this with your actual data source
     const products = [
@@ -201,37 +249,45 @@ function App() {
         },
     ];
 
+    // 반응형 그리드 클래스
+    const gridColumnClass = getGridColumnClass();
+
     return (
-        <div className="w-full max-w-[1920px] h-full mx-auto">
+        <div className='w-full max-w-[1920px] h-full mx-auto'>
             {/* 인라인 스타일 추가 */}
             <style>{youtubeStyles}</style>
+
             {/* 헤더 섹션 (유튜브 영상 배경) */}
-            <header className="relative">
-                {/* 유튜브 비디오 섹션 */}
-                <section className="youtube">
-                    <div className="youtube__area">
-                        <div id="player" className="player"></div>
+            <header className='relative'>
+                {/* 유튜브 비디오 섹션 - 원래 구조 유지 */}
+                <section className='youtube'>
+                    <div className='youtube__area'>
+                        <div id='player' className='player'></div>
                     </div>
-                    <div className="youtube__cover"></div>
+                    <div className='youtube__cover'></div>
                 </section>
 
-                {/* 상단 메뉴 */}
-                <div className="absolute top-5 left-1/2 transform -translate-x-1/2 text-center">
-                    <div className="text-base font-medium text-white tracking-wider mb-1">
-                        <img src="/public/images/logo.png" alt="logo" width={144} height={44} />
+                {/* 상단 메뉴 - 반응형 */}
+                <div className='absolute top-2 md:top-3 xl:top-5 left-1/2 transform -translate-x-1/2 text-center'>
+                    <div className='text-base font-medium text-white tracking-wider mb-1'>
+                        <img
+                            src='/public/images/logo.png'
+                            alt='logo'
+                            className='w-24 md:w-32 xl:w-36 2xl:w-44 h-auto'
+                        />
                     </div>
                 </div>
 
-                {/* 상단 우측 bag 메뉴 */}
-                <div className="absolute top-5 right-5 text-right">
-                    <div className="text-sm text-white cursor-pointer font-medium hover:opacity-80">bag</div>
+                {/* 상단 우측 bag 메뉴 - 반응형 */}
+                <div className='absolute top-2 md:top-3 xl:top-5 right-2 md:right-3 xl:right-5 text-right'>
+                    <div className='text-xs md:text-sm text-white cursor-pointer font-medium hover:opacity-80'>bag</div>
                 </div>
 
-                {/* 우측 refine 메뉴 (더 아래에 위치) */}
-                <div className="absolute top-20 right-12 text-right">
-                    <div className="relative">
+                {/* 우측 refine 메뉴 (더 아래에 위치) - 반응형 */}
+                <div className='absolute top-10 md:top-14 xl:top-20 right-4 md:right-8 xl:right-12 text-right'>
+                    <div className='relative'>
                         <div
-                            className="text-sm text-white cursor-pointer font-medium hover:opacity-80"
+                            className='text-xs md:text-sm text-white cursor-pointer font-medium hover:opacity-80'
                             onClick={toggleMenu}
                         >
                             refine
@@ -239,47 +295,47 @@ function App() {
 
                         {/* 토글되는 드롭다운 메뉴 */}
                         <div
-                            className={`absolute right-0 top-full mt-2 transition-all duration-300 overflow-hidden z-10 w-[120px]
+                            className={`absolute right-0 top-full mt-2 transition-all duration-300 overflow-hidden z-10 w-[100px] md:w-[120px]
                             ${isMenuVisible ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`}
                         >
-                            <div className="py-2 text-right pr-4">
-                                <div className="text-sm text-white py-2 cursor-pointer font-medium hover:opacity-80">
+                            <div className='py-2 text-right pr-4'>
+                                <div className='text-xs md:text-sm text-white py-2 cursor-pointer font-medium hover:opacity-80'>
                                     all
                                 </div>
-                                <div className="text-sm text-white py-2 cursor-pointer font-medium hover:opacity-80">
+                                <div className='text-xs md:text-sm text-white py-2 cursor-pointer font-medium hover:opacity-80'>
                                     outer
                                 </div>
-                                <div className="text-sm text-white py-2 cursor-pointer font-medium hover:opacity-80">
+                                <div className='text-xs md:text-sm text-white py-2 cursor-pointer font-medium hover:opacity-80'>
                                     tops
                                 </div>
-                                <div className="text-sm text-white py-2 cursor-pointer font-medium hover:opacity-80">
+                                <div className='text-xs md:text-sm text-white py-2 cursor-pointer font-medium hover:opacity-80'>
                                     bottoms
                                 </div>
-                                <div className="text-sm text-white py-2 cursor-pointer font-medium hover:opacity-80">
+                                <div className='text-xs md:text-sm text-white py-2 cursor-pointer font-medium hover:opacity-80'>
                                     acc
                                 </div>
 
                                 {/* 색상 선택 섹션 */}
-                                <div className="bg-[#cbd5e1] shadow-md p-4 mt-2">
-                                    <div className="flex items-center justify-between mb-2">
-                                        <div className="w-4 h-4 rounded-full bg-[#B7B7B7]"></div>
-                                        <span className="text-gray-700 text-sm">gray</span>
+                                <div className='bg-[#cbd5e1] shadow-md p-2 md:p-4 mt-2'>
+                                    <div className='flex items-center justify-between mb-2'>
+                                        <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#B7B7B7]'></div>
+                                        <span className='text-gray-700 text-xs md:text-sm'>gray</span>
                                     </div>
-                                    <div className="flex items-center justify-between mb-2">
-                                        <div className="w-4 h-4 rounded-full bg-[#000000]"></div>
-                                        <span className="text-gray-700 text-sm">black</span>
+                                    <div className='flex items-center justify-between mb-2'>
+                                        <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#000000]'></div>
+                                        <span className='text-gray-700 text-xs md:text-sm'>black</span>
                                     </div>
-                                    <div className="flex items-center justify-between mb-2">
-                                        <div className="w-4 h-4 rounded-full bg-[#FFFFFF] border border-gray-200"></div>
-                                        <span className="text-gray-700 text-sm">white</span>
+                                    <div className='flex items-center justify-between mb-2'>
+                                        <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#FFFFFF] border border-gray-200'></div>
+                                        <span className='text-gray-700 text-xs md:text-sm'>white</span>
                                     </div>
-                                    <div className="flex items-center justify-between mb-2">
-                                        <div className="w-4 h-4 rounded-full bg-[#FCF2D6]"></div>
-                                        <span className="text-gray-700 text-sm">begie</span>
+                                    <div className='flex items-center justify-between mb-2'>
+                                        <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#FCF2D6]'></div>
+                                        <span className='text-gray-700 text-xs md:text-sm'>begie</span>
                                     </div>
-                                    <div className="flex items-center justify-between">
-                                        <div className="w-4 h-4 rounded-full bg-[#CEE3FC]"></div>
-                                        <span className="text-gray-700 text-sm">blue</span>
+                                    <div className='flex items-center justify-between'>
+                                        <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#CEE3FC]'></div>
+                                        <span className='text-gray-700 text-xs md:text-sm'>blue</span>
                                     </div>
                                 </div>
                             </div>
@@ -287,15 +343,16 @@ function App() {
                     </div>
                 </div>
             </header>
-            {/* 제품 그리드 - 한 그리드 안에 모든 제품을 표시합니다 */}
-            <div className="flex flex-wrap p-12 bg-white">
+
+            {/* 제품 그리드 - 반응형으로 수정 */}
+            <div className='flex flex-wrap p-3 md:p-6 xl:p-8 2xl:p-12 bg-white'>
                 {products.map((product) => (
-                    <div key={product.id} className="w-1/5 px-4 mb-8">
-                        <div className="w-full h-[500px] rounded-lg overflow-hidden flex flex-col items-center transition-transform">
-                            <div className="w-[215px] h-[283px] flex justify-center items-center rounded-lg mt-[60px] mb-10 transition-all duration-300">
+                    <div key={product.id} className={`${gridColumnClass} px-2 md:px-3 xl:px-4 mb-4 md:mb-6 xl:mb-8`}>
+                        <div className='w-full h-auto md:h-[400px] xl:h-[450px] 2xl:h-[500px] rounded-lg overflow-hidden flex flex-col items-center transition-transform'>
+                            <div className='w-auto h-auto md:w-[180px] md:h-[240px] xl:w-[215px] xl:h-[283px] flex justify-center items-center rounded-lg mt-4 md:mt-[40px] xl:mt-[60px] mb-4 md:mb-6 xl:mb-10 transition-all duration-300'>
                                 <img
                                     src={product.image}
-                                    className="h-full w-full object-contain transition-all duration-300"
+                                    className='h-full w-full object-contain transition-all duration-300'
                                     style={{ filter: 'drop-shadow(0px 0px 0px transparent)' }}
                                     onMouseOver={(e) => {
                                         e.currentTarget.style.filter = 'drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.4))';
@@ -306,17 +363,21 @@ function App() {
                                     alt={product.name}
                                 />
                             </div>
-                            <div className="text-center text-sm text-gray-700 leading-relaxed">
-                                <p className="text-[16px]">{product.name}</p>
-                                <p className="text-[16px]">{product.price}</p>
-                                <p className="text-[14px] text-[#9CA3AF] mt-3">{product.sizes}</p>
+                            <div className='text-center text-sm text-gray-700 leading-relaxed'>
+                                <p className='text-xs md:text-sm xl:text-[16px]'>{product.name}</p>
+                                <p className='text-xs md:text-sm xl:text-[16px]'>{product.price}</p>
+                                <p className='text-xs md:text-xs xl:text-[14px] text-[#9CA3AF] mt-1 md:mt-2 xl:mt-3'>
+                                    {product.sizes}
+                                </p>
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
-            {/* 사이드메뉴바 - 원래 위치로 복원 */}
+
+            {/* 사이드메뉴바 */}
             <SideMenuBar isChatOpen={isChatOpen} setIsChatOpen={toggleChat} />
+
             {/* 채팅 컴포넌트 */}
             {isChatOpen && <LiveChat isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />}
         </div>
