@@ -144,10 +144,10 @@ const LiveChat = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
 
     return (
-        <div className='fixed bottom-20 right-16 z-40 h-screen flex items-center'>
+        <div className='fixed bottom-4 right-24 z-40 max-h-[90vh]'>
             <div
-                className='bg-white/85 rounded-lg shadow-xl flex flex-col overflow-hidden border border-gray-200 mr-10 mt-56'
-                style={{ width: '400px', height: '700px' }}
+                className='bg-white/85 rounded-lg shadow-xl flex flex-col overflow-hidden border border-gray-200'
+                style={{ width: '400px', maxHeight: '90vh', height: 'auto' }}
             >
                 {/* 채팅 헤더 */}
                 <div className='flex items-center justify-between p-4 border-b'>
@@ -189,7 +189,7 @@ const LiveChat = ({ isOpen, onClose }) => {
                 </div>
 
                 {/* Chat Messages */}
-                <div className='flex-1 overflow-y-auto p-4 space-y-8'>
+                <div className='flex-1 overflow-y-auto p-4 space-y-8' style={{ maxHeight: '50vh' }}>
                     {chatMessages.map((msg) =>
                         msg.sender === 'agent' ? (
                             // 에이전트 메시지
