@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
 import SideMenuBar from '../../components/main/SideMenuBar';
 import LiveChat from '../../components/main/LiveChatBot';
 
@@ -64,6 +65,7 @@ const youtubeStyles = `
 `;
 
 function App() {
+    const navigate = useNavigate(); // Initialize useNavigate hook
     const [isMenuVisible, setIsMenuVisible] = useState(false);
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
@@ -74,6 +76,11 @@ function App() {
 
     const toggleChat = () => {
         setIsChatOpen(!isChatOpen);
+    };
+
+    // Function to navigate to product page
+    const goToProductPage = () => {
+        navigate('/product');
     };
 
     // 창 크기 변경 감지
@@ -345,10 +352,14 @@ function App() {
             </header>
 
             {/* 제품 그리드 - 반응형으로 수정 */}
-            <div className='flex flex-wrap p-3 md:p-6 xl:p-8 2xl:p-12 bg-white'>
+            <div className='flex flex-wrap p-3 md:p-6 xl:p-8 2xl:p-12'>
                 {products.map((product) => (
-                    <div key={product.id} className={`${gridColumnClass} px-2 md:px-3 xl:px-4 mb-4 md:mb-6 xl:mb-8`}>
-                        <div className='w-full h-auto md:h-[400px] xl:h-[450px] 2xl:h-[500px] rounded-lg overflow-hidden flex flex-col items-center transition-transform'>
+                    <div
+                        key={product.id}
+                        className={`${gridColumnClass} px-2 md:px-3 xl:px-4 mb-4 md:mb-6 xl:mb-8`}
+                        onClick={goToProductPage} // Add onClick handler to navigate to product page
+                    >
+                        <div className='w-full h-auto md:h-[400px] xl:h-[450px] 2xl:h-[500px] rounded-lg overflow-hidden flex flex-col items-center '>
                             <div className='w-auto h-auto md:w-[180px] md:h-[240px] xl:w-[215px] xl:h-[283px] flex justify-center items-center rounded-lg mt-4 md:mt-[40px] xl:mt-[60px] mb-4 md:mb-6 xl:mb-10 transition-all duration-300'>
                                 <img
                                     src={product.image}
