@@ -1,6 +1,5 @@
 import { useDispatch } from 'react-redux';
 import { authActins } from '../../store/modules/authSlice';
-import Buttons from '../../ui/Buttons';
 
 const SocialLoginButtons = () => {
   const dispatch = useDispatch();
@@ -34,16 +33,19 @@ const SocialLoginButtons = () => {
     });
   };
   return (
-    <div className='flex space-x-2 my-6 '>
-      <Buttons className='small flex-1' state={'default'}>
+    <div className='flex space-x-2 mb-8'>
+      <button className='flex-1 bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-full transition-colors duration-300'>
         Google
-      </Buttons>
-      <Buttons className='small flex-1' state={'default'}>
+      </button>
+      <button className='flex-1 bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-full transition-colors duration-300'>
         Naver
-      </Buttons>
-      <Buttons className='small flex-1' state={'default'} onClick={handleKakaoLogin}>
-        KaKao
-      </Buttons>
+      </button>
+      <button
+        onClick={handleKakaoLogin}
+        className='flex-1 bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-full transition-colors duration-300'
+      >
+        Kakao
+      </button>
     </div>
   );
 };
