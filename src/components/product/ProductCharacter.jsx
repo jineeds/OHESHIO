@@ -64,8 +64,8 @@ const ProductCharacter = () => {
                 <div>
                     <div className="character_animation_contain absolute top-[3%] left-[-30%] z-[1000] w-[60%] h-[200px] flex items-end justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in ">
                         <div className="animation_text text-sm text-black w-[200px]  absolute bottom-[-50px] right-[5%]   ">
-                            <div ref={typedElement1}></div> {/* 첫 번째 줄 */}
-                            <div ref={typedElement2}></div> {/* 두 번째 줄 */}
+                            <div ref={typedElement1}></div>
+                            <div ref={typedElement2}></div>
                         </div>
                         <div className="animation_line_01 w-[200px] h-[1px] block -mt-[10px]">
                             <span className="w-full h-[1px] bg-black block float-right transition-all duration-200 ease-in delay-500"></span>
