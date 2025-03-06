@@ -36,7 +36,7 @@ const SideMenuBar = ({ setIsChatOpen }) => {
 
             {/* 사이드 메뉴 버튼들 */}
             <div
-                className={`fixed right-4 bottom-4 bg-primary-500 rounded-lg p-3 flex flex-col gap-3 transition-all duration-300 z-40 ${
+                className={`fixed right-4 bottom-4 bg-primary-300 rounded-lg p-3 flex flex-col gap-3 transition-all duration-300 z-40 ${
                     isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
                 }`}
             >
@@ -129,7 +129,7 @@ const SideMenuBar = ({ setIsChatOpen }) => {
                             </div>
                             {/* 오른쪽 섹션 - 최근 본 상품 */}
                             <div className='w-1/2 p-6'>
-                                <h2 className='font-korean text-base font-bold text-gray-800 mb-6'>최근 본 상품</h2>
+                                <h2 className='font-korean text-base font-bold text-gray- mb-6'>최근 본 상품</h2>
                                 <div className='flex gap-4'>
                                     {/* <div className='w-20 h-20 bg-gray-200 rounded'></div>
                                 <div className='w-20 h-20 bg-gray-200 rounded'></div>
