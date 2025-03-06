@@ -8,9 +8,9 @@ const Checkbox = ({ label, checked, onChange, id }) => {
           <input type='checkbox' id={id} checked={checked} onChange={onChange} className='sr-only' />
           <div>
             {checked ? (
-              <img src='/icon/CheckboxT.png' alt='체크가 된 체크박스' />
+              <img src='/icon/check-on.svg' alt='체크가 된 체크박스' />
             ) : (
-              <img src='/icon/Checkbox.png' alt='체크가 안된 체크박스' />
+              <img src='/icon/checkbox.svg' alt='체크가 안된 체크박스' />
             )}
           </div>
         </div>
