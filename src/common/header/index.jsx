@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import CloudEffect from './CloudEffect';
 import { SiOperagx } from 'react-icons/si';
 
 const Header = () => {
@@ -24,7 +23,6 @@ const Header = () => {
 
     return (
         <>
-            <CloudEffect />
             <header
                 className={`fixed top-0 left-0 w-full h-11 transition-all duration-300 z-50 ${
                     isScrolled ? 'bg-white shadow-md' : 'bg-transparent'
