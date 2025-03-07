@@ -197,105 +197,105 @@ function App() {
             id: 1,
             name: 'HEAVY HOOD',
             price: '145.00 USD',
-            sizes: 'XS S M L XL XXL',
+            sizes: 'XS SML XL XXL',
             image: '/public/images/RTBTANKROCK.png',
         },
         {
             id: 2,
             name: 'HEAVY HOOD',
             price: '145.00 USD',
-            sizes: 'XS S M L XL XXL',
+            sizes: 'XS SML XL XXL',
             image: '/public/images/RTBTANKROCK.png',
         },
         {
             id: 3,
             name: 'HEAVY HOOD',
             price: '145.00 USD',
-            sizes: 'XS S M L XL XXL',
+            sizes: 'XS SML XL XXL',
             image: '/public/images/RTBTANKROCK.png',
         },
         {
             id: 4,
             name: 'HEAVY HOOD',
             price: '145.00 USD',
-            sizes: 'XS S M L XL XXL',
+            sizes: 'XS SML XL XXL',
             image: '/public/images/RTBTANKROCK.png',
         },
         {
             id: 5,
             name: 'HEAVY HOOD',
             price: '145.00 USD',
-            sizes: 'XS S M L XL XXL',
+            sizes: 'XS SML XL XXL',
             image: '/public/images/RTBTANKROCK.png',
         },
         {
             id: 6,
             name: 'HEAVY HOOD',
             price: '145.00 USD',
-            sizes: 'XS S M L XL XXL',
+            sizes: 'XS SML XL XXL',
             image: '/public/images/RTBTANKROCK.png',
         },
         {
             id: 7,
             name: 'HEAVY HOOD',
             price: '145.00 USD',
-            sizes: 'XS S M L XL XXL',
+            sizes: 'XS SML XL XXL',
             image: '/public/images/RTBTANKROCK.png',
         },
         {
             id: 8,
             name: 'HEAVY HOOD',
             price: '145.00 USD',
-            sizes: 'XS S M L XL XXL',
+            sizes: 'XS SML XL XXL',
             image: '/public/images/RTBTANKROCK.png',
         },
         {
             id: 9,
             name: 'HEAVY HOOD',
             price: '145.00 USD',
-            sizes: 'XS S M L XL XXL',
+            sizes: 'XS SML XL XXL',
             image: '/public/images/RTBTANKROCK.png',
         },
         {
             id: 10,
             name: 'HEAVY HOOD',
             price: '145.00 USD',
-            sizes: 'XS S M L XL XXL',
+            sizes: 'XS SML XL XXL',
             image: '/public/images/RTBTANKROCK.png',
         },
         {
             id: 11,
             name: 'HEAVY HOOD',
             price: '145.00 USD',
-            sizes: 'XS S M L XL XXL',
+            sizes: 'XS SML XL XXL',
             image: '/public/images/RTBTANKROCK.png',
         },
         {
             id: 12,
             name: 'HEAVY HOOD',
             price: '145.00 USD',
-            sizes: 'XS S M L XL XXL',
+            sizes: 'XS SML XL XXL',
             image: '/public/images/RTBTANKROCK.png',
         },
         {
             id: 13,
             name: 'HEAVY HOOD',
             price: '145.00 USD',
-            sizes: 'XS S M L XL XXL',
+            sizes: 'XS SML XL XXL',
             image: '/public/images/RTBTANKROCK.png',
         },
         {
             id: 14,
             name: 'HEAVY HOOD',
             price: '145.00 USD',
-            sizes: 'XS S M L XL XXL',
+            sizes: 'XS SML XL XXL',
             image: '/public/images/RTBTANKROCK.png',
         },
         {
             id: 15,
             name: 'HEAVY HOOD',
             price: '145.00 USD',
-            sizes: 'XS S M L XL XXL',
+            sizes: 'XS SML XL XXL',
             image: '/public/images/RTBTANKROCK.png',
         },
     ];
@@ -303,17 +303,20 @@ function App() {
     // 반응형 그리드 클래스
     const gridColumnClass = getGridColumnClass();
 
+    // Check if we're in desktop view
+    const isDesktop = windowWidth >= 1280;
+
     return (
         <div className='w-full max-w-[1920px] h-full mx-auto'>
             {/* 인라인 스타일 추가 */}
             <style>{youtubeStyles}</style>
 
-            {/* 헤더 컴포넌트 - z-index 충돌을 방지하기 위해 위치 변경 */}
+            {/* 헤더 컴포넌트 */}
             <Header />
 
-            {/* 메인 콘텐츠 섹션 - <header> 태그를 <div>로 변경하여 충돌 방지 */}
+            {/* 메인 콘텐츠 섹션 */}
             <div className='relative'>
-                {/* 유튜브 비디오 섹션 - 원래 구조 유지 */}
+                {/* 유튜브 비디오 섹션 */}
                 <section className='youtube'>
                     <div className='youtube__area'>
                         <div id='player' className='player'></div>
@@ -321,70 +324,71 @@ function App() {
                     <div className='youtube__cover'></div>
                 </section>
 
-                {/* 우측 refine 메뉴 (더 아래에 위치) - 반응형, z-index 조정 */}
-                <div className='fixed top-10 md:top-14 xl:top-20 right-4 md:right-8 xl:right-12 text-right z-[8000]'>
-                    <div className='relative'>
-                        <div
-                            className='text-xs md:text-sm text-black cursor-pointer font-medium hover:opacity-80 mr-4'
-                            onClick={toggleMenu}
-                        >
-                            refine
-                        </div>
+                {/* 우측 refine 메뉴 - 데스크탑 뷰에서만 표시 */}
+                {isDesktop && (
+                    <div className='fixed top-10 md:top-14 xl:top-20 right-4 md:right-8 xl:right-12 text-right z-[8000]'>
+                        <div className='relative'>
+                            <div
+                                className='text-xs md:text-sm text-black cursor-pointer font-medium hover:opacity-80 mr-4'
+                                onClick={toggleMenu}
+                            >
+                                refine
+                            </div>
 
-                        {/* 토글되는 드롭다운 메뉴 - z-index 조정 */}
-                        <div
-                            className={`absolute right-0 top-full mt-2 transition-all duration-300 overflow-hidden z-[8010] w-[100px] md:w-[120px]
-                                ${
-                                    isMenuVisible
-                                        ? 'max-h-[500px] opacity-100'
-                                        : 'max-h-0 opacity-0 pointer-events-none'
-                                }`}
-                        >
-                            <div className='py-2 text-right pr-4'>
-                                <div className='text-xs md:text-sm text-black py-2 cursor-pointer font-medium hover:opacity-80'>
-                                    all
-                                </div>
-                                <div className='text-xs md:text-sm text-black py-2 cursor-pointer font-medium hover:opacity-80'>
-                                    outer
-                                </div>
-                                <div className='text-xs md:text-sm text-black py-2 cursor-pointer font-medium hover:opacity-80'>
-                                    tops
-                                </div>
-                                <div className='text-xs md:text-sm text-black py-2 cursor-pointer font-medium hover:opacity-80'>
-                                    bottoms
-                                </div>
-                                <div className='text-xs md:text-sm text-black py-2 cursor-pointer font-medium hover:opacity-80'>
-                                    acc
-                                </div>
+                            {/* 토글되는 드롭다운 메뉴 - z-index 조정 */}
+                            <div
+                                className={`absolute right-0 top-full mt-2 transition-all duration-300 overflow-hidden z-[8010] w-[100px] md:w-[120px]
+                                    ${
+                                        isMenuVisible
+                                            ? 'max-h-[500px] opacity-100'
+                                            : 'max-h-0 opacity-0 pointer-events-none'
+                                    }`}
+                            >
+                                <div className='py-2 text-right pr-4'>
+                                    <div className='text-xs md:text-sm text-black py-2 cursor-pointer font-medium hover:opacity-80'>
+                                        all
+                                    </div>
+                                    <div className='text-xs md:text-sm text-black py-2 cursor-pointer font-medium hover:opacity-80'>
+                                        outer
+                                    </div>
+                                    <div className='text-xs md:text-sm text-black py-2 cursor-pointer font-medium hover:opacity-80'>
+                                        tops
+                                    </div>
+                                    <div className='text-xs md:text-sm text-black py-2 cursor-pointer font-medium hover:opacity-80'>
+                                        bottoms
+                                    </div>
+                                    <div className='text-xs md:text-sm text-black py-2 cursor-pointer font-medium hover:opacity-80'>
+                                        acc
+                                    </div>
 
-                                {/* 색상 선택 섹션 - z-index 조정 */}
-                                <div className='absolute right-0 top-0 z-[8020]'></div>
-                                <div className='bg-[#cbd5e1] shadow-md p-2 md:p-4 mt-2 border border-primary-500'>
-                                    <div className='flex items-center justify-between mb-2'>
-                                        <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#B7B7B7]'></div>
-                                        <span className='text-gray-700 text-xs md:text-sm'>gray</span>
-                                    </div>
-                                    <div className='flex items-center justify-between mb-2'>
-                                        <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#000000]'></div>
-                                        <span className='text-gray-700 text-xs md:text-sm'>black</span>
-                                    </div>
-                                    <div className='flex items-center justify-between mb-2'>
-                                        <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#FFFFFF] border border-gray-200'></div>
-                                        <span className='text-gray-700 text-xs md:text-sm'>white</span>
-                                    </div>
-                                    <div className='flex items-center justify-between mb-2'>
-                                        <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#FCF2D6]'></div>
-                                        <span className='text-gray-700 text-xs md:text-sm'>begie</span>
-                                    </div>
-                                    <div className='flex items-center justify-between'>
-                                        <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#CEE3FC]'></div>
-                                        <span className='text-gray-700 text-xs md:text-sm'>blue</span>
+                                    {/* 색상 선택 섹션 */}
+                                    <div className='bg-[#cbd5e1] shadow-md p-2 md:p-4 mt-2 border border-primary-500'>
+                                        <div className='flex items-center justify-between mb-2'>
+                                            <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#B7B7B7]'></div>
+                                            <span className='text-gray-700 text-xs md:text-sm'>gray</span>
+                                        </div>
+                                        <div className='flex items-center justify-between mb-2'>
+                                            <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#000000]'></div>
+                                            <span className='text-gray-700 text-xs md:text-sm'>black</span>
+                                        </div>
+                                        <div className='flex items-center justify-between mb-2'>
+                                            <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#FFFFFF] border border-gray-200'></div>
+                                            <span className='text-gray-700 text-xs md:text-sm'>white</span>
+                                        </div>
+                                        <div className='flex items-center justify-between mb-2'>
+                                            <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#FCF2D6]'></div>
+                                            <span className='text-gray-700 text-xs md:text-sm'>begie</span>
+                                        </div>
+                                        <div className='flex items-center justify-between'>
+                                            <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#CEE3FC]'></div>
+                                            <span className='text-gray-700 text-xs md:text-sm'>blue</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                )}
             </div>
 
             {/* 제품 그리드 - 헤더와 겹치지 않도록 상단 마진 추가 */}
