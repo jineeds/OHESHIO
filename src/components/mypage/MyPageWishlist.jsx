@@ -42,7 +42,6 @@ const MyPageWishlist = () => {
                 <img src={item.imageUrl} alt={item.name} className="w-32 h-32 object-cover" />
 
                 <div className="flex flex-col flex-grow justify-between h-full">
-                  {/* 삭제 버튼 (오른쪽 정렬) */}
                   <div className="flex justify-between items-start">
                     <h3 className="text-lg font-semibold text-left">{item.name}</h3>
                     <button className="text-gray-600 text-xl">×</button>
@@ -56,13 +55,17 @@ const MyPageWishlist = () => {
 
                   <div className="flex justify-end gap-4">
                     <Buttons
-                      size="medium"
+                      size="small"
                       state="default"
                       className="border border-primary-400 text-primary-500 px-4 py-2"
                     >
                       장바구니
                     </Buttons>
-                    <Buttons size="medium" state="primary" className="px-4 py-2">
+                    <Buttons
+                      size="small"
+                      state="default"
+                      className="border border-primary-400 text-primary-500 px-4 py-2"
+                    >
                       주문하기
                     </Buttons>
                   </div>

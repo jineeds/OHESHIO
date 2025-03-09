@@ -54,13 +54,17 @@ const MyPageRecentViewed = () => {
 
                   <div className="flex justify-end gap-4">
                     <Buttons
-                      size="medium"
+                      size="small"
                       state="default"
                       className="border border-primary-400 text-primary-500 px-4 py-2"
                     >
                       장바구니
                     </Buttons>
-                    <Buttons size="medium" state="primary" className="px-4 py-2">
+                    <Buttons
+                      size="small"
+                      state="default"
+                      className="border border-primary-400 text-primary-500 px-4 py-2"
+                    >
                       주문하기
                     </Buttons>
                   </div>
