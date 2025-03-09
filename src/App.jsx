@@ -4,7 +4,6 @@ import { About, Cart, Home, Login, Main, MyPage, Product, Signup } from './pages
 import { useEffect } from 'react';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import NaverCallback from './components/login/NaverCallback';
-import Landing from './pages/landing';
 
 function App() {
     useEffect(() => {
@@ -25,7 +24,7 @@ function App() {
                         <Route path='/product' element={<Product />} />
                         <Route path='/signup' element={<Signup />} />
                         <Route path='/main' element={<Main />} />
-                        <Route path='/landing' element={<Landing />} />
+                        <Route path='/home' element={<Home />} />
                         <Route path='/mypage' element={<MyPage />} />
                     </Route>
                     <Route path='/login/callback/naver' element={<NaverCallback />} />
