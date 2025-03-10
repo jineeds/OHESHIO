@@ -6,13 +6,14 @@ import { authActions } from '../../store/modules/authSlice';
 import Checkbox from '../../ui/Checkbox';
 import InputCustom from '../../ui/InputCustom';
 import Buttons from '../../ui/Buttons';
+import { cartActions } from '../../store/modules/cartSlice';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const inputRefId = useRef();
   const inputRefPw = useRef();
-  const { error, authed } = useSelector((state) => state.authR);
+  const { error, authed, currentUser } = useSelector((state) => state.authR);
 
   const [loginData, setLoginData] = useState({
     userId: '',
@@ -39,8 +40,21 @@ const LoginForm = () => {
     const isValid = loginData.userId.trim() !== '' && loginData.password.trim() !== '';
     setIsFormValid(isValid);
   }, [loginData]);
+
   useEffect(() => {
     if (authed) {
+      if (currentUser && currentUser.cart && currentUser.cart.length > 0) {
+        const cartItems = currentUser.cart.map((item) => ({
+          id: item.productId,
+          name: item.name,
+          color: item.color || 'DEFAULT',
+          price: item.price,
+          quantity: item.quantity,
+          image: item.image,
+        }));
+
+        dispatch(cartActions.replaceCart(cartItems));
+      }
       navigate('/');
     }
   }, [authed]);
