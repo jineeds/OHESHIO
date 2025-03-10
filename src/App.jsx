@@ -18,12 +18,16 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
+
             <Route path="/about" element={<About />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/login" element={<Login />} />
             <Route path="/product" element={<Product />} />
+            <Route path="/product/:id" element={<Product />} />
+
             <Route path="/signup" element={<Signup />} />
             <Route path="/main" element={<Main />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/checkout" element={<Checkout />} />
           </Route>

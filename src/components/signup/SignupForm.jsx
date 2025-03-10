@@ -58,25 +58,18 @@ const SignupForm = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // 에러 상태 초기화
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: '' }));
     }
-
-    // 리덕스 에러 초기화
     if (error) {
       dispatch(authActins.clearError());
     }
-
-    // 유효성 검사
     validateField(name, value);
   };
 
-  // 개별 필드 유효성 검사
   const validateField = (name, value) => {
     switch (name) {
       case 'userId':
-        // 아이디가 이미 존재하는지 확인하는 로직 (예시)
         if (value === 'semin') {
           setErrors((prev) => ({ ...prev, userId: '이미 사용하고 있는 아이디입니다.' }));
           setValidFields((prev) => ({ ...prev, userId: false }));
@@ -142,24 +135,20 @@ const SignupForm = () => {
     }
   };
 
-  // 전체 폼 유효성 검사
   const validateForm = () => {
     let isValid = true;
     const newErrors = { ...errors };
 
-    // 아이디 검사
     if (!formData.userId) {
       newErrors.userId = '아이디를 입력해주세요.';
       isValid = false;
     }
 
-    // 비밀번호 검사
     if (!formData.password) {
       newErrors.password = '비밀번호를 입력해주세요.';
       isValid = false;
     }
 
-    // 비밀번호 확인 검사
     if (!formData.confirmPassword) {
       newErrors.confirmPassword = '비밀번호 확인을 입력해주세요.';
       isValid = false;
@@ -168,35 +157,29 @@ const SignupForm = () => {
       isValid = false;
     }
 
-    // 이메일 검사
     if (!formData.email || !formData.emailDomain) {
       newErrors.email = '이메일을 입력해주세요.';
       isValid = false;
     }
 
-    // 휴대폰 번호 검사
     if (!formData.phone) {
       newErrors.phone = '휴대폰 번호를 입력해주세요.';
       isValid = false;
     }
 
-    // 휴대폰 인증 검사
     if (!verificationSuccess) {
       newErrors.verificationCode = '휴대폰 인증이 필요합니다.';
       isValid = false;
     }
 
-    // 약관 동의 검사
     if (!agreements.terms || !agreements.privacy) {
       isValid = false;
-      // 약관 동의 관련 에러 표시 (화면에 표시할 방법이 필요함)
     }
 
     setErrors(newErrors);
     return isValid;
   };
 
-  // 약관 동의 처리
   const handleAgreementChange = (agreement) => {
     if (agreement === 'all') {
       const newValue = !agreements.all;
@@ -213,7 +196,6 @@ const SignupForm = () => {
           [agreement]: !prev[agreement],
         };
 
-        // 전체 동의 상태 업데이트
         const allChecked = ['terms', 'privacy', 'marketing'].every((key) => newAgreements[key]);
 
         return {
@@ -223,18 +205,14 @@ const SignupForm = () => {
       });
     }
   };
-
-  // 인증번호 전송 처리
   const handleSendVerification = () => {
     if (!formData.phone || errors.phone) {
       setErrors((prev) => ({ ...prev, phone: '유효한 휴대폰 번호를 입력해주세요.' }));
       return;
     }
 
-    // 인증번호 전송 로직 (실제로는 API 호출)
     setVerificationSent(true);
 
-    // 실제 구현에서는 서버에서 인증번호를 받아와야 함
     alert('인증번호가 발송되었습니다.');
   };
 
@@ -274,14 +252,14 @@ const SignupForm = () => {
   }, [authed, navigate]);
 
   return (
-    <div className='flex flex-col md:flex-row justify-center items-center min-h-screen w-full  mx-auto px-4'>
+    <div className='flex flex-col md:flex-row  justify-center items-center min-h-screen w-full mx-auto px-4 md:bg-[url(/images/signup-bg2.png)] bg-center  bg-no-repeat'>
       <h1 className='text-2xl font-bold text-center mb-6 mt-14 md:hidden'>Create Account</h1>
-      <div className='hidden md:flex md:w-1/2 flex-col justify-center items-center mb-8 md:mb-0'>
+      <div className='hidden w-auto md:flex flex-1 flex-col justify-center items-center mb-8 md:mb-0'>
         <h1 className='text-4xl md:text-5xl font-bold mb-8 md:mb-10  md:text-left whitespace-nowrap'>CREATE ACCOUNT</h1>
         <SocialSignupButton handleSubmit={handleSubmit} />
       </div>
-      {/* bg-[url(/images/signup-bg.png)]  bg-right-bottom bg-cover bg-no-repeat */}
-      <div className='w-full md:w-1/2 flex flex-col justify-center items-center  '>
+
+      <div className='w-full  flex-1 flex flex-col justify-center items-center  '>
         <div className='w-full max-w-xl'>
           <form
             onSubmit={handleSubmit}
