@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { IoMdHeadset } from 'react-icons/io';
+import { SiOperagx } from 'react-icons/si';
 
 const FadeUpSection = ({ children }) => {
   const ref = useRef();
@@ -120,7 +122,6 @@ const About = () => {
       </section>
       {/* 어바웃어스 소개글 섹션 */}
       <div className="w-full max-w-[1920px] mx-auto bg-white">
-        {/* About us 버튼 */}
         <FadeUpSection>
           <section className="text-center py-16 px-4">
             <button
@@ -161,7 +162,6 @@ const About = () => {
           </section>
         </FadeUpSection>
 
-        {/* Contact Information 버튼과 설명 */}
         <FadeUpSection>
           <section className="text-center py-16 px-4">
             <button
@@ -186,6 +186,7 @@ const About = () => {
               style={{ backgroundImage: "url('/about/contactimg1.jpg')" }}
             >
               <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-white text-center px-4">
+                <IoMdHeadset size={24} className="mb-4" />
                 <p className="text-xs md:text-sm font-mono tracking-wide">MON–FRI : 10:00AM – 16:00PM</p>
                 <p className="text-xs md:text-sm font-mono mt-2">cs@oheshio.com</p>
                 <p className="text-xs md:text-sm font-mono mt-1">+82 3144-2595</p>
@@ -196,6 +197,7 @@ const About = () => {
               style={{ backgroundImage: "url('/about/contactimg2.jpg')" }}
             >
               <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-white text-center px-4">
+                <SiOperagx size={24} className="mb-4" />
                 <p className="text-xs md:text-sm font-mono tracking-wide">
                   HEAD OFFICE : 3F, 47, Tojeong-ro, Mapo-gu,
                   <br />
