@@ -59,7 +59,7 @@ const Header = () => {
                 <div className='container mx-auto px-4 h-full relative'>
                     {/* Desktop only "home" text */}
                     <div className='hidden xl:block text-xs md:text-sm font-medium absolute top-1/2 -translate-y-1/2 left-16 text-black'>
-                        <Link to='/home'>home</Link>
+                        <Link to='/'>home</Link>
                     </div>
 
                     {/* Mobile/Tablet Icon */}
@@ -97,7 +97,7 @@ const Header = () => {
 
                     {/* Logo (always centered) */}
                     <div className='absolute left-1/2 transform -translate-x-1/2 top-1/2 -translate-y-1/2'>
-                        <Link to='/home'>
+                        <Link to='/'>
                             <img src='/public/images/logo.png' alt='logo' width={144} />
                         </Link>
                     </div>
