@@ -1,31 +1,20 @@
 export const productDetails = [
   {
     id: 'p001',
-    name: '체크 패턴 후드 자켓',
-    price: 228000,
+    name: 'ROUND COLLAR SEMI-CROP JACKET',
+    name_kr: '라운드 칼라 세미크롭 자켓',
+    price: 248000,
     category: 'outer',
-    description: '체크 패턴의 후드 퍼프 자켓입니다. 방풍 소재와 탈부착 가능한 후드가 특징입니다.',
-    material: 'COTTON 100%',
-    care: 'DRY CLEANING ONLY',
-    model_info: {
-      height: '175cm',
-      weight: '65kg',
-      wearing_size: 'M',
-    },
-    size_info: {
-      // 사이즈 정보...
-    },
-    images: {
-      blue: {
-        thumbnail: '/images/products/p001/blue/thumbnail.jpg',
-        main_images: [
-          // 이미지 정보...
-        ],
-      },
-      // 다른 색상...
-    },
-    related_products: ['p005', 'p010', 'p015'],
-    styling_products: ['p004', 'p008', 'p012'],
+    color: 'gray',
+    image: '/oheshio/outer/gray/p001_round_collar_semi-crop_jacket/p001.png',
+    detail_images: [
+      '/oheshio/outer/gray/p001_round_collar_semi-crop_jacket/detail1.png',
+      '/oheshio/outer/gray/p001_round_collar_semi-crop_jacket/detail2.png',
+      '/oheshio/outer/gray/p001_round_collar_semi-crop_jacket/detail3.png',
+    ],
+    model_images: [
+      '/oheshio/outer/gray/p001_round_collar_semi-crop_jacket/p001_1.png',
+      '/oheshio/outer/gray/p001_round_collar_semi-crop_jacket/model2.png',
+    ],
   },
-  // 더 많은 상품 상세...
 ];
