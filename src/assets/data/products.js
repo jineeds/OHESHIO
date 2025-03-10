@@ -1265,7 +1265,7 @@ export const products = [
     price: 106000,
     category: 'ACC',
     color: 'white',
-    image: '/oheshio/acc/white/p114_dot_cross_card_wallet/p113.png',
+    image: '/oheshio/acc/white/p113_dot_cross_card_wallet/p113.png',
     model_images: [
       '/oheshio/acc/white/p113_dot_cross_card_wallet/p113_1.png',
       '/oheshio/acc/white/p113_dot_cross_card_wallet/p113_2.png',
@@ -1356,11 +1356,11 @@ export const products = [
     price: 23000,
     category: 'acc',
     color: 'gray',
-    image: 'oheshio/miseki/acc/gray/p105_shirring_knee_socks/p106.png',
+    image: 'oheshio/miseki/acc/gray/p106_shirring_knee_socks/p106.png',
     model_images: [
-      '/oheshio/miseki/acc/gray/p105_shirring_knee_socks/p106_1.png',
-      '/oheshio/miseki/acc/gray/p105_shirring_knee_socks/p106_2.png',
-      '/oheshio/miseki/acc/gray/p105_shirring_knee_socks/p106_3.png',
+      '/oheshio/miseki/acc/gray/p106_shirring_knee_socks/p106_1.png',
+      '/oheshio/miseki/acc/gray/p106_shirring_knee_socks/p106_2.png',
+      '/oheshio/miseki/acc/gray/p106_shirring_knee_socks/p106_3.png',
     ],
   },
   {
