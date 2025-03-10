@@ -1,18 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Buttons from '../../ui/Buttons';
 import PopupModal from './PopupModal';
+import { authActions } from '../../store/modules/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const MyPageUserInfo = ({ userInfo }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [userData, setUserData] = useState({
-    name: '홍길동',
-    email: 'gildong@example.com',
-    password: 'default1234',
+    name: '',
+    email: '',
+    password: '',
     address: {
-      receiver: '홍길동',
-      address: '서울특별시 강남구 테헤란로',
-      phone: '010-1234-5678',
+      receiver: '',
+      address: '',
+      phone: '',
     },
   });
+
+  useEffect(() => {
+    if (userInfo) {
+      setUserData({
+        name: userInfo.username || '',
+        email: userInfo.userEmail || '',
+        password: userInfo.password || '',
+        address: {
+          receiver: userInfo.username || '',
+          address: userInfo.address || '',
+          phone: userInfo.phone || '',
+        },
+      });
+    }
+  }, [userInfo]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState('');
@@ -25,13 +45,53 @@ const MyPageUserInfo = ({ userInfo }) => {
   const handleSave = (updatedData) => {
     if (modalType === 'profile') {
       setUserData((prev) => ({ ...prev, name: updatedData.name, email: updatedData.email }));
+
+      dispatch(
+        authActions.updateUserInfo({
+          id: userInfo.id,
+          username: updatedData.name,
+          userEmail: updatedData.email,
+        })
+      );
     } else if (modalType === 'password') {
       setUserData((prev) => ({ ...prev, password: updatedData.new }));
+
+      dispatch(
+        authActions.updateUserInfo({
+          id: userInfo.id,
+          password: updatedData.new,
+        })
+      );
     } else if (modalType === 'address') {
       setUserData((prev) => ({ ...prev, address: updatedData }));
+
+      dispatch(
+        authActions.updateUserInfo({
+          id: userInfo.id,
+          address: updatedData.address,
+          phone: updatedData.phone,
+        })
+      );
     }
     setIsModalOpen(false);
   };
+
+  const handleLogout = () => {
+    dispatch(authActions.logout());
+    navigate('/main');
+  };
+  const onDel = () => {
+    openModal('confirmDelete');
+  };
+  const handleDeleteAccount = () => {
+    dispatch(authActions.deleteAccount(userInfo.id));
+    setIsModalOpen(false);
+    navigate('/');
+  };
+
+  if (!userInfo) {
+    return <div className='text-center py-10'>로그인이 필요합니다.</div>;
+  }
 
   return (
     <div className='border-t border-gray-300'>
@@ -96,10 +156,10 @@ const MyPageUserInfo = ({ userInfo }) => {
           </div>
 
           <div className='flex justify-center gap-4 mt-6 flex-wrap'>
-            <Buttons size='medium' state='default'>
+            <Buttons size='medium' state='default' onClick={handleLogout}>
               로그아웃
             </Buttons>
-            <Buttons size='medium' state='danger' onClick={() => openModal('confirmDelete')}>
+            <Buttons size='medium' state='danger' onClick={onDel}>
               회원탈퇴
             </Buttons>
           </div>
@@ -110,6 +170,7 @@ const MyPageUserInfo = ({ userInfo }) => {
             type={modalType}
             onClose={() => setIsModalOpen(false)}
             onSave={handleSave}
+            onDelete={handleDeleteAccount}
             currentName={userData.name}
             currentEmail={userData.email}
             currentAddress={userData.address}

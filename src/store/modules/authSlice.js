@@ -15,7 +15,29 @@ const initialState = {
       orders: [],
       reviews: [],
       points: 1000,
-      coupons: [],
+      coupons: [
+        {
+          id: 1,
+          name: '[자주배송 전용] 가입 축하 할인 쿠폰',
+          amount: '10,000원',
+          discount: '70% 할인',
+          validity: '2025-03-09 - 2025-03-16',
+        },
+        {
+          id: 2,
+          name: '회원 가입 축하 할인 쿠폰',
+          amount: '50,000원',
+          discount: '15% 할인',
+          validity: '2025-03-09 - 2025-03-16',
+        },
+        {
+          id: 3,
+          name: '회원 가입 축하 할인 쿠폰',
+          amount: '300,000원',
+          discount: '10% 할인',
+          validity: '2025-03-09 - 2025-03-16',
+        },
+      ],
       createdAt: '2025-03-05',
     },
   ],
@@ -42,6 +64,19 @@ export const authSlice = createSlice({
         state.error = '이미 사용 중인 아이디 또는 이메일입니다.';
         return;
       }
+      const currentDate = new Date();
+
+      const validityEndDate = new Date(currentDate);
+      validityEndDate.setDate(validityEndDate.getDate() + 7);
+
+      const formatDate = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      };
+
+      const validityPeriod = `${formatDate(currentDate)} - ${formatDate(validityEndDate)}`;
 
       const newUser = {
         id: state.users.length > 0 ? Math.max(...state.users.map((user) => user.id)) + 1 : 1,
@@ -56,7 +91,29 @@ export const authSlice = createSlice({
         orders: [],
         reviews: [],
         points: 1000,
-        coupons: [],
+        coupons: [
+          {
+            id: 1,
+            name: '[자주배송 전용] 가입 축하 할인 쿠폰',
+            amount: '10,000원',
+            discount: '70% 할인',
+            validity: validityPeriod,
+          },
+          {
+            id: 2,
+            name: '회원 가입 축하 할인 쿠폰',
+            amount: '50,000원',
+            discount: '15% 할인',
+            validity: validityPeriod,
+          },
+          {
+            id: 3,
+            name: '회원 가입 축하 할인 쿠폰',
+            amount: '300,000원',
+            discount: '10% 할인',
+            validity: validityPeriod,
+          },
+        ],
         createdAt: new Date().toISOString(),
       };
 
@@ -121,11 +178,9 @@ export const authSlice = createSlice({
     socialLogin: (state, action) => {
       const { provider, profile } = action.payload;
 
-      // 소셜 ID로 기존 사용자 찾기
       const existingUser = state.users.find((user) => user.socialId === profile.id && user.socialProvider === provider);
 
       if (existingUser) {
-        // 기존 사용자면 로그인 처리
         state.currentUser = existingUser;
         state.authed = true;
         state.error = null;
@@ -133,7 +188,19 @@ export const authSlice = createSlice({
         localStorage.setItem('currentUser', JSON.stringify(existingUser));
         localStorage.setItem('authed', 'true');
       } else {
-        // 새 사용자면 가입 처리
+        const currentDate = new Date();
+        const validityEndDate = new Date(currentDate);
+        validityEndDate.setDate(validityEndDate.getDate() + 7);
+        const formatDate = (date) => {
+          const year = date.getFullYear();
+          const month = String(date.getMonth() + 1).padStart(2, '0');
+          const day = String(date.getDate()).padStart(2, '0');
+          return `${year}-${month}-${day}`;
+        };
+
+        // 쿠폰 유효기간 설정
+        const validityPeriod = `${formatDate(currentDate)} - ${formatDate(validityEndDate)}`;
+
         const newUser = {
           id: state.users.length > 0 ? Math.max(...state.users.map((user) => user.id)) + 1 : 1,
           username: profile.name || `${provider}User`,
@@ -145,7 +212,30 @@ export const authSlice = createSlice({
           cart: [],
           wishlist: [],
           orders: [],
-          points: 1000, // 신규 가입 포인트
+          coupons: [
+            {
+              id: 1,
+              name: '[자주배송 전용] 가입 축하 할인 쿠폰',
+              amount: '10,000원',
+              discount: '70% 할인',
+              validity: validityPeriod,
+            },
+            {
+              id: 2,
+              name: '회원 가입 축하 할인 쿠폰',
+              amount: '50,000원',
+              discount: '15% 할인',
+              validity: validityPeriod,
+            },
+            {
+              id: 3,
+              name: '회원 가입 축하 할인 쿠폰',
+              amount: '300,000원',
+              discount: '10% 할인',
+              validity: validityPeriod,
+            },
+          ],
+          points: 1000,
           createdAt: new Date().toISOString(),
         };
 
@@ -159,127 +249,30 @@ export const authSlice = createSlice({
         localStorage.setItem('authed', 'true');
       }
     },
-    // updateUserInfo: (state, action) => {
-    //   const { id, ...updatedInfo } = action.payload;
+    updateUserInfo: (state, action) => {
+      const { id, ...updatedInfo } = action.payload;
 
-    //   state.users = state.users.map((user) => (user.id === id ? { ...user, ...updatedInfo } : user));
+      state.users = state.users.map((user) => (user.id === id ? { ...user, ...updatedInfo } : user));
 
-    //   if (state.currentUser && state.currentUser.id === id) {
-    //     state.currentUser = { ...state.currentUser, ...updatedInfo };
-    //     localStorage.setItem('currentUser', JSON.stringify(state.currentUser));
-    //   }
+      if (state.currentUser && state.currentUser.id === id) {
+        state.currentUser = { ...state.currentUser, ...updatedInfo };
+        localStorage.setItem('currentUser', JSON.stringify(state.currentUser));
+      }
 
-    //   localStorage.setItem('users', JSON.stringify(state.users));
-    // },
+      localStorage.setItem('users', JSON.stringify(state.users));
+    },
+    deleteAccount: (state, action) => {
+      const userId = action.payload;
 
-    // addToCart: (state, action) => {
-    //   const { productId, name, price, quantity, image } = action.payload;
+      state.users = state.users.filter((user) => user.id !== userId);
 
-    //   if (!state.currentUser) {
-    //     state.error = '로그인이 필요합니다.';
-    //     return;
-    //   }
+      state.currentUser = null;
+      state.authed = false;
 
-    //   const userId = state.currentUser.id;
-
-    //   const userIndex = state.users.findIndex((user) => user.id === userId);
-
-    //   if (userIndex === -1) {
-    //     state.error = '사용자를 찾을 수 없습니다.';
-    //     return;
-    //   }
-
-    //   const existingItemIndex = state.users[userIndex].cart.findIndex((item) => item.productId === productId);
-
-    //   if (existingItemIndex !== -1) {
-    //     state.users[userIndex].cart[existingItemIndex].quantity += quantity;
-    //   } else {
-    //     const newItem = {
-    //       id:
-    //         state.users[userIndex].cart.length > 0
-    //           ? Math.max(...state.users[userIndex].cart.map((item) => item.id)) + 1
-    //           : 1,
-    //       productId,
-    //       name,
-    //       price,
-    //       quantity,
-    //       image,
-    //     };
-
-    //     state.users[userIndex].cart.push(newItem);
-    //   }
-
-    //   if (state.currentUser) {
-    //     state.currentUser = state.users[userIndex];
-    //   }
-
-    //   localStorage.setItem('users', JSON.stringify(state.users));
-    //   localStorage.setItem('currentUser', JSON.stringify(state.currentUser));
-    // },
-
-    // updateCartItemQuantity: (state, action) => {
-    //   const { productId, quantity } = action.payload;
-
-    //   if (!state.currentUser) return;
-
-    //   const userId = state.currentUser.id;
-    //   const userIndex = state.users.findIndex((user) => user.id === userId);
-
-    //   if (userIndex !== -1) {
-    //     const cartItemIndex = state.users[userIndex].cart.findIndex((item) => item.productId === productId);
-
-    //     if (cartItemIndex !== -1) {
-    //       if (quantity <= 0) {
-    //         state.users[userIndex].cart = state.users[userIndex].cart.filter((item) => item.productId !== productId);
-    //       } else {
-    //         state.users[userIndex].cart[cartItemIndex].quantity = quantity;
-    //       }
-
-    //       state.currentUser = state.users[userIndex];
-
-    //       localStorage.setItem('users', JSON.stringify(state.users));
-    //       localStorage.setItem('currentUser', JSON.stringify(state.currentUser));
-    //     }
-    //   }
-    // },
-
-    // removeFromCart: (state, action) => {
-    //   const { productId } = action.payload;
-
-    //   if (!state.currentUser) return;
-
-    //   const userId = state.currentUser.id;
-    //   const userIndex = state.users.findIndex((user) => user.id === userId);
-
-    //   if (userIndex !== -1) {
-    //     state.users[userIndex].cart = state.users[userIndex].cart.filter((item) => item.productId !== productId);
-
-    //     state.currentUser = state.users[userIndex];
-
-    //     localStorage.setItem('users', JSON.stringify(state.users));
-    //     localStorage.setItem('currentUser', JSON.stringify(state.currentUser));
-    //   }
-    // },
-
-    // clearCart: (state) => {
-    //   if (!state.currentUser) return;
-
-    //   const userId = state.currentUser.id;
-    //   const userIndex = state.users.findIndex((user) => user.id === userId);
-
-    //   if (userIndex !== -1) {
-    //     state.users[userIndex].cart = [];
-
-    //     state.currentUser = state.users[userIndex];
-
-    //     localStorage.setItem('users', JSON.stringify(state.users));
-    //     localStorage.setItem('currentUser', JSON.stringify(state.currentUser));
-    //   }
-    // },
-
-    // clearError: (state) => {
-    //   state.error = null;
-    // },
+      localStorage.setItem('users', JSON.stringify(state.users));
+      localStorage.removeItem('currentUser');
+      localStorage.setItem('authed', 'false');
+    },
     updateUserCart: (state, action) => {
       if (!state.currentUser) return;
 
@@ -301,6 +294,82 @@ export const authSlice = createSlice({
 
         state.users[userIndex].cart = userCartItems;
         state.currentUser.cart = userCartItems;
+
+        localStorage.setItem('users', JSON.stringify(state.users));
+        localStorage.setItem('currentUser', JSON.stringify(state.currentUser));
+      }
+    },
+    addWishlist: (state, action) => {
+      if (!state.currentUser) return;
+
+      const item = action.payload;
+      const userIndex = state.users.findIndex((user) => user.id === state.currentUser.id);
+
+      if (userIndex !== -1) {
+        const existingItemIndex = state.users[userIndex].wishlist.findIndex((wishItem) => wishItem.id === item.id);
+
+        if (existingItemIndex === -1) {
+          state.users[userIndex].wishlist.push(item);
+          state.currentUser.wishlist.push(item);
+
+          localStorage.setItem('users', JSON.stringify(state.users));
+          localStorage.setItem('currentUser', JSON.stringify(state.currentUser));
+        }
+      }
+    },
+    removeWishlist: (state, action) => {
+      if (!state.currentUser) return;
+
+      const itemId = action.payload;
+      const userIndex = state.users.findIndex((user) => user.id === state.currentUser.id);
+
+      if (userIndex !== -1) {
+        state.users[userIndex].wishlist = state.users[userIndex].wishlist.filter((item) => item.id !== itemId);
+        state.currentUser.wishlist = state.currentUser.wishlist.filter((item) => item.id !== itemId);
+
+        localStorage.setItem('users', JSON.stringify(state.users));
+        localStorage.setItem('currentUser', JSON.stringify(state.currentUser));
+      }
+    },
+    addRecentlyViewed: (state, action) => {
+      if (!state.currentUser) return;
+
+      const item = action.payload;
+      const userIndex = state.users.findIndex((user) => user.id === state.currentUser.id);
+
+      if (userIndex !== -1) {
+        if (!state.users[userIndex].recentlyViewed) {
+          state.users[userIndex].recentlyViewed = [];
+          state.currentUser.recentlyViewed = [];
+        }
+
+        state.users[userIndex].recentlyViewed = state.users[userIndex].recentlyViewed.filter(
+          (viewedItem) => viewedItem.id !== item.id
+        );
+
+        state.users[userIndex].recentlyViewed.unshift(item);
+
+        if (state.users[userIndex].recentlyViewed.length > 20) {
+          state.users[userIndex].recentlyViewed = state.users[userIndex].recentlyViewed.slice(0, 20);
+        }
+
+        state.currentUser.recentlyViewed = [...state.users[userIndex].recentlyViewed];
+
+        localStorage.setItem('users', JSON.stringify(state.users));
+        localStorage.setItem('currentUser', JSON.stringify(state.currentUser));
+      }
+    },
+    removeRecentlyViewed: (state, action) => {
+      if (!state.currentUser || !state.currentUser.recentlyViewed) return;
+
+      const itemId = action.payload;
+      const userIndex = state.users.findIndex((user) => user.id === state.currentUser.id);
+
+      if (userIndex !== -1 && state.users[userIndex].recentlyViewed) {
+        state.users[userIndex].recentlyViewed = state.users[userIndex].recentlyViewed.filter(
+          (item) => item.id !== itemId
+        );
+        state.currentUser.recentlyViewed = state.currentUser.recentlyViewed.filter((item) => item.id !== itemId);
 
         localStorage.setItem('users', JSON.stringify(state.users));
         localStorage.setItem('currentUser', JSON.stringify(state.currentUser));

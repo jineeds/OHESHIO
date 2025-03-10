@@ -1,8 +1,7 @@
-// ✅ PopupModal.js (모달 내부 저장 로직 포함)
 import React, { useState, useEffect } from 'react';
 import Buttons from '../../ui/Buttons';
 
-const PopupModal = ({ type, onClose, onSave, currentName, currentEmail, currentAddress }) => {
+const PopupModal = ({ type, onClose, onSave, currentName, currentEmail, currentAddress, onDelete }) => {
   const [name, setName] = useState(currentName || '홍길동');
   const [email, setEmail] = useState(currentEmail || 'gildong@example.com');
   const [emailConsent, setEmailConsent] = useState(true);
@@ -32,9 +31,9 @@ const PopupModal = ({ type, onClose, onSave, currentName, currentEmail, currentA
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-lg p-6 w-[400px]">
-        <h2 className="text-lg font-semibold mb-4">
+    <div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50'>
+      <div className='bg-white rounded-lg shadow-lg p-6 w-[400px]'>
+        <h2 className='text-lg font-semibold mb-4'>
           {type === 'password' && '비밀번호 변경'}
           {type === 'address' && '배송지 관리'}
           {type === 'profile' && '내 정보 수정'}
@@ -43,72 +42,72 @@ const PopupModal = ({ type, onClose, onSave, currentName, currentEmail, currentA
         </h2>
 
         {type === 'profile' && (
-          <div className="flex flex-col gap-4 text-left">
-            <div className="flex flex-col">
-              <label className="text-sm text-gray-600">이름</label>
+          <div className='flex flex-col gap-4 text-left'>
+            <div className='flex flex-col'>
+              <label className='text-sm text-gray-600'>이름</label>
               <input
-                type="text"
+                type='text'
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="border p-2 rounded"
+                className='border p-2 rounded'
               />
             </div>
-            <div className="flex flex-col">
-              <label className="text-sm text-gray-600">이메일</label>
+            <div className='flex flex-col'>
+              <label className='text-sm text-gray-600'>이메일</label>
               <input
-                type="email"
+                type='email'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="border p-2 rounded"
+                className='border p-2 rounded'
               />
             </div>
           </div>
         )}
 
         {type === 'password' && (
-          <div className="flex flex-col gap-4">
+          <div className='flex flex-col gap-4'>
             <input
-              type="password"
-              placeholder="현재 비밀번호"
-              className="border p-2 rounded"
+              type='password'
+              placeholder='현재 비밀번호'
+              className='border p-2 rounded'
               value={passwordInfo.current}
               onChange={(e) => setPasswordInfo({ ...passwordInfo, current: e.target.value })}
             />
             <input
-              type="password"
-              placeholder="새 비밀번호"
-              className="border p-2 rounded"
+              type='password'
+              placeholder='새 비밀번호'
+              className='border p-2 rounded'
               onChange={(e) => setPasswordInfo({ ...passwordInfo, new: e.target.value })}
             />
             <input
-              type="password"
-              placeholder="새 비밀번호 확인"
-              className="border p-2 rounded"
+              type='password'
+              placeholder='새 비밀번호 확인'
+              className='border p-2 rounded'
               onChange={(e) => setPasswordInfo({ ...passwordInfo, confirm: e.target.value })}
             />
           </div>
         )}
 
         {type === 'address' && (
-          <div className="flex flex-col gap-4">
+          <div className='flex flex-col gap-4'>
             <input
-              type="text"
-              placeholder="받는 사람"
-              className="border p-2 rounded"
+              type='text'
+              placeholder='받는 사람'
+              className='border p-2 rounded'
               value={addressInfo.receiver}
               onChange={(e) => setAddressInfo({ ...addressInfo, receiver: e.target.value })}
             />
             <input
-              type="text"
-              placeholder="주소"
-              className="border p-2 rounded"
+              type='text'
+              placeholder='주소'
+              className='border p-2 rounded'
               value={addressInfo.address}
               onChange={(e) => setAddressInfo({ ...addressInfo, address: e.target.value })}
             />
             <input
-              type="text"
-              placeholder="연락처"
-              className="border p-2 rounded"
+              type='text'
+              placeholder='연락처'
+              className='border p-2 rounded'
               value={addressInfo.phone}
               onChange={(e) => setAddressInfo({ ...addressInfo, phone: e.target.value })}
             />
@@ -116,42 +115,38 @@ const PopupModal = ({ type, onClose, onSave, currentName, currentEmail, currentA
         )}
 
         {type === 'email' && (
-          <label className="flex items-center gap-2">
+          <label className='flex items-center gap-2'>
             <input
-              type="checkbox"
+              type='checkbox'
               checked={emailConsent}
               onChange={() => setEmailConsent(!emailConsent)}
-              className="w-5 h-5"
+              className='w-5 h-5'
             />
-            <span className="text-gray-500 text-sm">이메일 수신 동의</span>
+            <span className='text-gray-500 text-sm'>이메일 수신 동의</span>
           </label>
         )}
 
         {type === 'confirmDelete' && (
-          <p className="text-gray-600 text-sm mb-2 text-center">
-            정말로 회원 탈퇴하시겠습니까?
-            <br />
-            회원가 및 이벤트 혜택을 놓치지 마세요.
-          </p>
+          <div className='text-center'>
+            <p className='text-gray-700 mb-2'>정말로 회원 탈퇴하시겠습니까?</p>
+            <p className='text-gray-600 text-sm mb-4'>
+              회원가입 혜택 및 이벤트 혜택을 놓치지 마세요.
+              <br />
+              탈퇴 후에는 데이터를 복구할 수 없습니다.
+            </p>
+          </div>
         )}
 
-        <div className="flex justify-end gap-2 mt-4">
-          <Buttons size="small" state="default" onClick={onClose}>
+        <div className='flex justify-end gap-2 mt-4'>
+          <Buttons size='small' state='default' onClick={onClose}>
             취소
           </Buttons>
           {type === 'confirmDelete' ? (
-            <Buttons
-              size="small"
-              state="danger"
-              onClick={() => {
-                alert('탈퇴 처리 완료');
-                onClose();
-              }}
-            >
-              확인
+            <Buttons size='small' state='danger' onClick={onDelete}>
+              탈퇴하기
             </Buttons>
           ) : (
-            <Buttons size="small" state="primary" onClick={handleSave}>
+            <Buttons size='small' state='primary' onClick={handleSave}>
               저장
             </Buttons>
           )}

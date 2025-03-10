@@ -132,6 +132,12 @@ export const cartSlice = createSlice({
       state.discount = action.payload;
       state.total = state.subtotal + state.shipping - state.discount;
     },
+    replaceCart: (state, action) => {
+      state.items = action.payload;
+      state.totalQuantity = action.payload.reduce((total, item) => total + item.quantity, 0);
+      state.subtotal = action.payload.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      state.total = state.subtotal + state.shipping - state.discount;
+    },
   },
 });
 
