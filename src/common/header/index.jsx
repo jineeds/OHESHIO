@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { SiOperagx } from 'react-icons/si';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { authActions } from '../../store/modules/authSlice';
 
 const Header = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isBottomMenuVisible, setIsBottomMenuVisible] = useState(false);
     const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1281);
-
+    const { authed } = useSelector((state) => state.authR);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const onGo = () => {
+        navigate('/login');
+    };
+    const onLogout = () => {
+        dispatch(authActions.logout());
+        navigate('/login');
+    };
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > 10) {
@@ -47,7 +59,7 @@ const Header = () => {
                 <div className='container mx-auto px-4 h-full relative'>
                     {/* Desktop only "home" text */}
                     <div className='hidden xl:block text-xs md:text-sm font-medium absolute top-1/2 -translate-y-1/2 left-16 text-black'>
-                        home
+                        <Link to='/'>home</Link>
                     </div>
 
                     {/* Mobile/Tablet Icon */}
@@ -56,20 +68,38 @@ const Header = () => {
                             <div className='text-sm text-black cursor-pointer font-medium hover:opacity-80 flex items-center justify-center'>
                                 <SiOperagx className='text-lg' />
                             </div>
-                            <div className='absolute left-1/2 -translate-x-1/2 mt-1 w-32 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 pt-2'>
-                                <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center'>
-                                    sign up
-                                </div>
-                                <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center'>
-                                    my page
-                                </div>
+                            <div className='absolute  flex flex-col left-1/2 -translate-x-1/2 mt-1 w-32 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 pt-2'>
+                                {authed ? (
+                                    <>
+                                        <button
+                                            onClick={onLogout}
+                                            className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '
+                                        >
+                                            logout
+                                        </button>
+                                        <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '>
+                                            my page
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <button
+                                            onClick={onGo}
+                                            className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '
+                                        >
+                                            sign up
+                                        </button>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>
 
                     {/* Logo (always centered) */}
                     <div className='absolute left-1/2 transform -translate-x-1/2 top-1/2 -translate-y-1/2'>
-                        <img src='/public/images/logo.png' alt='logo' width={144} />
+                        <Link to='/'>
+                            <img src='/public/images/logo.png' alt='logo' width={144} />
+                        </Link>
                     </div>
 
                     {/* Desktop only collection dropdown */}
@@ -99,13 +129,29 @@ const Header = () => {
                             <div className='text-sm text-black cursor-pointer font-medium hover:opacity-80 flex items-center justify-center'>
                                 <SiOperagx className='text-lg' />
                             </div>
-                            <div className='absolute left-1/2 -translate-x-1/2 mt-1 w-32 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 pt-2'>
-                                <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '>
-                                    sign up
-                                </div>
-                                <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '>
-                                    my page
-                                </div>
+                            <div className='absolute flex flex-col justify-center left-1/2 -translate-x-1/2 mt-1 w-32 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 pt-2'>
+                                {authed ? (
+                                    <>
+                                        <button
+                                            onClick={onLogout}
+                                            className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '
+                                        >
+                                            logout
+                                        </button>
+                                        <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '>
+                                            my page
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <button
+                                            onClick={onGo}
+                                            className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '
+                                        >
+                                            sign up
+                                        </button>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>
