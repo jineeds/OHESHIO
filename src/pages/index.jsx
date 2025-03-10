@@ -6,3 +6,4 @@ export { default as Main } from './main';
 export { default as MyPage } from './mypage';
 export { default as Product } from './product';
 export { default as Signup } from './signup';
+export { default as Checkout } from './checkout';
