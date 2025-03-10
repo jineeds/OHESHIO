@@ -10,7 +10,6 @@ function App() {
   useEffect(() => {
     if (window.Kakao && !window.Kakao.isInitialized()) {
       window.Kakao.init('f7aadc98e379d0346b134b21cb45c732');
-      console.log('Kakao SDK initialized');
     }
   }, []);
   return (
@@ -23,7 +22,7 @@ function App() {
               <Route path='/about' element={<About />} />
               <Route path='/cart' element={<Cart />} />
               <Route path='/product' element={<Product />} />
-              <Route path='/product/:id' element={<Product />} />
+              <Route path='/product/:productId' element={<Product />} />
               <Route path='/main' element={<Main />} />
               <Route path='/mypage' element={<MyPage />} />
               <Route path='/checkout' element={<Checkout />} />
