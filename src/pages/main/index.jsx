@@ -69,7 +69,7 @@ const youtubeStyles = `
 
 function App() {
     // Redux에서 제품 정보와 commonDetails 가져오기
-    const { products, commonDetails } = useSelector((state) => state.productR);
+    const { products, filteredProducts, commonDetails, selectedColor } = useSelector((state) => state.productR);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
@@ -115,7 +115,15 @@ function App() {
         };
     }, []);
 
-    // YouTube API 로드 및 초기화 (수정된 버전)
+    // 초기 데이터 로드
+    useEffect(() => {
+        // 컴포넌트 마운트 시 모든 제품을 filteredProducts로 설정
+        if (!filteredProducts || filteredProducts.length === 0) {
+            dispatch(productsActions.filterByCategory('all'));
+        }
+    }, [dispatch, filteredProducts]);
+
+    // YouTube API 로드 및 초기화
     useEffect(() => {
         // YouTube IFrame API를 비동기로 로드하는 함수
         const loadYouTubeAPI = () => {
@@ -220,6 +228,21 @@ function App() {
     // 1280px 이상에서만 refine 버튼 표시
     const showRefine = windowWidth >= 1280;
 
+    // 현재 선택된 색상에 따른 스타일 지정
+    const getColorButtonStyle = (color) => {
+        return {
+            border: selectedColor === color ? '2px solid black' : 'none',
+            transform: selectedColor === color ? 'scale(1.1)' : 'scale(1)',
+            transition: 'all 0.2s ease',
+        };
+    };
+
+    // 데스크탑 체크
+    const isDesktop = windowWidth >= 1280;
+
+    // 실제 렌더링할 제품 목록 (filteredProducts가 없으면 products 사용)
+    const productsToDisplay = filteredProducts && filteredProducts.length > 0 ? filteredProducts : products;
+
     return (
         <div className='w-full max-w-[1920px] h-full mx-auto'>
             {/* 인라인 스타일 추가 */}
@@ -283,7 +306,10 @@ function App() {
                                     >
                                         bottoms
                                     </div>
-                                    <div className='text-xs md:text-sm text-black py-2 cursor-pointer font-medium hover:opacity-80'>
+                                    <div
+                                        className='text-xs md:text-sm text-black py-2 cursor-pointer font-medium hover:opacity-80'
+                                        onClick={() => filterByCategory('acc')}
+                                    >
                                         acc
                                     </div>
 
@@ -294,35 +320,50 @@ function App() {
                                             className='flex items-center justify-between mb-2 cursor-pointer'
                                             onClick={() => filterByColor('gray')}
                                         >
-                                            <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#B7B7B7]'></div>
+                                            <div
+                                                className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#B7B7B7]'
+                                                style={getColorButtonStyle('gray')}
+                                            ></div>
                                             <span className='text-gray-700 text-xs md:text-sm'>gray</span>
                                         </div>
                                         <div
                                             className='flex items-center justify-between mb-2 cursor-pointer'
                                             onClick={() => filterByColor('black')}
                                         >
-                                            <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#000000]'></div>
+                                            <div
+                                                className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#000000]'
+                                                style={getColorButtonStyle('black')}
+                                            ></div>
                                             <span className='text-gray-700 text-xs md:text-sm'>black</span>
                                         </div>
                                         <div
                                             className='flex items-center justify-between mb-2 cursor-pointer'
                                             onClick={() => filterByColor('white')}
                                         >
-                                            <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#FFFFFF] border border-gray-200'></div>
+                                            <div
+                                                className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#FFFFFF] border border-gray-200'
+                                                style={getColorButtonStyle('white')}
+                                            ></div>
                                             <span className='text-gray-700 text-xs md:text-sm'>white</span>
                                         </div>
                                         <div
                                             className='flex items-center justify-between mb-2 cursor-pointer'
                                             onClick={() => filterByColor('beige')}
                                         >
-                                            <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#FCF2D6]'></div>
+                                            <div
+                                                className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#FCF2D6]'
+                                                style={getColorButtonStyle('beige')}
+                                            ></div>
                                             <span className='text-gray-700 text-xs md:text-sm'>beige</span>
                                         </div>
                                         <div
                                             className='flex items-center justify-between cursor-pointer'
                                             onClick={() => filterByColor('blue')}
                                         >
-                                            <div className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#CEE3FC]'></div>
+                                            <div
+                                                className='w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#CEE3FC]'
+                                                style={getColorButtonStyle('blue')}
+                                            ></div>
                                             <span className='text-gray-700 text-xs md:text-sm'>blue</span>
                                         </div>
                                     </div>
@@ -335,7 +376,8 @@ function App() {
 
             {/* 제품 그리드 - 헤더와 겹치지 않도록 상단 마진 추가 */}
             <div className='flex flex-wrap p-3 md:p-6 xl:p-8 2xl:p-12 mt-11'>
-                {products.map((product) => (
+                {/* productsToDisplay를 사용하여 제품 표시 */}
+                {productsToDisplay.map((product) => (
                     <div
                         key={product.id}
                         className={`${gridColumnClass} px-2 md:px-3 xl:px-4 mb-4 md:mb-6 xl:mb-8`}
@@ -362,11 +404,50 @@ function App() {
                                 <p className='text-xs md:text-xs xl:text-[14px] text-[#9CA3AF] mt-1 md:mt-2 xl:mt-3'>
                                     {commonDetails.size.join(' ')}
                                 </p>
+                                {/* 색상 표시 추가 */}
+                                <p className='text-xs md:text-xs xl:text-[14px] text-[#9CA3AF] mt-1'>{product.color}</p>
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
+
+            {/* 선택된 색상이 있을 경우 표시 - 반응형 위치 적용 */}
+            {selectedColor && (
+                <div
+                    className={`fixed left-4 bg-white p-1.5 rounded-lg shadow-md z-40 max-w-fit ${
+                        isDesktop ? 'bottom-4' : 'bottom-14'
+                    }`}
+                >
+                    <div className='flex items-center space-x-2'>
+                        <div
+                            className='w-3 h-3 rounded-full'
+                            style={{
+                                backgroundColor:
+                                    selectedColor === 'gray'
+                                        ? '#B7B7B7'
+                                        : selectedColor === 'black'
+                                        ? '#000000'
+                                        : selectedColor === 'white'
+                                        ? '#FFFFFF'
+                                        : selectedColor === 'beige'
+                                        ? '#FCF2D6'
+                                        : selectedColor === 'blue'
+                                        ? '#CEE3FC'
+                                        : '#FFFFFF',
+                                border: selectedColor === 'white' ? '1px solid #e5e7eb' : 'none',
+                            }}
+                        ></div>
+                        <p className='text-xs capitalize font-medium'>{selectedColor}</p>
+                        <button
+                            className='text-xs bg-gray-200 px-1.5 py-0.5 rounded hover:bg-gray-300'
+                            onClick={() => filterByColor(null)}
+                        >
+                            Reset
+                        </button>
+                    </div>
+                </div>
+            )}
 
             {/* 사이드메뉴바 - z-index 조정 */}
             <SideMenuBar isChatOpen={isChatOpen} setIsChatOpen={toggleChat} />
