@@ -1,12 +1,10 @@
 import { Outlet } from 'react-router-dom';
+import Header from '../header';
 
 const Layout = () => {
   return (
     <>
-      <header>
-        {/* 여기에 네비게이션 메뉴 등 공통 요소를 배치 */}
-        <nav>{/* 네비게이션 링크 */}</nav>
-      </header>
+      <Header />
 
       <main>
         <Outlet />

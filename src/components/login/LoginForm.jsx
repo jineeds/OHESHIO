@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import SocialLoginButtons from './SocialLoginButtons';
 import { useDispatch, useSelector } from 'react-redux';
-import { authActins } from '../../store/modules/authSlice';
+import { authActions } from '../../store/modules/authSlice';
 import Checkbox from '../../ui/Checkbox';
 import InputCustom from '../../ui/InputCustom';
 import Buttons from '../../ui/Buttons';
@@ -43,7 +43,7 @@ const LoginForm = () => {
     if (authed) {
       navigate('/');
     }
-  }, [authed, navigate]);
+  }, [authed]);
 
   useEffect(() => {
     const savedId = localStorage.getItem('rememberedId');
@@ -57,7 +57,7 @@ const LoginForm = () => {
     const { name, value } = e.target;
     setLoginData((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: '' }));
-    if (error) dispatch(authActins.clearError());
+    if (error) dispatch(authActions.clearError());
   };
 
   const handleSubmit = (e) => {
@@ -77,7 +77,7 @@ const LoginForm = () => {
     }
 
     dispatch(
-      authActins.login({
+      authActions.login({
         userId: loginData.userId,
         password: loginData.password,
         rememberMe,

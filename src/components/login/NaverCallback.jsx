@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { authActins } from '../../store/modules/authSlice';
+import { authActions } from '../../store/modules/authSlice';
 
 const NaverCallback = () => {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const NaverCallback = () => {
       return;
     }
     dispatch(
-      authActins.socialLogin({
+      authActions.socialLogin({
         provider: 'naver',
         profile: {
           id: 'naver_' + new Date().getTime(),

@@ -18,6 +18,22 @@ const initialState = {
       coupons: [],
       createdAt: '2025-03-05',
     },
+    {
+      id: 2,
+      username: '셈셈',
+      userId: 'test',
+      userEmail: 'test22@gmail.com',
+      password: '111111',
+      phone: '010-2234-5678',
+      address: '강남역 이젠 아카데미',
+      cart: [],
+      wishlist: [],
+      orders: [],
+      reviews: [],
+      points: 1000,
+      coupons: [],
+      createdAt: '2025-03-05',
+    },
   ],
 
   currentUser: JSON.parse(localStorage.getItem('currentUser')) || null,
@@ -78,11 +94,27 @@ export const authSlice = createSlice({
       );
 
       if (user) {
-        state.currentUser = user;
+        const updatedUser = {
+          ...user,
+          cart: user.cart || [],
+          wishlist: user.wishlist || [],
+          orders: user.orders || [],
+          reviews: user.reviews || [],
+          points: user.points || 0,
+          coupons: user.coupons || [],
+        };
+
+        state.currentUser = updatedUser;
         state.authed = true;
         state.error = null;
 
-        localStorage.setItem('currentUser', JSON.stringify(user));
+        const userIndex = state.users.findIndex((u) => u.id === user.id);
+        if (userIndex !== -1) {
+          state.users[userIndex] = updatedUser;
+        }
+
+        localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+        localStorage.setItem('users', JSON.stringify(state.users));
         localStorage.setItem('authed', 'true');
 
         if (rememberMe) {
@@ -267,5 +299,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const authActins = authSlice.actions;
+export const authActions = authSlice.actions;
+
 export default authSlice.reducer;
