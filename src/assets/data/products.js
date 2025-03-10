@@ -6,6 +6,11 @@ export const products = [
     category: 'outer',
     color: 'gray',
     image: '/oheshio/outer/gray/p001_round_collar_semi-crop_jacket/p001.png',
+    model_images: [
+      '/oheshio/outer/gray/p001_round_collar_semi-crop_jacket/p001_1.png',
+      '/oheshio/outer/gray/p001_round_collar_semi-crop_jacket/p001_2.png',
+      '/oheshio/outer/gray/p001_round_collar_semi-crop_jacket/p001_3.png',
+    ],
   },
   {
     id: 'p002',
@@ -14,6 +19,11 @@ export const products = [
     category: 'outer',
     color: 'black',
     image: '/oheshio/outer/black/p002_round_collar_semi-crop_jacket/p002.png',
+    model_images: [
+      '/oheshio/outer/black/p002_round_collar_semi-crop_jacket/p002_1.png',
+      '/oheshio/outer/black/p002_round_collar_semi-crop_jacket/p002_2.png',
+      '/oheshio/outer/black/p002_round_collar_semi-crop_jacket/p002_3.png',
+    ],
   },
   {
     id: 'p003',
@@ -22,6 +32,11 @@ export const products = [
     category: 'bottom',
     color: 'black',
     image: '/oheshio/bottom/black/p003_balloon_layered_banding_skirt/p003.png',
+    model_images: [
+      '/oheshio/bottom/black/p003_balloon_layered_banding_skirt/p003_1.png',
+      '/oheshio/bottom/black/p003_balloon_layered_banding_skirt/p003_2.png',
+      '/oheshio/bottom/black/p003_balloon_layered_banding_skirt/p003_3.png',
+    ],
   },
   {
     id: 'p004',
@@ -30,6 +45,11 @@ export const products = [
     category: 'bottom',
     color: 'black',
     image: '/oheshio/bottom/black/p004_asymmetric_flare_skirt/p004.png',
+    model_images: [
+      '/oheshio/bottom/black/p004_asymmetric_flare_skirt/p004_1.png',
+      '/oheshio/bottom/black/p004_asymmetric_flare_skirt/p004_2.png',
+      '/oheshio/bottom/black/p004_asymmetric_flare_skirt/p004_3.png',
+    ],
   },
   {
     id: 'p005',
@@ -38,6 +58,11 @@ export const products = [
     category: 'bottom',
     color: 'black',
     image: '/oheshio/bottom/black/p005_ballet_wrap_mini_skirt/p005.png',
+    model_images: [
+      '/oheshio/bottom/black/p005_ballet_wrap_mini_skirt/p005_1.png',
+      '/oheshio/bottom/black/p005_ballet_wrap_mini_skirt/p005_2.png',
+      '/oheshio/bottom/black/p005_ballet_wrap_mini_skirt/p005_3.png',
+    ],
   },
   {
     id: 'p006',
@@ -46,6 +71,11 @@ export const products = [
     category: 'bottom',
     color: 'black',
     image: '/oheshio/bottom/black/p006_balloon_mini_skirt/p006.png',
+    model_images: [
+      '/oheshio/bottom/black/p006_balloon_mini_skirt/p006_1.png',
+      '/oheshio/bottom/black/p006_balloon_mini_skirt/p006_2.png',
+      '/oheshio/bottom/black/p006_balloon_mini_skirt/p006_3.png',
+    ],
   },
   {
     id: 'p007',
@@ -54,6 +84,11 @@ export const products = [
     category: 'bottom',
     color: 'black',
     image: '/oheshio/bottom/black/p007_pleats_skirt_midi_pants/p007.png',
+    model_images: [
+      '/oheshio/bottom/black/p007_pleats_skirt_midi_pants/p007_1.png',
+      '/oheshio/bottom/black/p007_pleats_skirt_midi_pants/p007_2.png',
+      '/oheshio/bottom/black/p007_pleats_skirt_midi_pants/p007_3.png',
+    ],
   },
   {
     id: 'p008',
@@ -62,6 +97,11 @@ export const products = [
     category: 'bottom',
     color: 'black',
     image: '/oheshio/bottom/black/p008_wide_curved_pants/p008.png',
+    model_images: [
+      '/oheshio/bottom/black/p008_wide_curved_pants/p008_1.png',
+      '/oheshio/bottom/black/p008_wide_curved_pants/p008_2.png',
+      '/oheshio/bottom/black/p008_wide_curved_pants/p008_3.png',
+    ],
   },
   {
     id: 'p009',
@@ -70,6 +110,11 @@ export const products = [
     category: 'bottom',
     color: 'black',
     image: '/oheshio/bottom/black/p009_balloon_layered_banding/p009.png',
+    model_images: [
+      '/oheshio/bottom/black/p009_balloon_layered_banding/p009_1.png',
+      '/oheshio/bottom/black/p009_balloon_layered_banding/p009_2.png',
+      '/oheshio/bottom/black/p009_balloon_layered_banding/p009_3.png',
+    ],
   },
   {
     id: 'p010',
@@ -78,6 +123,11 @@ export const products = [
     category: 'bottom',
     color: 'black',
     image: '/oheshio/bottom/black/p010_pleated_layered_skirt/p010.png',
+    model_images: [
+      '/oheshio/bottom/black/p010_pleated_layered_skirt/p010_1.png',
+      '/oheshio/bottom/black/p010_pleated_layered_skirt/p010_2.png',
+      '/oheshio/bottom/black/p010_pleated_layered_skirt/p010_3.png',
+    ],
   },
   {
     id: 'p011',
@@ -86,6 +136,11 @@ export const products = [
     category: 'outer',
     color: 'gray',
     image: '/oheshio/outer/gray/p011_regular_blazer_jacket/p011.png',
+    model_images: [
+      '/oheshio/outer/gray/p011_regular_blazer_jacket/p011_1.png',
+      '/oheshio/outer/gray/p011_regular_blazer_jacket/p011_2.png',
+      '/oheshio/outer/gray/p011_regular_blazer_jacket/p011_3.png',
+    ],
   },
   {
     id: 'p012',
@@ -94,6 +149,11 @@ export const products = [
     category: 'bottom',
     color: 'blue',
     image: '/oheshio/bottom/blue/p012_pleats_skirt_midi_pants/p012.png',
+    model_images: [
+      '/oheshio/bottom/blue/p012_pleats_skirt_midi_pants/p012_1.png',
+      '/oheshio/bottom/blue/p012_pleats_skirt_midi_pants/p012_2.png',
+      '/oheshio/bottom/blue/p012_pleats_skirt_midi_pants/p012_3.png',
+    ],
   },
   {
     id: 'p013',
@@ -102,6 +162,11 @@ export const products = [
     category: 'bottom',
     color: 'white',
     image: '/oheshio/bottom/white/p013_ballet_wrap_mini_skirt/p013.png',
+    model_images: [
+      '/oheshio/bottom/white/p013_ballet_wrap_mini_skirt/p013_1.png',
+      '/oheshio/bottom/white/p013_ballet_wrap_mini_skirt/p013_2.png',
+      '/oheshio/bottom/white/p013_ballet_wrap_mini_skirt/p013_3.png',
+    ],
   },
   {
     id: 'p014',
@@ -110,6 +175,11 @@ export const products = [
     category: 'bottom',
     color: 'white',
     image: '/oheshio/bottom/white/p014_balloon_layered_banding_skirt/p014.png',
+    model_images: [
+      '/oheshio/bottom/white/p014_balloon_layered_banding_skirt/p014_1.png',
+      '/oheshio/bottom/white/p014_balloon_layered_banding_skirt/p014_2.png',
+      '/oheshio/bottom/white/p014_balloon_layered_banding_skirt/p014_3.png',
+    ],
   },
   {
     id: 'p015',
@@ -118,6 +188,11 @@ export const products = [
     category: 'bottom',
     color: 'white',
     image: '/oheshio/bottom/white/p015_wide_curved_pants/p015.png',
+    model_images: [
+      '/oheshio/bottom/white/p015_wide_curved_pants/p015_1.png',
+      '/oheshio/bottom/white/p015_wide_curved_pants/p015_2.png',
+      '/oheshio/bottom/white/p015_wide_curved_pants/p015_3.png',
+    ],
   },
   {
     id: 'p016',
@@ -126,6 +201,11 @@ export const products = [
     category: 'bottom',
     color: 'gray',
     image: '/oheshio/bottom/gray/p016_asymmetric_flare_skirt/p016.png',
+    model_images: [
+      '/oheshio/bottom/gray/p016_asymmetric_flare_skirt/p016_1.png',
+      '/oheshio/bottom/gray/p016_asymmetric_flare_skirt/p016_2.png',
+      '/oheshio/bottom/gray/p016_asymmetric_flare_skirt/p016_3.png',
+    ],
   },
   {
     id: 'p017',
@@ -134,6 +214,11 @@ export const products = [
     category: 'bottom',
     color: 'gray',
     image: '/oheshio/bottom/gray/p017_gray_wide_curved_pants/p017.png',
+    model_images: [
+      '/oheshio/bottom/gray/p017_gray_wide_curved_pants/p017_1.png',
+      '/oheshio/bottom/gray/p017_gray_wide_curved_pants/p017_2.png',
+      '/oheshio/bottom/gray/p017_gray_wide_curved_pants/p017_3.png',
+    ],
   },
   {
     id: 'p018',
@@ -142,6 +227,11 @@ export const products = [
     category: 'bottom',
     color: 'gray',
     image: '/oheshio/bottom/gray/p018_pleated_layered_skirt/p018.png',
+    model_images: [
+      '/oheshio/bottom/gray/p018_pleated_layered_skirt/p018_1.png',
+      '/oheshio/bottom/gray/p018_pleated_layered_skirt/p018_2.png',
+      '/oheshio/bottom/gray/p018_pleated_layered_skirt/p018_3.png',
+    ],
   },
   {
     id: 'p019',
@@ -150,6 +240,11 @@ export const products = [
     category: 'bottom',
     color: 'gray',
     image: '/oheshio/bottom/gray/p019_balloon_mini_skirt/p019.png',
+    model_images: [
+      '/oheshio/bottom/gray/p019_balloon_mini_skirt/p019_1.png',
+      '/oheshio/bottom/gray/p019_balloon_mini_skirt/p019_2.png',
+      '/oheshio/bottom/gray/p019_balloon_mini_skirt/p019_3.png',
+    ],
   },
   {
     id: 'p020',
@@ -158,6 +253,11 @@ export const products = [
     category: 'outer',
     color: 'blue',
     image: '/oheshio/outer/blue/p020_dot_two_tone_cardigan/p020.png',
+    model_images: [
+      '/oheshio/outer/blue/p020_dot_two_tone_cardigan/p020_1.png',
+      '/oheshio/outer/blue/p020_dot_two_tone_cardigan/p020_2.png',
+      '/oheshio/outer/blue/p020_dot_two_tone_cardigan/p020_3.png',
+    ],
   },
   {
     id: 'p021',
@@ -166,6 +266,11 @@ export const products = [
     category: 'top',
     color: 'blue',
     image: '/oheshio/top/blue/p021_hooded_two-way_shirt/p021.png',
+    model_images: [
+      '/oheshio/top/blue/p021_hooded_two-way_shirt/p021_1.png',
+      '/oheshio/top/blue/p021_hooded_two-way_shirt/p021_2.png',
+      '/oheshio/top/blue/p021_hooded_two-way_shirt/p021_3.png',
+    ],
   },
   {
     id: 'p022',
@@ -174,6 +279,11 @@ export const products = [
     category: 'top',
     color: 'blue',
     image: '/oheshio/top/blue/p022_spangle_sheer_knit/p022.png',
+    model_images: [
+      '/oheshio/top/blue/p022_spangle_sheer_knit/p022_1.png',
+      '/oheshio/top/blue/p022_spangle_sheer_knit/p022_2.png',
+      '/oheshio/top/blue/p022_spangle_sheer_knit/p022_3.png',
+    ],
   },
   {
     id: 'p023',
@@ -182,6 +292,11 @@ export const products = [
     category: 'top',
     color: 'blue',
     image: '/oheshio/top/blue/p023_two_tone_v-neck_knit/p023.png',
+    model_images: [
+      '/oheshio/top/blue/p023_two_tone_v-neck_knit/p023_1.png',
+      '/oheshio/top/blue/p023_two_tone_v-neck_knit/p023_2.png',
+      '/oheshio/top/blue/p023_two_tone_v-neck_knit/p023_3.png',
+    ],
   },
   {
     id: 'p024',
@@ -190,6 +305,11 @@ export const products = [
     category: 'top',
     color: 'beige',
     image: '/oheshio/top/beige/p024_two_tone_v-neck_knit2/p024.png',
+    model_images: [
+      '/oheshio/top/beige/p024_two_tone_v-neck_knit2/p024_1.png',
+      '/oheshio/top/beige/p024_two_tone_v-neck_knit2/p024_2.png',
+      '/oheshio/top/beige/p024_two_tone_v-neck_knit2/p024_3.png',
+    ],
   },
   {
     id: 'p025',
@@ -198,6 +318,11 @@ export const products = [
     category: 'top',
     color: 'black',
     image: '/oheshio/top/black/p025_dot_glitter_knit/p025.png',
+    model_images: [
+      '/oheshio/top/black/p025_dot_glitter_knit/p025_1.png',
+      '/oheshio/top/black/p025_dot_glitter_knit/p025_2.png',
+      '/oheshio/top/black/p025_dot_glitter_knit/p025_3.png',
+    ],
   },
   {
     id: 'p026',
@@ -206,6 +331,11 @@ export const products = [
     category: 'top',
     color: 'black',
     image: '/oheshio/top/black/p026_balloon_mini_dress/p026.png',
+    model_images: [
+      '/oheshio/top/black/p026_balloon_mini_dress/p026_1.png',
+      '/oheshio/top/black/p026_balloon_mini_dress/p026_2.png',
+      '/oheshio/top/black/p026_balloon_mini_dress/p026_3.png',
+    ],
   },
   {
     id: 'p027',
@@ -214,6 +344,11 @@ export const products = [
     category: 'top',
     color: 'black',
     image: '/oheshio/top/black/p027_layered_halter_dress/p027.png',
+    model_images: [
+      '/oheshio/top/black/p027_layered_halter_dress/p027_1.png',
+      '/oheshio/top/black/p027_layered_halter_dress/p027_2.png',
+      '/oheshio/top/black/p027_layered_halter_dress/p027_3.png',
+    ],
   },
   {
     id: 'p028',
@@ -222,6 +357,11 @@ export const products = [
     category: 'top',
     color: 'black',
     image: '/oheshio/top/black/p028_logo_slim_t-shirt/p028.png',
+    model_images: [
+      '/oheshio/top/black/p028_logo_slim_t-shirt/p028_1.png',
+      '/oheshio/top/black/p028_logo_slim_t-shirt/p028_2.png',
+      '/oheshio/top/black/p028_logo_slim_t-shirt/p028_3.png',
+    ],
   },
   {
     id: 'p029',
@@ -230,6 +370,11 @@ export const products = [
     category: 'top',
     color: 'gray',
     image: '/oheshio/top/gray/p029_dot_glitter_knit/p029.png',
+    model_images: [
+      '/oheshio/top/gray/p029_dot_glitter_knit/p029_1.png',
+      '/oheshio/top/gray/p029_dot_glitter_knit/p029_2.png',
+      '/oheshio/top/gray/p029_dot_glitter_knit/p029_3.png',
+    ],
   },
   {
     id: 'p030',
@@ -238,6 +383,11 @@ export const products = [
     category: 'top',
     color: 'gray',
     image: '/oheshio/top/gray/p030_dot_sheer_long_sleeve_top/p030.png',
+    model_images: [
+      '/oheshio/top/gray/p030_dot_sheer_long_sleeve_top/p030_1.png',
+      '/oheshio/top/gray/p030_dot_sheer_long_sleeve_top/p030_2.png',
+      '/oheshio/top/gray/p030_dot_sheer_long_sleeve_top/p030_3.png',
+    ],
   },
   {
     id: 'p031',
@@ -246,6 +396,11 @@ export const products = [
     category: 'top',
     color: 'gray',
     image: '/oheshio/top/gray/p031_frill_pocket_blouse/p031.png',
+    model_images: [
+      '/oheshio/top/gray/p031_frill_pocket_blouse/p031_1.png',
+      '/oheshio/top/gray/p031_frill_pocket_blouse/p031_2.png',
+      '/oheshio/top/gray/p031_frill_pocket_blouse/p031_3.png',
+    ],
   },
   {
     id: 'p032',
@@ -254,6 +409,11 @@ export const products = [
     category: 'top',
     color: 'gray',
     image: '/oheshio/top/gray/p032_layered_halter_dress/p032.png',
+    model_images: [
+      '/oheshio/top/gray/p032_layered_halter_dress/p032_1.png',
+      '/oheshio/top/gray/p032_layered_halter_dress/p032_2.png',
+      '/oheshio/top/gray/p032_layered_halter_dress/p032_3.png',
+    ],
   },
   {
     id: 'p033',
@@ -262,6 +422,11 @@ export const products = [
     category: 'top',
     color: 'gray',
     image: '/oheshio/top/gray/p033_layered_halter_sleeveless/p033.png',
+    model_images: [
+      '/oheshio/top/gray/p033_layered_halter_sleeveless/p033_1.png',
+      '/oheshio/top/gray/p033_layered_halter_sleeveless/p033_2.png',
+      '/oheshio/top/gray/p033_layered_halter_sleeveless/p033_3.png',
+    ],
   },
   {
     id: 'p034',
@@ -270,6 +435,11 @@ export const products = [
     category: 'top',
     color: 'gray',
     image: '/oheshio/top/gray/p034_layered_halter_sleeveless_lightgray/p034.png',
+    model_images: [
+      '/oheshio/top/gray/p034_layered_halter_sleeveless_lightgray/p034_1.png',
+      '/oheshio/top/gray/p034_layered_halter_sleeveless_lightgray/p034_2.png',
+      '/oheshio/top/gray/p034_layered_halter_sleeveless_lightgray/p034_3.png',
+    ],
   },
   {
     id: 'p035',
@@ -278,6 +448,11 @@ export const products = [
     category: 'top',
     color: 'white',
     image: '/oheshio/top/white/p035_frill_pocket_blouse/p035.png',
+    model_images: [
+      '/oheshio/top/white/p035_frill_pocket_blouse/p035_1.png',
+      '/oheshio/top/white/p035_frill_pocket_blouse/p035_2.png',
+      '/oheshio/top/white/p035_frill_pocket_blouse/p035_3.png',
+    ],
   },
   {
     id: 'p036',
@@ -286,6 +461,11 @@ export const products = [
     category: 'top',
     color: 'white',
     image: '/oheshio/top/white/p036_hooded_two-way_shirt/p036.png',
+    model_images: [
+      '/oheshio/top/white/p036_hooded_two-way_shirt/p036_1.png',
+      '/oheshio/top/white/p036_hooded_two-way_shirt/p036_2.png',
+      '/oheshio/top/white/p036_hooded_two-way_shirt/p036_3.png',
+    ],
   },
   {
     id: 'p037',
@@ -294,6 +474,11 @@ export const products = [
     category: 'top',
     color: 'white',
     image: '/oheshio/top/white/p037_lace_long_sleeve_top/p037.png',
+    model_images: [
+      '/oheshio/top/white/p037_lace_long_sleeve_top/p037_1.png',
+      '/oheshio/top/white/p037_lace_long_sleeve_top/p037_2.png',
+      '/oheshio/top/white/p037_lace_long_sleeve_top/p037_3.png',
+    ],
   },
   {
     id: 'p038',
@@ -302,6 +487,11 @@ export const products = [
     category: 'top',
     color: 'white',
     image: '/oheshio/top/white/p038_spangle_sheer_knit/p038.png',
+    model_images: [
+      '/oheshio/top/white/p038_spangle_sheer_knit/p038_1.png',
+      '/oheshio/top/white/p038_spangle_sheer_knit/p038_2.png',
+      '/oheshio/top/white/p038_spangle_sheer_knit/p038_3.png',
+    ],
   },
   {
     id: 'p039',
@@ -310,6 +500,11 @@ export const products = [
     category: 'top',
     color: 'white',
     image: '/oheshio/top/white/p039_pocket_over-fit_shirt/p039.png',
+    model_images: [
+      '/oheshio/top/white/p039_pocket_over-fit_shirt/p039_1.png',
+      '/oheshio/top/white/p039_pocket_over-fit_shirt/p039_2.png',
+      '/oheshio/top/white/p039_pocket_over-fit_shirt/p039_3.png',
+    ],
   },
   {
     id: 'p040',
@@ -318,14 +513,24 @@ export const products = [
     category: 'top',
     color: 'white',
     image: '/oheshio/top/white/p040_pocket_over-fit_shirtstripe/p040.png',
+    model_images: [
+      '/oheshio/top/white/p040_pocket_over-fit_shirtstripe/p040_1.png',
+      '/oheshio/top/white/p040_pocket_over-fit_shirtstripe/p040_2.png',
+      '/oheshio/top/white/p040_pocket_over-fit_shirtstripe/p040_3.png',
+    ],
   },
   {
     id: 'p041',
-    name: 'POCKET OVER-FIT SHIRTSTRIPE',
+    name: 'BALLOON MINI DRESS',
     price: 158000,
     category: 'top',
     color: 'white',
     image: '/oheshio/top/white/p041_balloon_mini_dress/p041.png',
+    model_images: [
+      '/oheshio/top/white/p041_balloon_mini_dress/p041_1.png',
+      '/oheshio/top/white/p041_balloon_mini_dress/p041_2.png',
+      '/oheshio/top/white/p041_balloon_mini_dress/p041_3.png',
+    ],
   },
   {
     id: 'p042',
@@ -334,21 +539,36 @@ export const products = [
     category: 'top',
     color: 'white',
     image: '/oheshio/top/white/p042_dot_bug_patchy_t-shirt/p042.png',
+    model_images: [
+      '/oheshio/top/white/p042_dot_bug_patchy_t-shirt/p042_1.png',
+      '/oheshio/top/white/p042_dot_bug_patchy_t-shirt/p042_2.png',
+      '/oheshio/top/white/p042_dot_bug_patchy_t-shirt/p042_3.png',
+    ],
   },
   {
     id: 'p043',
-    name: 'LAYERED HALTER SLEEVELESS',
+    name: 'LAYERED HALTER DRESS',
     price: 49000,
     category: 'top',
     color: 'white',
     image: '/oheshio/top/white/p043_layered_halter_dress/p043.png',
+    model_images: [
+      '/oheshio/top/white/p043_layered_halter_dress/p043_1.png',
+      '/oheshio/top/white/p043_layered_halter_dress/p043_2.png',
+      '/oheshio/top/white/p043_layered_halter_dress/p043_3.png',
+    ],
   },
   {
     id: 'p044',
-    name: 'LAYERED HALTER SLEEVELESS',
+    name: 'LOGO SLIM T-SHIRT',
     price: 53000,
     category: 'top',
     color: 'white',
     image: '/oheshio/top/white/p044_logo_slim_t-shirt/p044.png',
+    model_images: [
+      '/oheshio/top/white/p044_logo_slim_t-shirt/p044_1.png',
+      '/oheshio/top/white/p044_logo_slim_t-shirt/p044_2.png',
+      '/oheshio/top/white/p044_logo_slim_t-shirt/p044_3.png',
+    ],
   },
 ];
