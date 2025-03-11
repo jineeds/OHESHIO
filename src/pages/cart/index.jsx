@@ -10,8 +10,7 @@ const Cart = () => {
 
   return (
     <>
-      <header className="h-[72px] bg-gray-200">header</header>
-      <div className="container !max-w-[1556px] pt-20 flex flex-col xl:flex-row gap-10 text-gray-800">
+      <div className="container !max-w-[1536px] pt-20 flex flex-col xl:flex-row gap-10 text-gray-800">
         <div className="basis-3/4">
           <CartHeader />
           {cartItems.length > 0 ? (
@@ -19,7 +18,7 @@ const Cart = () => {
               <CartItem key={item.id} id={item.id} isLast={index === cartItems.length - 1} />
             ))
           ) : (
-            <div className="p-20 text-center text-gray-500">
+            <div className="py-20 text-center text-gray-500">
               <p>There is nothing in your bag.</p>
               <Link to={'/'} className="block mt-3 underline underline-offset-2">
                 return to shop
@@ -27,8 +26,9 @@ const Cart = () => {
             </div>
           )}
         </div>
+
         <div className="basis-1/4">
-          <div className="xl:sticky xl:top-[152px]">
+          <div className="xl:sticky xl:top-[80px]">
             <OrderSummary subtotal={subtotal} shipping={shipping} discount={discount} total={total} />
           </div>
         </div>

@@ -54,32 +54,19 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    // 상품 수량 증가
-    increaseQuantity: (state, action) => {
-      const id = action.payload;
+    // 상품 수량 설정
+    setQuantity: (state, action) => {
+      const { id, quantity } = action.payload;
       const existingItem = state.items.find((item) => item.id === id);
 
       if (existingItem) {
-        existingItem.quantity++;
-        state.totalQuantity++;
-
-        state.subtotal = state.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-        state.total = state.subtotal + state.shipping - state.discount;
-      }
-    },
-
-    // 상품 수량 감소
-    decreaseQuantity: (state, action) => {
-      const id = action.payload;
-      const existingItem = state.items.find((item) => item.id === id);
-
-      if (existingItem) {
-        if (existingItem.quantity > 1) {
-          existingItem.quantity--;
-          state.totalQuantity--;
-        } else {
+        if (quantity <= 0) {
+          state.totalQuantity -= existingItem.quantity;
           state.items = state.items.filter((item) => item.id !== id);
-          state.totalQuantity--;
+        } else {
+          state.totalQuantity = state.totalQuantity - existingItem.quantity + quantity;
+
+          existingItem.quantity = quantity;
         }
 
         state.subtotal = state.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
