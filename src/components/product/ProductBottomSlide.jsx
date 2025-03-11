@@ -54,22 +54,21 @@ const ProductBottomSlide = ({ products }) => {
 
   return (
     <ProductBottomSlideContainer>
-      <div className={`slide_inner w-[400vw] flex ${isPaused ? 'paused' : ''}`} onMouseOut={handleMouseOut}>
+      <div
+        className={`slide_inner w-[800vw] md:w-[400vw] mt-20 flex ${isPaused ? 'paused' : ''}`}
+        onMouseOut={handleMouseOut}
+      >
         {selectedProducts.map((product, index) => {
           const displayImageUrl = getImageForProduct(product);
 
           return (
             <div
               key={`${product.id}-${index}`}
-              className='slide_img_1 w-[16.66%] m-0 relative z-10 '
+              className='slide_img_1 w-[26.66%] m-0 relative z-10 '
               onMouseOver={() => handleMouseOver(product.id)}
               onClick={(e) => onGo(product.id, e)}
             >
-              <a
-                href={`#/product/${product.id}`}
-                className='-ml-10'
-                style={{ width: '100%', height: '100%', display: 'block' }}
-              >
+              <a href={`#/product/${product.id}`} style={{ width: '100%', height: '100%', display: 'block' }}>
                 <div
                   style={{
                     width: '100%',
