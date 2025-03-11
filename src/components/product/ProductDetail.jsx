@@ -5,6 +5,7 @@ import { products } from '../../assets/data/products';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { authActions } from '../../store/modules/authSlice';
+import ProductSizing from './ProductSizing';
 const ProductDetail = ({ product, commonDetails }) => {
   const { id, name, category, price, color, image, model_images } = product;
   const { description, material, care, size_info, model_info } = commonDetails;
@@ -12,6 +13,7 @@ const ProductDetail = ({ product, commonDetails }) => {
   const [selectedSize, setSelectedSize] = useState(false);
   const [size, setSize] = useState('');
   const [colorsProduct, setColorsProduct] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -209,7 +211,13 @@ const ProductDetail = ({ product, commonDetails }) => {
           )}
         </div>
         <div className='sizing_chart_toggle text-gray-700'>
-          <span className='sizing_toggle_description'>sizing chart</span>
+          <>
+            <button onClick={() => setIsModalOpen(true)} className='sizing_toggle_description'>
+              sizing chart +
+            </button>
+
+            <ProductSizing isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} category={category} name={name} />
+          </>
         </div>
         <div className='text-gray-700'>
           <span>styled with ↓</span>

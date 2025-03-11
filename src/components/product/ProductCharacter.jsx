@@ -53,24 +53,6 @@ const ProductCharacter = ({ product, commonDetails }) => {
   const images = model_images;
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const handleMouseLeave = (e) => {
-    const container = e.currentTarget;
-
-    // 마커 먼저 사라지기
-    const marker = container.querySelector('.animation-marker');
-    marker.style.opacity = 0;
-    marker.style.transitionDelay = '0ms';
-
-    // 두 번째 라인 사라지기
-    const line2 = container.querySelector('.animation-line-02 span');
-    line2.style.transform = 'scaleX(0)';
-    line2.style.transitionDelay = '100ms';
-
-    // 첫 번째 라인 사라지기
-    const line1 = container.querySelector('.animation-line-01 span');
-    line1.style.transform = 'scaleX(0)';
-    line1.style.transitionDelay = '600ms';
-  };
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
@@ -79,7 +61,7 @@ const ProductCharacter = ({ product, commonDetails }) => {
   }, []);
 
   return (
-    <div className='w-[60%] ml-[5%] min-h-[80vh] flex items-center pl-5 justify-center flex-wrap'>
+    <div className='w-[60%] ml-[5%] min-h-[80vh] flex items-center  justify-center flex-wrap '>
       <div
         className=' top_character_img group select-none'
         onMouseEnter={() => {
@@ -109,12 +91,12 @@ const ProductCharacter = ({ product, commonDetails }) => {
           </div>
         </div>
 
-        <div className='flex flex-col gap-20'>
-          <div className='w-full max-h-screen  relative'>
-            <img src={images[currentIndex]} className='w-full h-full mt-[-150px] ' alt={name} />
+        <div className='flex flex-col'>
+          <div className='w-full relative'>
+            <img src={images[currentIndex]} className='w-full h-full mt-[-150px]' alt={name} />
           </div>
           <div className='w-full max-h-screen '>
-            <img src={image} className='w-full h-full ' alt={name} />
+            <img src={image} className='w-full h-full' alt={name} />
           </div>
         </div>
       </div>
