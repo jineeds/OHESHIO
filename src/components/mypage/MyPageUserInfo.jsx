@@ -104,7 +104,7 @@ const MyPageUserInfo = ({ userInfo }) => {
                 <BsPersonGear size={32} />
               </div>
               <div className="flex flex-col items-start">
-                <h3 className="text-lg font-semibold cursor-pointer" onClick={() => openModal('profile')}>
+                <h3 className="text-lg font-semibold cursor-pointer font-korean" onClick={() => openModal('profile')}>
                   {userData.name}
                 </h3>
                 <p className="text-gray-500 text-sm cursor-pointer" onClick={() => openModal('profile')}>
@@ -115,7 +115,7 @@ const MyPageUserInfo = ({ userInfo }) => {
             <Buttons
               size="small"
               state="default"
-              className="w-[80px] h-[32px] px-4 text-sm"
+              className="w-[80px] h-[32px] px-4 text-sm font-korean"
               onClick={() => openModal('profile')}
             >
               수정
@@ -124,9 +124,9 @@ const MyPageUserInfo = ({ userInfo }) => {
 
           <div className="bg-[#F1F5F9] rounded-lg shadow-md p-6 flex flex-col gap-4">
             <div className="flex justify-between items-center">
-              <span className="text-gray-500 text-sm">비밀번호</span>
+              <span className="text-gray-500 text-sm font-korean">비밀번호</span>
               <div className="flex items-center gap-2">
-                <p className="text-gray-500 text-sm">
+                <p className="text-gray-500 text-sm font-korean">
                   {userData.password.length >= 2
                     ? userData.password.slice(0, 2) + '*'.repeat(userData.password.length - 2)
                     : '*'.repeat(userData.password.length)}
@@ -134,7 +134,7 @@ const MyPageUserInfo = ({ userInfo }) => {
                 <Buttons
                   size="small"
                   state="default"
-                  className="w-[80px] h-[32px] px-4 text-sm"
+                  className="w-[80px] h-[32px] px-4 text-sm font-korean"
                   onClick={() => openModal('password')}
                 >
                   변경
@@ -142,13 +142,13 @@ const MyPageUserInfo = ({ userInfo }) => {
               </div>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-gray-500 text-sm">배송지</span>
+              <span className="text-gray-500 text-sm font-korean">배송지</span>
               <div className="flex items-center gap-2">
-                <p className="text-gray-500 text-sm">{userData.address.address}</p>
+                <p className="text-gray-500 text-sm font-korean">{userData.address.address}</p>
                 <Buttons
                   size="small"
                   state="default"
-                  className="w-[80px] h-[32px] px-4 text-sm"
+                  className="w-[80px] h-[32px] px-4 text-sm font-korean"
                   onClick={() => openModal('address')}
                 >
                   관리
@@ -157,11 +157,11 @@ const MyPageUserInfo = ({ userInfo }) => {
             </div>
           </div>
 
-          <div className="flex justify-center gap-4 mt-6 flex-wrap">
-            <Buttons size="medium" state="default" onClick={handleLogout}>
+          <div className="flex justify-center gap-4 mt-6 flex-wrap ">
+            <Buttons size="medium" state="default" onClick={handleLogout} className="font-korean">
               로그아웃
             </Buttons>
-            <Buttons size="medium" state="danger" onClick={onDel}>
+            <Buttons size="medium" state="danger" onClick={onDel} className="font-korean">
               회원탈퇴
             </Buttons>
           </div>
