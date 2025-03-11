@@ -1,12 +1,11 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../store/modules/authSlice';
 import { cartActions } from '../../store/modules/cartSlice';
 import Buttons from '../../ui/Buttons';
-
-const MyPageRecentViewed = ({ recentlyViewed }) => {
+import { showToast } from '/src/ui/toast/showToast';
+const MyPageRecentViewed = ({ recentlyViewed, wishlist }) => {
   const dispatch = useDispatch();
-
   const removeRecentlyViewed = (itemId) => {
     dispatch(authActions.removeRecentlyViewed(itemId));
   };
@@ -25,7 +24,14 @@ const MyPageRecentViewed = ({ recentlyViewed }) => {
   };
 
   const addWishlist = (item) => {
-    dispatch(authActions.addWishlist(item));
+    const isAlreadyInWishlist = wishlist.some((wishItem) => wishItem.id === item.id);
+
+    if (isAlreadyInWishlist) {
+      showToast('centerInfo', { message: `${item.name}은 이미 위시리스트에 있습니다.` });
+    } else {
+      dispatch(authActions.addWishlist(item));
+      showToast('centerSuccess', { message: `${item.name}을 위시리스트에 담았습니다.` });
+    }
   };
 
   return (
