@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ProductContain = styled.div`
-  padding: 14.5px 0 20px;
+  padding: 101px 0 20px;
   width: 100%;
   margin: 0 auto;
   position: relative;
@@ -13,8 +13,8 @@ export const ProductContain = styled.div`
 
   .product_detail_contain {
     div {
-      margin-top: 20px;
-      margin-bottom: 20px;
+      margin-top: 10px;
+      margin-bottom: 10px;
     }
     .detail_small_img {
       display: block;
@@ -38,13 +38,13 @@ export const ProductContain = styled.div`
   }
   .product_details_toggle {
     span:after {
-      content: "+";
+      content: '+';
       display: inline;
       padding-left: 5px;
     }
     &.clicked {
       span:after {
-        content: "-";
+        content: '-';
         display: inline;
         padding-left: 5px;
       }
@@ -53,7 +53,7 @@ export const ProductContain = styled.div`
 
   .sizing_chart_toggle {
     span:after {
-      content: "+";
+      content: '+';
       display: inline;
       padding-left: 5px;
     }

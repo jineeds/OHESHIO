@@ -15,6 +15,7 @@ const initialState = {
       orders: [],
       reviews: [],
       points: 1000,
+      ohcoin: 1000000,
       coupons: [
         {
           id: 1,
@@ -91,6 +92,7 @@ export const authSlice = createSlice({
         orders: [],
         reviews: [],
         points: 1000,
+        ohcoin: 1000000,
         coupons: [
           {
             id: 1,
@@ -236,6 +238,7 @@ export const authSlice = createSlice({
             },
           ],
           points: 1000,
+          ohcoin: 1000000,
           createdAt: new Date().toISOString(),
         };
 
