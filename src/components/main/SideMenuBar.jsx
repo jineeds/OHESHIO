@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { authActions } from '../../store/modules/authSlice';
-import { showToast } from '/src/ui/toast/showToast';
 
-// SideMenuBar 컴포넌트를 수정하여 addRecentlyViewedItem 함수를 외부로 노출합니다
-const SideMenuBar = ({ setIsChatOpen, onAddRecentItem }) => {
+const SideMenuBar = ({ setIsChatOpen }) => {
     const [isVisible, setIsVisible] = useState(false);
     const [isHistoryOpen, setIsHistoryOpen] = useState(false);
     const dispatch = useDispatch();
@@ -13,21 +11,14 @@ const SideMenuBar = ({ setIsChatOpen, onAddRecentItem }) => {
 
     // Redux store에서 현재 사용자 정보 가져오기 (authR 리듀서 사용)
     const currentUser = useSelector((state) => state.authR.currentUser);
-
-    // 빈 배열로 초기화 - main 페이지에서 제품을 클릭해야만 항목이 추가됨
     const [recentlyViewed, setRecentlyViewed] = useState([]);
     const [recentCategories, setRecentCategories] = useState([]);
 
-    // 첫 마운트 시 currentUser의 recentlyViewed 데이터 가져오기
+    // 컴포넌트가 마운트될 때와 currentUser가 변경될 때 최근 본 상품/카테고리 상태 업데이트
     useEffect(() => {
         if (currentUser) {
-            // 카테고리 데이터 설정
+            setRecentlyViewed(currentUser.recentlyViewed || []);
             setRecentCategories(currentUser.recentCategories || []);
-
-            // 최근 본 상품 데이터 설정 (변경: 초기화하지 않고 가져옴)
-            if (currentUser.recentlyViewed && currentUser.recentlyViewed.length > 0) {
-                setRecentlyViewed(currentUser.recentlyViewed);
-            }
         }
     }, [currentUser]);
 
@@ -57,37 +48,13 @@ const SideMenuBar = ({ setIsChatOpen, onAddRecentItem }) => {
         setIsHistoryOpen(!isHistoryOpen);
     };
 
-    // 최근 본 상품 추가 (제품 페이지에서 호출)
-    const addRecentlyViewedItem = (product) => {
-        if (!product) return;
-
-        // 이미 있는 경우 제외하고 최신 항목을 앞에 추가
-        const updatedItems = [product, ...recentlyViewed.filter((item) => item.id !== product.id)];
-
-        setRecentlyViewed(updatedItems);
-
-        // Redux 액션 디스패치 (필요한 경우)
-        if (currentUser) {
-            dispatch(authActions.addRecentlyViewed(product));
-        }
-    };
-
-    // 외부에서 전달된 onAddRecentItem prop이 있으면 addRecentlyViewedItem 함수 연결
-    useEffect(() => {
-        if (onAddRecentItem) {
-            onAddRecentItem(addRecentlyViewedItem);
-        }
-    }, [onAddRecentItem]);
-
     // 최근 본 상품 제거
     const handleRemoveItem = (itemId) => {
         const updatedItems = recentlyViewed.filter((item) => item.id !== itemId);
         setRecentlyViewed(updatedItems);
 
         // Redux 액션 디스패치
-        if (currentUser) {
-            dispatch(authActions.removeRecentlyViewed(itemId));
-        }
+        dispatch(authActions.removeRecentlyViewed(itemId));
     };
 
     // 최근 본 카테고리 제거
@@ -96,41 +63,52 @@ const SideMenuBar = ({ setIsChatOpen, onAddRecentItem }) => {
         setRecentCategories(updatedCategories);
 
         // Redux 액션 디스패치
-        if (currentUser) {
-            dispatch(authActions.removeRecentCategory(categoryId));
-        }
+        dispatch(authActions.removeRecentCategory(categoryId));
     };
 
     // 최근 본 상품 전체 삭제
     const clearAllRecentlyViewed = () => {
-        // 로컬 상태 업데이트
+        // 로컬 상태 즉시 업데이트하여 UI에서 모든 항목 제거
         setRecentlyViewed([]);
 
         if (currentUser) {
             try {
+                // Redux 액션 디스패치 (My Page History 포함 모든 곳에서 상태 업데이트)
+                dispatch(authActions.clearAllRecentlyViewed());
+
                 // users 배열에서 현재 사용자 찾기
                 const users = JSON.parse(localStorage.getItem('users') || '[]');
                 const userIndex = users.findIndex((user) => user.id === currentUser.id);
 
                 if (userIndex !== -1) {
-                    // 해당 사용자의 recentlyViewed 배열 비우기
+                    // 해당 사용자의 recentlyViewed 배열을 완전히 비우기
                     users[userIndex].recentlyViewed = [];
 
-                    // 현재 사용자 객체 복사 및 업데이트
+                    // 현재 사용자 객체 업데이트
                     const updatedCurrentUser = {
                         ...currentUser,
                         recentlyViewed: [],
                     };
 
-                    // localStorage 업데이트
+                    // localStorage 완전히 업데이트
                     localStorage.setItem('users', JSON.stringify(users));
                     localStorage.setItem('currentUser', JSON.stringify(updatedCurrentUser));
-                }
 
-                // 성공 메시지 표시 (초기 로드 시에는 메시지 표시 안함)
+                    // 다른 컴포넌트들에 변경 사항 알리기 위한 이벤트 발생
+                    const historyUpdateEvent = new CustomEvent('historyUpdated', {
+                        detail: { userId: currentUser.id, clearedAll: true },
+                    });
+                    window.dispatchEvent(historyUpdateEvent);
+
+                    // 강제로 컴포넌트 상태 재설정 (추가된 안전장치)
+                    setTimeout(() => {
+                        setRecentlyViewed([]);
+                    }, 0);
+                }
             } catch (error) {
                 console.error('Error clearing recently viewed items:', error);
-                showToast('error', { message: '삭제 중 오류가 발생했습니다.' });
+                // 에러가 발생해도 UI는 비워진 상태 유지
+                setRecentlyViewed([]);
             }
         }
     };
@@ -190,25 +168,27 @@ const SideMenuBar = ({ setIsChatOpen, onAddRecentItem }) => {
                     </svg>
                 </button>
 
-                {/* Instagram - 수정된 부분: button 태그를 a 태그로 변경 */}
-                <a
-                    href='https://www.instagram.com/oheshio/'
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className='w-12 h-12 bg-[#F1F5F9] rounded-full flex justify-center items-center hover:bg-white transition-colors duration-200 cursor-pointer'
-                >
-                    <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        className='h-6 w-6'
-                        fill='none'
-                        viewBox='0 0 24 24'
-                        stroke='#64748B'
+                {/* Instagram */}
+                <button>
+                    <a
+                        href='https://www.instagram.com/oheshio/'
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className='w-12 h-12 bg-[#F1F5F9] rounded-full flex justify-center items-center hover:bg-white transition-colors duration-200 cursor-pointer'
                     >
-                        <rect x='2' y='2' width='20' height='20' rx='5' strokeWidth={2} />
-                        <circle cx='12' cy='12' r='4' strokeWidth={2} />
-                        <circle cx='18' cy='6' r='1' strokeWidth={2} fill='#64748B' />
-                    </svg>
-                </a>
+                        <svg
+                            xmlns='http://www.w3.org/2000/svg'
+                            className='h-6 w-6'
+                            fill='none'
+                            viewBox='0 0 24 24'
+                            stroke='#64748B'
+                        >
+                            <rect x='2' y='2' width='20' height='20' rx='5' strokeWidth={2} />
+                            <circle cx='12' cy='12' r='4' strokeWidth={2} />
+                            <circle cx='18' cy='6' r='1' strokeWidth={2} fill='#64748B' />
+                        </svg>
+                    </a>
+                </button>
 
                 {/* Clock / History - 히스토리 토글 기능 추가 */}
                 <button
