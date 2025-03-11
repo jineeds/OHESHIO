@@ -1,7 +1,7 @@
 import React from 'react';
 
 const MyPageNavigation = ({ activeTab, setActiveTab }) => {
-  const tabs = ['홈', '주문내역', '쿠폰/적립금', '관심상품', '최근 본 상품', '회원정보'];
+  const tabs = ['Home', 'Order', 'Coupon', 'Wishlist', 'History', 'Info'];
 
   return (
     <div className="w-full">

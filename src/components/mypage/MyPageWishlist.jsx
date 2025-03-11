@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import Buttons from '../../ui/Buttons';
 import { authActions } from '../../store/modules/authSlice';
 import { cartActions } from '../../store/modules/cartSlice';
+import { IoIosClose } from 'react-icons/io';
 
 const MyPageWishlist = ({ wishlist }) => {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ const MyPageWishlist = ({ wishlist }) => {
         <div className="w-full max-w-[1100px] mx-auto">
           {wishlist.length === 0 ? (
             <div className="text-center py-10">
-              <p className="text-gray-500">위시리스트에 상품이 없습니다.</p>
+              <p className="text-gray-500 font-korean">위시리스트에 상품이 없습니다.</p>
             </div>
           ) : (
             <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-5 mx-auto">
@@ -45,7 +46,7 @@ const MyPageWishlist = ({ wishlist }) => {
                     <div className="flex justify-between items-start">
                       <h3 className="text-lg font-semibold text-left">{item.name.toUpperCase()}</h3>
                       <button className="text-gray-600 text-xl" onClick={() => removeWishlist(item.id)}>
-                        ×
+                        <IoIosClose />
                       </button>
                     </div>
 
@@ -55,7 +56,7 @@ const MyPageWishlist = ({ wishlist }) => {
                       <p className="text-gray-900 font-semibold mt-2">{item.price}</p>
                     </div>
 
-                    <div className="flex justify-end gap-4">
+                    <div className="flex justify-end gap-2 mt-5">
                       <Buttons
                         size="small"
                         state="default"
