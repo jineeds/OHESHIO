@@ -68,7 +68,7 @@ const youtubeStyles = `
   }
 `;
 
-function App() {
+function Main() {
     // Redux에서 제품 정보와 commonDetails 가져오기
     const { products, filteredProducts, commonDetails, selectedColor } = useSelector((state) => state.productR);
     const dispatch = useDispatch();
@@ -129,10 +129,43 @@ function App() {
             );
         }
     };
-    // 카테고리 필터링 함수
+
+    // 카테고리 필터링 함수 - 최근 본 카테고리에 추가하는 기능 추가
     const filterByCategory = (category) => {
+        // 카테고리 필터링 액션 디스패치
         dispatch(productsActions.filterByCategory(category));
+
+        // 로그인한 사용자만 최근 본 카테고리에 추가
+        if (authed) {
+            // 카테고리 정보 객체 생성
+            const categoryInfo = {
+                id: category, // 카테고리 ID
+                name: getCategoryName(category), // 카테고리 이름 함수 호출
+            };
+
+            // 최근 본 카테고리에 추가하는 액션 디스패치
+            dispatch(authActions.addRecentCategory(categoryInfo));
+        }
+
         setIsMenuVisible(false); // 필터 선택 후 메뉴 닫기
+    };
+
+    // 카테고리 ID에 따른 이름 반환 함수
+    const getCategoryName = (categoryId) => {
+        switch (categoryId) {
+            case 'all':
+                return 'all';
+            case 'outer':
+                return 'outer';
+            case 'top':
+                return 'tops';
+            case 'bottom':
+                return 'bottoms';
+            case 'acc':
+                return 'acc';
+            default:
+                return categoryId; // 기본값으로 ID 그대로 반환
+        }
     };
 
     // 색상 필터링 함수
@@ -500,4 +533,4 @@ function App() {
     );
 }
 
-export default App;
+export default Main;
