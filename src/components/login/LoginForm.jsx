@@ -2,35 +2,62 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import SocialLoginButtons from './SocialLoginButtons';
 import { useDispatch, useSelector } from 'react-redux';
-import { authActins } from '../../store/modules/authSlice';
+import { authActions } from '../../store/modules/authSlice';
 import Checkbox from '../../ui/Checkbox';
 import InputCustom from '../../ui/InputCustom';
 import Buttons from '../../ui/Buttons';
+import { cartActions } from '../../store/modules/cartSlice';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const inputRefId = useRef();
   const inputRefPw = useRef();
-  const { error, authed } = useSelector((state) => state.authR);
+  const { error, authed, currentUser } = useSelector((state) => state.authR);
 
   const [loginData, setLoginData] = useState({
     userId: '',
     password: '',
   });
   const [rememberMe, setRememberMe] = useState(false);
-  const [formError, setFormError] = useState('');
-  const [isFormValid, setIsFormValid] = useState(false);
 
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [validFields, setValidFields] = useState({
+    userId: false,
+    password: false,
+    confirmPassword: false,
+    phone: false,
+  });
+  const [errors, setErrors] = useState({
+    userId: '',
+    password: '',
+    confirmPassword: '',
+    email: '',
+    phone: '',
+    verificationCode: '',
+  });
   useEffect(() => {
     const isValid = loginData.userId.trim() !== '' && loginData.password.trim() !== '';
     setIsFormValid(isValid);
   }, [loginData]);
+
   useEffect(() => {
     if (authed) {
+      if (currentUser && currentUser.cart && currentUser.cart.length > 0) {
+        const cartItems = currentUser.cart.map((item) => ({
+          id: item.productId,
+          name: item.name,
+          color: item.color || 'DEFAULT',
+          price: item.price,
+          quantity: item.quantity,
+          image: item.image,
+        }));
+
+        dispatch(cartActions.replaceCart(cartItems));
+      }
       navigate('/');
     }
-  }, [authed, navigate]);
+  }, [authed]);
 
   useEffect(() => {
     const savedId = localStorage.getItem('rememberedId');
@@ -43,26 +70,28 @@ const LoginForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setLoginData((prev) => ({ ...prev, [name]: value }));
-    setFormError('');
-    if (error) dispatch(authActins.clearError());
+    setErrors((prev) => ({ ...prev, [name]: '' }));
+    if (error) dispatch(authActions.clearError());
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!loginData.userId.trim()) {
-      setFormError('아이디를 입력해주세요.');
+      setErrors((prev) => ({ ...prev, userId: '아이디를입력해주세요' }));
+      setValidFields((prev) => ({ ...prev, userId: false }));
       inputRefId.current?.focus();
       return;
     }
     if (!loginData.password.trim()) {
-      setFormError('비밀번호를 입력해주세요.');
+      setErrors((prev) => ({ ...prev, password: '비밀번호를 입력해주세요.' }));
+      setValidFields((prev) => ({ ...prev, password: false }));
       inputRefPw.current?.focus();
       return;
     }
 
     dispatch(
-      authActins.login({
+      authActions.login({
         userId: loginData.userId,
         password: loginData.password,
         rememberMe,
@@ -83,15 +112,9 @@ const LoginForm = () => {
         <div className='w-full max-w-lg transition-all duration-300'>
           <div className='text-center mb-8 flex items-center justify-center transition-all duration-300'>
             <h1 className='w-64 transition-all duration-300'>
-              <img src='/images/logo.png' className='object-cover transition-opacity duration-300' alt='로고' />
+              <img src='/images/logo.svg' className='object-cover transition-opacity duration-300' alt='로고' />
             </h1>
           </div>
-
-          {(error || formError) && (
-            <div className='bg-red-100 border font-korean border-red-400 text-red-700 px-4 py-3 rounded mb-4 transition-all duration-300'>
-              {formError || error}
-            </div>
-          )}
 
           <form
             onSubmit={handleSubmit}
@@ -107,6 +130,8 @@ const LoginForm = () => {
                 onChange={handleChange}
                 placeholder='ID'
                 className='font-korean'
+                error={error}
+                success={validFields.userId}
               />
             </div>
 
@@ -119,8 +144,10 @@ const LoginForm = () => {
                 onChange={handleChange}
                 placeholder='비밀번호'
                 className='font-korean'
+                error={error}
+                success={validFields.password}
               />
-              <p className='text-xs font-korean select-none text-gray-600 text-right -mt-2 mb-4'>
+              <p className='text-xs font-korean select-none py-2 text-gray-600 text-right '>
                 영어 대/소문자 6-10, 특수문자 조합
               </p>
             </div>
@@ -144,7 +171,7 @@ const LoginForm = () => {
               </div>
             </div>
 
-            <Buttons className='w-full mb-4' state={isFormValid ? 'active' : 'disabled'}>
+            <Buttons type='submit' className='w-full mb-4' state={isFormValid ? 'active' : 'disabled'}>
               Login
             </Buttons>
             <SocialLoginButtons />

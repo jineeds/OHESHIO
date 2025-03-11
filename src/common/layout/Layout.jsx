@@ -1,12 +1,26 @@
 import { Outlet } from 'react-router-dom';
+import Header from '../header';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useRef } from 'react';
+import { authActions } from '../../store/modules/authSlice';
 
 const Layout = () => {
+  const dispatch = useDispatch();
+  const { items: cartItems } = useSelector((state) => state.cartR);
+  const { authed, currentUser } = useSelector((state) => state.authR);
+  const prevCartItemsRef = useRef(null);
+
+  useEffect(() => {
+    const cartItemsChanged = JSON.stringify(prevCartItemsRef.current) !== JSON.stringify(cartItems);
+
+    if (authed && currentUser && cartItemsChanged) {
+      dispatch(authActions.updateUserCart(cartItems));
+      prevCartItemsRef.current = [...cartItems];
+    }
+  }, [cartItems, authed, currentUser, dispatch]);
   return (
     <>
-      <header>
-        {/* 여기에 네비게이션 메뉴 등 공통 요소를 배치 */}
-        <nav>{/* 네비게이션 링크 */}</nav>
-      </header>
+      <Header />
 
       <main>
         <Outlet />
