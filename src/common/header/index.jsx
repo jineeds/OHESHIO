@@ -9,7 +9,7 @@ const Header = () => {
   const [isBottomMenuVisible, setIsBottomMenuVisible] = useState(false);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1281);
   const { authed } = useSelector((state) => state.authR);
-  
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onGo = () => {
@@ -69,7 +69,7 @@ const Header = () => {
         <div className='container mx-auto px-4 h-full relative'>
           {/* Desktop only "home" text */}
           <div className='hidden xl:block text-xs md:text-sm font-medium absolute top-1/2 -translate-y-1/2 left-16 text-black'>
-            <Link to='/'>home</Link>
+            <Link to='/main'>home</Link>
           </div>
 
           {/* Mobile/Tablet Icon */}
