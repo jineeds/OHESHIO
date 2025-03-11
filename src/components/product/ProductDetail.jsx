@@ -1,13 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Typed from 'typed.js';
 import Buttons from '../../ui/Buttons';
-
+import { products } from '../../assets/data/products';
 const ProductDetail = ({ product, commonDetails }) => {
   const { id, name, category, price, color, image, model_images } = product;
   const { description, material, care, size_info, model_info } = commonDetails;
   const [isVisible, setIsVisible] = useState(false);
   const [selectedSize, setSelectedSize] = useState(false);
   const [size, setSize] = useState('');
+  const [colorsProduct, setColorsProduct] = useState([]);
+  useEffect(() => {
+    try {
+      const allColor = products.filter((item) => item.name === product.name);
+
+      setColorsProduct(allColor);
+    } catch (error) {
+      console.error('관련 제품을 불러오는 중 오류가 발생했습니다:', error);
+    }
+  }, [product.name]);
 
   const handleSizeSelect = (sizeOption) => {
     setSelectedSize(sizeOption);
@@ -121,16 +131,24 @@ const ProductDetail = ({ product, commonDetails }) => {
           <span ref={doc2} />
         </div>
       </div>
-      <div className='w-[calc(100%-20px)] flex flex-wrap my-[20px]'>
-        <span className='detail_small_img'>
-          <img src='public/images/small_product.png' alt='' />
-        </span>
-        <span className='detail_small_img'>
-          <img src='public/images/small_product2.png' alt='' />
-        </span>
-        <span className='detail_small_img'>
-          <img src='public/images/small_product3.png' alt='' />
-        </span>
+      <div className='w-[calc(100%-20px)] flex flex-wrap '>
+        {colorsProduct.length > 0 && (
+          <div className='w-full mb-3'>
+            <div className='flex flex-wrap gap-2'>
+              {colorsProduct.map((item) => (
+                <a
+                  key={item.id}
+                  href={`/product/${item.id}`}
+                  className={`w-28 h-28 cursor-pointer overflow-hidden rounded detail_small_img 
+                  }`}
+                  title={item.color}
+                >
+                  <img src={item.image} alt={`${item.name} - ${item.color}`} className='w-full h-full object-cover' />
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
       <div className='lower_product_info'>
         <div></div>
