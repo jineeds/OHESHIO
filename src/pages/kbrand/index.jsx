@@ -136,10 +136,18 @@ const Kbrand = () => {
         <div>
           <img src="/images/logo.png" alt="logo" />
         </div>
-        <div>
-          <img src="/oheshio/miseki/outer/black/p047_bow_over_cardigan/p047_2.png" alt="model1" />
-          <img src="/oheshio/miseki/bottom/black/p068_side_bow_pleats_midi_skirt_/p068_2.png" alt="model2" />
-          <img src="/oheshio/miseki/bottom/black/p070_draped_midi_skirt_pantsv/p070_2.png" alt="model3" />
+        <div className="flex w-full">
+          <img src="/oheshio/miseki/outer/black/p047_bow_over_cardigan/p047_2.png" alt="model1" className="h-[600px]" />
+          <img
+            src="/oheshio/miseki/bottom/black/p068_side_bow_pleats_midi_skirt_/p068_2.png"
+            alt="model2"
+            className="h-[600px]"
+          />
+          <img
+            src="/oheshio/miseki/bottom/black/p070_draped_midi_skirt_pantsv/p070_2.png"
+            alt="model3"
+            className="h-[600px] mt-4"
+          />
         </div>
       </section>
     </>
