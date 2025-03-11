@@ -42,11 +42,13 @@ const Product = () => {
   }
   return (
     <>
-      <ProductContain>
-        <ProductDetail product={selectedProduct} commonDetails={commonDetails} />
-        <ProductCharacter product={selectedProduct} commonDetails={commonDetails} />
-      </ProductContain>
-      <ProductBottomSlide />
+      <div className=' flex flex-col gap-[300px]'>
+        <ProductContain>
+          <ProductDetail product={selectedProduct} commonDetails={commonDetails} />
+          <ProductCharacter product={selectedProduct} commonDetails={commonDetails} />
+        </ProductContain>
+        <ProductBottomSlide products={products} />
+      </div>
     </>
   );
 };
