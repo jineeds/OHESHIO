@@ -187,18 +187,18 @@ function App() {
 
             if (document.getElementById('player') && window.YT && window.YT.Player) {
                 playerRef.current = new window.YT.Player('player', {
-                    videoId: 'tVIXY14aJms', // 제공한 유튜브 영상 ID
+                    videoId: 'pSUydWEqKwE', // 제공한 유튜브 영상 ID
                     playerVars: {
                         autoplay: 1, // 자동 재생
                         loop: 1, // 반복 재생
-                        playlist: 'tVIXY14aJms', // 반복 재생할 영상 ID
+                        playlist: 'pSUydWEqKwE', // 반복 재생할 영상 ID
                         controls: 0, // 컨트롤 숨김
                         showinfo: 0, // 영상 정보 숨김
                         rel: 0, // 관련 영상 숨김
                         disablekb: 1, // 키보드 컨트롤 비활성화
                         iv_load_policy: 3, // 주석 숨김
-                        start: 128,
-                        end: 160,
+                        start: 56,
+                        end: 75,
                     },
                     events: {
                         onReady: (event) => {
@@ -301,7 +301,7 @@ function App() {
 
                 {/* 우측 refine 메뉴 (더 아래에 위치) - 반응형, z-index 조정 */}
                 {showRefine && (
-                    <div className='fixed top-10 md:top-14 xl:top-20 right-4 md:right-8 xl:right-12 text-right z-[8000]'>
+                    <div className='fixed top-10 md:top-14 xl:top-20 right-4 md:right-8 xl:right-12 text-right z-[8000] select-none'>
                         <div className='relative'>
                             <div
                                 className='text-xs md:text-sm text-black cursor-pointer font-medium hover:opacity-80 mr-4'
