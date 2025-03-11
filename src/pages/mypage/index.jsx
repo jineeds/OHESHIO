@@ -31,7 +31,9 @@ const MyPage = () => {
         {activeTab === '주문내역' && <MyPageOrderHistory orders={currentUser.orders} />}
         {activeTab === '쿠폰/적립금' && <MyPageCoupons points={currentUser.points} coupons={currentUser.coupons} />}
         {activeTab === '관심상품' && <MyPageWishlist wishlist={currentUser.wishlist} />}
-        {activeTab === '최근 본 상품' && <MyPageRecentViewed recentlyViewed={currentUser.recentlyViewed || []} />}
+        {activeTab === '최근 본 상품' && (
+          <MyPageRecentViewed recentlyViewed={currentUser.recentlyViewed || []} wishlist={currentUser.wishlist} />
+        )}
         {activeTab === '회원정보' && <MyPageUserInfo userInfo={currentUser} />}
       </div>
     </div>
