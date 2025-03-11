@@ -42,7 +42,7 @@ const Product = () => {
   }
   return (
     <>
-      <div className=' flex flex-col gap-[300px]'>
+      <div className=' flex flex-col gap-56 '>
         <ProductContain>
           <ProductDetail product={selectedProduct} commonDetails={commonDetails} />
           <ProductCharacter product={selectedProduct} commonDetails={commonDetails} />

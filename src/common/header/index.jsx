@@ -12,6 +12,7 @@ const Header = () => {
     const { authed } = useSelector((state) => state.authR);
     const [showCloudEffect, setShowCloudEffect] = useState(false);
     const [isHovering, setIsHovering] = useState(false);
+    const [showRecentlyViewed, setShowRecentlyViewed] = useState(false);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -30,6 +31,14 @@ const Header = () => {
         } else {
             navigate('/mypage');
         }
+    };
+
+    // Clear all recently viewed products
+    const clearRecentlyViewed = () => {
+        // Assuming you're storing recently viewed products in localStorage
+        localStorage.removeItem('recentlyViewedProducts');
+        showToast('info', { message: '최근 본 상품이 모두 삭제되었습니다.' });
+        setShowRecentlyViewed(false);
     };
 
     useEffect(() => {
@@ -71,6 +80,10 @@ const Header = () => {
 
     // Check if we're in desktop view
     const isDesktop = windowWidth >= 1280;
+
+    // Mock data for recently viewed products (replace with actual data from your app state)
+    const recentlyViewedProducts = JSON.parse(localStorage.getItem('recentlyViewedProducts')) || [];
+    const hasRecentlyViewed = recentlyViewedProducts.length > 0;
 
     return (
         <>
@@ -164,15 +177,21 @@ const Header = () => {
                             </div>
                             {/* Dropdown Menu */}
                             <div className='absolute left-0 mt-1 w-32 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 pt-2'>
-                                <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 '>
-                                    uniform
-                                </div>
-                                <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 '>
-                                    k-brand
-                                </div>
-                                <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 '>
-                                    about
-                                </div>
+                                <Link to='/main' className='block'>
+                                    <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 '>
+                                        uniform
+                                    </div>
+                                </Link>
+                                <Link to='/kbrand' className='block'>
+                                    <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 '>
+                                        k-brand
+                                    </div>
+                                </Link>
+                                <Link to='/about' className='block'>
+                                    <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 '>
+                                        about
+                                    </div>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -213,10 +232,68 @@ const Header = () => {
                         </div>
                     </div>
 
-                    {/* Shopping bag button (always in top right) */}
+                    {/* Shopping bag button with dropdown */}
                     <div className='absolute top-1/2 -translate-y-1/2 right-16'>
-                        <div className='text-xs md:text-sm text-black cursor-pointer font-medium hover:opacity-80'>
-                            bag
+                        <div className='group relative'>
+                            <div
+                                className='text-xs md:text-sm text-black cursor-pointer font-medium hover:opacity-80'
+                                onClick={() => setShowRecentlyViewed(!showRecentlyViewed)}
+                            >
+                                bag
+                                {hasRecentlyViewed && (
+                                    <span className='absolute -top-1 -right-2 w-2 h-2 bg-red-500 rounded-full'></span>
+                                )}
+                            </div>
+
+                            {/* Recently Viewed Products Dropdown */}
+                            <div
+                                className={`absolute right-0 mt-3 w-64 z-50 bg-white shadow-lg transition-all duration-300 overflow-hidden
+                                    ${
+                                        showRecentlyViewed
+                                            ? 'opacity-100 visible max-h-96'
+                                            : 'opacity-0 invisible max-h-0'
+                                    }`}
+                            >
+                                <div className='p-4'>
+                                    <div className='flex justify-between items-center mb-3'>
+                                        <h3 className='text-sm font-medium'>최근 본 상품</h3>
+                                        {hasRecentlyViewed && (
+                                            <button
+                                                onClick={clearRecentlyViewed}
+                                                className='text-xs text-gray-500 hover:text-black transition-colors'
+                                            >
+                                                전체 삭제
+                                            </button>
+                                        )}
+                                    </div>
+
+                                    {hasRecentlyViewed ? (
+                                        <div className='space-y-3 max-h-60 overflow-y-auto'>
+                                            {recentlyViewedProducts.map((product, index) => (
+                                                <div key={index} className='flex items-center space-x-3'>
+                                                    <div className='w-12 h-12 bg-gray-100'>
+                                                        {product.imageUrl && (
+                                                            <img
+                                                                src={product.imageUrl}
+                                                                alt={product.name}
+                                                                className='w-full h-full object-cover'
+                                                            />
+                                                        )}
+                                                    </div>
+                                                    <div className='flex-1'>
+                                                        <p className='text-xs font-medium'>{product.name}</p>
+                                                        <p className='text-xs text-gray-500'>{product.price}원</p>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <p className='text-xs text-gray-500 text-center py-4'>
+                                            최근 본 상품이 없습니다.
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -234,15 +311,21 @@ const Header = () => {
                                 </div>
                                 {/* Dropdown Menu (opens upward) */}
                                 <div className='absolute left-1/2 -translate-x-1/2 bottom-12 w-32 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500'>
-                                    <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600'>
-                                        uniform
-                                    </div>
-                                    <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600'>
-                                        k-brand
-                                    </div>
-                                    <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600'>
-                                        about
-                                    </div>
+                                    <Link to='/main' className='block'>
+                                        <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600'>
+                                            uniform
+                                        </div>
+                                    </Link>
+                                    <Link to='/kbrand' className='block'>
+                                        <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600'>
+                                            k-brand
+                                        </div>
+                                    </Link>
+                                    <Link to='/about' className='block'>
+                                        <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600'>
+                                            about
+                                        </div>
+                                    </Link>
                                 </div>
                             </div>
 
