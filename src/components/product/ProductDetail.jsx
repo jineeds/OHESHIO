@@ -164,8 +164,7 @@ const ProductDetail = ({ product, commonDetails }) => {
           </div>
         )}
       </div>
-      <div className='lower_product_info'>
-        <div></div>
+      <div className='lower_product_info flex flex-col gap-5'>
         <div className='w-full flex mt-5 flex-wrap relative'>
           {['XS', 'S', 'M', 'L', 'XL'].map((sizeOption) => (
             <button
