@@ -16,7 +16,7 @@ const CartItem = ({ id, isLast }) => {
   }, [item]);
 
   if (!item) return null;
-  const { name, color, price, quantity, image } = item;
+  const { name, color, price, quantity, image, size } = item;
 
   const handleQuantityChange = (e) => {
     const newValue = e.target.value;
@@ -62,7 +62,7 @@ const CartItem = ({ id, isLast }) => {
               <div className="text-xs lg:text-sm text-gray-400">
                 <span>{color}</span>
                 <span className="px-1">/</span>
-                <span>XS</span>
+                <span>{size}</span>
               </div>
             </Link>
           </div>
