@@ -13,10 +13,11 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async (_
 const initialState = {
   products: products,
   commonDetails: {
-    description: 'A dot pattern knit featuring a glitter yarn combination...',
-    material: 'COTTON 100%',
-    care: 'DRY CLEANING ONLY',
-    size_info: 'LENGTH 68  SHOULDER 54  CHEST 59  SLEEVE LENGTH 57  AMHOLE 26.5  HEM 55 (cm)',
+    description:
+      '- A standard-fit round neck cardigan with a polka dot pattern, brand logo engraved buttons, and a back neck Ohesio silver label detail.',
+    material: '- COTTON 100%',
+    care: '- DRY CLEANING ONLY',
+    size_info: '- LENGTH 68  SHOULDER 54  CHEST 59  SLEEVE LENGTH 57  AMHOLE 26.5  HEM 55 (cm)',
     size: ['XS', 'S', 'M', 'L', 'XL'],
     model_info: {
       height: '166cm',

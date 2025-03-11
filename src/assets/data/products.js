@@ -1356,7 +1356,7 @@ export const products = [
     price: 23000,
     category: 'acc',
     color: 'gray',
-    image: 'oheshio/miseki/acc/gray/p106_shirring_knee_socks/p106.png',
+    image: '/oheshio/miseki/acc/gray/p106_shirring_knee_socks/p106.png',
     model_images: [
       '/oheshio/miseki/acc/gray/p106_shirring_knee_socks/p106_1.png',
       '/oheshio/miseki/acc/gray/p106_shirring_knee_socks/p106_2.png',
@@ -1369,7 +1369,7 @@ export const products = [
     price: 23000,
     category: 'acc',
     color: 'gray',
-    image: 'oheshio/miseki/acc/gray/p105_shirring_knee_socks/p105.png',
+    image: '/oheshio/miseki/acc/gray/p105_shirring_knee_socks/p105.png',
     model_images: [
       '/oheshio/miseki/acc/gray/p105_shirring_knee_socks/p105_1.png',
       '/oheshio/miseki/acc/gray/p105_shirring_knee_socks/p105_2.png',
@@ -1382,7 +1382,7 @@ export const products = [
     price: 23000,
     category: 'acc',
     color: 'white',
-    image: 'oheshio/miseki/acc/white/p104_shirring_knee_socks/p104.png',
+    image: '/oheshio/miseki/acc/white/p104_shirring_knee_socks/p104.png',
     model_images: [
       '/oheshio/miseki/acc/white/p104_shirring_knee_socks/p104_1.png',
       '/oheshio/miseki/acc/white/p104_shirring_knee_socks/p104_2.png',
