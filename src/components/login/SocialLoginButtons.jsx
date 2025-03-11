@@ -1,9 +1,9 @@
 import { useDispatch } from 'react-redux';
-import { authActins } from '../../store/modules/authSlice';
 import Buttons from '../../ui/Buttons';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { authActions } from '../../store/modules/authSlice';
 
 const SocialLoginButtons = () => {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ const SocialLoginButtons = () => {
           success: (res) => {
             console.log('카카오 사용자 정보:', res);
             dispatch(
-              authActins.socialLogin({
+              authActions.socialLogin({
                 provider: 'kakao',
                 profile: {
                   id: res.id,
@@ -52,7 +52,7 @@ const SocialLoginButtons = () => {
 
         // Redux 디스패치로 로그인 처리
         dispatch(
-          authActins.socialLogin({
+          authActions.socialLogin({
             provider: 'google',
             profile: {
               id: userInfo.sub,
@@ -87,26 +87,19 @@ const SocialLoginButtons = () => {
     const left = window.screen.width / 2 - width / 2;
     const top = window.screen.height / 2 - height / 2;
     window.open(naverLoginUrl, 'naverLogin', `width=${width},height=${height},left=${left},top=${top}`);
-  };
-  useEffect(() => {
+
     const handleNaverLoginMessage = (event) => {
       if (event.origin !== window.location.origin) return;
-
-      console.log('메시지 수신:', event.data);
-
       if (event.data.type === 'naver-login-success') {
-        console.log('네이버 로그인 성공 메시지 수신');
-
-        navigate('/main');
+        navigate('/');
+        // 이벤트 리스너 제거
+        window.removeEventListener('message', handleNaverLoginMessage);
       }
     };
 
     window.addEventListener('message', handleNaverLoginMessage);
+  };
 
-    return () => {
-      window.removeEventListener('message', handleNaverLoginMessage);
-    };
-  }, [navigate]);
   return (
     <div className='flex space-x-2 my-6 '>
       <Buttons className='small flex-1' state={'default'} onClick={handleGoogleLogin}>

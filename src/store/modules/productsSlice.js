@@ -1,5 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { products } from '../../assets/data/products';
+
+export const fetchProducts = createAsyncThunk('products/fetchProducts', async (_, { rejectWithValue }) => {
+  try {
+    const response = await products();
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
 
 const initialState = {
   products: products,
@@ -18,7 +27,7 @@ const initialState = {
   selectedProduct: null,
   selectedColor: null,
   colorProducts: {},
-  isLoading: false,
+  loading: false, // 이름 변경: isLoading -> loading
   error: null,
 };
 
@@ -49,15 +58,8 @@ export const productsSlice = createSlice({
       }
     },
 
-    // 상품 상세 정보 선택
     selectProduct: (state, action) => {
-      const productId = action.payload;
-      state.selectedProduct = state.products.find((product) => product.id === productId);
-
-      // 선택된 상품의 색상 설정
-      if (state.selectedProduct) {
-        state.selectedColor = state.selectedProduct.color;
-      }
+      state.selectedProduct = state.products.find((product) => product.id === action.payload);
     },
 
     // 색상 선택
@@ -131,8 +133,34 @@ export const productsSlice = createSlice({
       return [];
     },
   },
+  // extraReducers를 리듀서 객체 밖으로 이동
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchProducts.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products = action.payload;
+        // 필터링된 상품도 업데이트
+        state.filteredProducts = action.payload;
+        // 초기 선택 상품이 있으면 다시 설정
+        if (state.selectedProduct) {
+          const id = state.selectedProduct.id;
+          state.selectedProduct = action.payload.find((product) => product.id === id) || null;
+        }
+      })
+      .addCase(fetchProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+  },
 });
 
-export const productsActions = productsSlice.actions;
+export const productsActions = {
+  ...productsSlice.actions,
+  fetchProducts,
+};
 
 export default productsSlice.reducer;

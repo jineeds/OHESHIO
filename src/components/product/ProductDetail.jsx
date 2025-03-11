@@ -1,11 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-import Typed from "typed.js";
-import Buttons from "../../ui/Buttons";
+import React, { useEffect, useRef, useState } from 'react';
+import Typed from 'typed.js';
+import Buttons from '../../ui/Buttons';
 
-const ProductDetail = () => {
+const ProductDetail = ({ product, commonDetails }) => {
+  const { id, name, category, price, color, image, model_images } = product;
+  const { description, material, care, size_info, model_info } = commonDetails;
   const [isVisible, setIsVisible] = useState(false);
   const [selectedSize, setSelectedSize] = useState(false);
-  const [size, setSize] = useState("");
+  const [size, setSize] = useState('');
 
   const handleSizeSelect = (sizeOption) => {
     setSelectedSize(sizeOption);
@@ -31,12 +33,12 @@ const ProductDetail = () => {
 
   useEffect(() => {
     typed.current = new Typed(doc.current, {
-      strings: ["Wares PANT SEAL"],
+      strings: [name],
       typeSpeed: 50,
     });
 
     typed2.current = new Typed(doc2.current, {
-      strings: ["239.00 USD"],
+      strings: [`KRW  ${price.toString()}`],
       typeSpeed: 50,
     });
   }, []);
@@ -45,25 +47,25 @@ const ProductDetail = () => {
     if (isVisible) {
       if (product_detail1.current && !product_typed1.current) {
         product_typed1.current = new Typed(product_detail1.current, {
-          strings: ["- 100% faux fur"],
+          strings: ['- 100% faux fur'],
           typeSpeed: 50,
         });
       }
       if (product_detail2.current && !product_typed2.current) {
         product_typed2.current = new Typed(product_detail2.current, {
-          strings: ["- 100% faux fur"],
+          strings: ['- 100% faux fur'],
           typeSpeed: 50,
         });
       }
       if (product_detail3.current && !product_typed3.current) {
         product_typed3.current = new Typed(product_detail3.current, {
-          strings: ["- 100% faux fur"],
+          strings: ['- 100% faux fur'],
           typeSpeed: 50,
         });
       }
       if (product_detail4.current && !product_typed4.current) {
         product_typed4.current = new Typed(product_detail4.current, {
-          strings: ["- 100% faux fur"],
+          strings: ['- 100% faux fur'],
           typeSpeed: 50,
         });
       }
@@ -110,34 +112,34 @@ const ProductDetail = () => {
     };
   }, []);
   return (
-    <div className="product_detail_contain w-1/3 text-black z-[99] sticky top-[100px]">
-      <div className="top_product_info">
-        <div className="detail_title">
+    <div className='product_detail_contain w-1/3 text-black z-[99] sticky top-[100px]'>
+      <div className='top_product_info'>
+        <div className='detail_title'>
           <span ref={doc} />
         </div>
-        <div className="detail_price">
+        <div className='detail_price'>
           <span ref={doc2} />
         </div>
       </div>
-      <div className="w-[calc(100%-20px)] flex flex-wrap my-[20px]">
-        <span className="detail_small_img">
-          <img src="public/images/small_product.png" alt="" />
+      <div className='w-[calc(100%-20px)] flex flex-wrap my-[20px]'>
+        <span className='detail_small_img'>
+          <img src='public/images/small_product.png' alt='' />
         </span>
-        <span className="detail_small_img">
-          <img src="public/images/small_product2.png" alt="" />
+        <span className='detail_small_img'>
+          <img src='public/images/small_product2.png' alt='' />
         </span>
-        <span className="detail_small_img">
-          <img src="public/images/small_product3.png" alt="" />
+        <span className='detail_small_img'>
+          <img src='public/images/small_product3.png' alt='' />
         </span>
       </div>
-      <div className="lower_product_info">
+      <div className='lower_product_info'>
         <div></div>
-        <div className="w-full flex mt-5 flex-wrap relative">
-          {["XS", "S", "M", "L", "XL"].map((sizeOption) => (
+        <div className='w-full flex mt-5 flex-wrap relative'>
+          {['XS', 'S', 'M', 'L', 'XL'].map((sizeOption) => (
             <button
               key={sizeOption}
               className={`w-[50px] h-[50px] rounded-full mr-[10px] text-center flex items-center justify-center uppercase relative mb-[10px] bg-[#F1F5F9] text-[#A3A3A3] text-sm ${
-                selectedSize === sizeOption ? "border-2 border-[#94A3B8] shadow-[0_1px_6px_0_rgba(32,33,36,0.6)]" : ""
+                selectedSize === sizeOption ? 'border-2 border-[#94A3B8] shadow-[0_1px_6px_0_rgba(32,33,36,0.6)]' : ''
               }`}
               onClick={() => handleSizeSelect(sizeOption)}
             >
@@ -147,13 +149,13 @@ const ProductDetail = () => {
         </div>
         <div>
           {selectedSize ? (
-            <div className="shadow-[0_1px_6px_0_rgba(32,33,36,0.6)] px-5 py-[15px] w-[60%] flex justify-between items-center rounded-[2.5em] bg-[#CBD5E1]">
+            <div className='shadow-[0_1px_6px_0_rgba(32,33,36,0.6)] px-5 py-[15px] w-[60%] flex justify-between items-center rounded-[2.5em] bg-[#CBD5E1]'>
               <span></span>
               <span>add to bag</span>
               <span>→</span>
             </div>
           ) : (
-            <div className="shadow-[0_1px_6px_0_rgba(32,33,36,0.6)] px-5 py-[15px] w-[60%] flex justify-between items-center opacity-70 rounded-[2.5em] bg-[#F8FAFC] text-[#9CA3AF]">
+            <div className='shadow-[0_1px_6px_0_rgba(32,33,36,0.6)] px-5 py-[15px] w-[60%] flex justify-between items-center opacity-70 rounded-[2.5em] bg-[#F8FAFC] text-[#9CA3AF]'>
               <span></span>
               <span>select your size</span>
               <span>→</span>
@@ -161,13 +163,13 @@ const ProductDetail = () => {
           )}
         </div>
 
-        <div className={`product_details_toggle ${isVisible ? "clicked" : ""}`}>
-          <span className="details_toggle_description cursor-pointer" onClick={toggleDetails}>
+        <div className={`product_details_toggle ${isVisible ? 'clicked' : ''}`}>
+          <span className='details_toggle_description cursor-pointer' onClick={toggleDetails}>
             product details
           </span>
 
           {isVisible && (
-            <div className="product_details_document">
+            <div className='product_details_document'>
               <p ref={product_detail1}></p>
               <p ref={product_detail2}></p>
               <p ref={product_detail3}></p>
@@ -175,8 +177,8 @@ const ProductDetail = () => {
             </div>
           )}
         </div>
-        <div className="sizing_chart_toggle">
-          <span className="sizing_toggle_description">sizing chart</span>
+        <div className='sizing_chart_toggle'>
+          <span className='sizing_toggle_description'>sizing chart</span>
         </div>
         <div>
           <span>styled with ↓</span>

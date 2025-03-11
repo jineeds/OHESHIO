@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import SocialSignupButton from './SocialSignupButton';
 import InputCustom from '../../ui/InputCustom';
-import { authActins } from '../../store/modules/authSlice';
+import { authActions } from '../../store/modules/authSlice';
 import Checkbox from '../../ui/Checkbox';
 import Buttons from '../../ui/Buttons';
 import SocialMobile from './SocialMobile';
@@ -62,7 +62,7 @@ const SignupForm = () => {
       setErrors((prev) => ({ ...prev, [name]: '' }));
     }
     if (error) {
-      dispatch(authActins.clearError());
+      dispatch(authActions.clearError());
     }
     validateField(name, value);
   };
@@ -242,7 +242,7 @@ const SignupForm = () => {
       address: '',
     };
 
-    dispatch(authActins.signup(signupData));
+    dispatch(authActions.signup(signupData));
   };
 
   useEffect(() => {

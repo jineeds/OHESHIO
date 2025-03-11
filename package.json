@@ -21,6 +21,7 @@
     "react-naver-login": "^0.1.4",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.3.0",
+    "react-toastify": "^11.0.5",
     "sass": "^1.85.1",
     "styled-components": "^6.1.15",
     "styled-reset": "^4.5.2",
