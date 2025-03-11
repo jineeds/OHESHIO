@@ -2,8 +2,17 @@ import { IoIosArrowDown } from 'react-icons/io';
 import Buttons from '../../ui/Buttons';
 import Checkbox from '../../ui/Checkbox';
 import InputCustom from '../../ui/InputCustom';
+import { useDispatch, useSelector } from 'react-redux';
+import { checkoutActions } from '../../store/modules/checkoutSlice';
 
-const PaymentMethods = ({ paymentMethod, handlePaymentMethodChange, selectedCard, handleCardChange }) => {
+const PaymentMethods = ({ selectedCard, handleCardChange }) => {
+  const { paymentMethod } = useSelector((state) => state.checkoutR);
+  const dispatch = useDispatch();
+
+  const handlePaymentMethodChange = (method) => {
+    dispatch(checkoutActions.setPaymentMethod(method));
+  };
+
   return (
     <>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-y-4 gap-x-2 md:gap-x-4">
@@ -75,7 +84,7 @@ const PaymentMethods = ({ paymentMethod, handlePaymentMethodChange, selectedCard
               name="installmentPeriod"
               disabled={!selectedCard}
               className={`appearance-none w-full px-4 py-3 font-korean rounded border-0 transition-all duration-200 focus:outline-primary-600 hover:shadow-[0px_2px_4px_0_rgba(0,0,0,0.25)] ${
-                !selectedCard ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-primary-100'
+                !selectedCard ? 'bg-gray-100 text-gray-400 pointer-events-none' : 'bg-primary-100'
               }`}
             >
               <option value="0">일시불</option>
