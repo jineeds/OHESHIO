@@ -1,50 +1,43 @@
 import React, { useState } from 'react';
 import Buttons from '../../ui/Buttons';
 import { FaChevronDown } from 'react-icons/fa';
-import OrderDetailModal from './OrderDetailModal'; // ✅ 추가할 모달 컴포넌트 import
+import OrderDetailModal from './OrderDetailModal';
 
-const MyPageOrderHistory = ({ orders = [] }) => {
+const MyPageOrderHistory = ({
+  orders = [],
+  cancelledOrders = [],
+  setCancelledOrders,
+  exchangeOrders = [],
+  setExchangeOrders,
+  refundOrders = [],
+  setRefundOrders,
+}) => {
   const [selectedPeriod, setSelectedPeriod] = useState('오늘');
   const [selectedButton, setSelectedButton] = useState('주문내역');
   const [selectedStatus, setSelectedStatus] = useState('');
-  const [cancelledOrders, setCancelledOrders] = useState([]);
-  const [detailModalOrder, setDetailModalOrder] = useState(null); // ✅ 상세 모달 상태
+  const [detailModalOrder, setDetailModalOrder] = useState(null);
 
   const filterByPeriod = (orderDate) => {
     const now = new Date();
     const orderDay = new Date(orderDate);
     const diff = now - orderDay;
     const days = diff / (1000 * 60 * 60 * 24);
-
     if (selectedPeriod === '오늘') return days < 1;
     if (selectedPeriod === '3개월') return days <= 90;
     if (selectedPeriod === '6개월') return days <= 180;
     return true;
   };
 
-  const formattedOrders = orders.map((order) => {
-    const displayStatus = [];
+  const filteredOrders = orders.filter((order) => {
+    const isInPeriod = filterByPeriod(order.date);
+    const hasStatus = !selectedStatus || order.displayStatus.includes(selectedStatus);
 
-    if (order.status === 'pending' && order.paymentMethod === 'bankTransfer') displayStatus.push('입금대기');
-    if (order.status === 'paid') displayStatus.push('결제완료', '배송준비중');
-    if (order.status === 'preparing') displayStatus.push('배송준비중');
-    if (order.status === 'shipping') displayStatus.push('배송중');
-    if (order.status === 'delivered') displayStatus.push('배송완료');
-    if (displayStatus.length === 0) displayStatus.push('입금대기');
-
-    return { ...order, displayStatus };
-  });
-
-  const updatedOrders = formattedOrders.map((order) => {
-    if (cancelledOrders.includes(order.id)) {
-      return { ...order, displayStatus: ['주문취소'] };
+    if (selectedButton === '취소/교환/반품 내역') {
+      return isInPeriod && order.displayStatus.includes('주문취소');
     }
-    return order;
-  });
 
-  const filteredOrders = updatedOrders.filter(
-    (order) => (!selectedStatus || order.displayStatus.includes(selectedStatus)) && filterByPeriod(order.date)
-  );
+    return isInPeriod && hasStatus;
+  });
 
   const handleCancel = (orderId) => {
     if (window.confirm('정말 이 주문을 취소하시겠습니까?')) {
@@ -121,26 +114,18 @@ const MyPageOrderHistory = ({ orders = [] }) => {
                 <div className="text-sm text-gray-600 mb-1">주문일: {order.date}</div>
                 <div className="text-sm text-gray-700 mb-2">
                   상태:{' '}
-                  {order.displayStatus.map((status, idx) => (
-                    <span key={idx}>
-                      {status}
-                      {idx !== order.displayStatus.length - 1 && ' / '}
-                    </span>
-                  ))}
+                  {[
+                    ...(order.displayStatus.length > 0 ? order.displayStatus : ['주문접수']),
+                    exchangeOrders.includes(order.id) ? '교환요청' : null,
+                    refundOrders.includes(order.id) ? '환불요청' : null,
+                  ]
+                    .filter(Boolean)
+                    .join(' / ')}
                 </div>
-                <ul className="text-sm text-gray-800 list-disc list-inside">
-                  {order.items.map((item, idx) => (
-                    <li key={idx}>
-                      {item.name} / {item.quantity}개 / {item.price.toLocaleString()}원
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="flex gap-2 mt-4 justify-center">
-                  {!cancelledOrders.includes(order.id) && (
+                <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-4">
+                  {!order.displayStatus.includes('주문취소') && (
                     <Buttons
                       size="small"
-                      state="default"
                       className="border border-red-400 text-red-500 font-korean"
                       onClick={() => handleCancel(order.id)}
                     >
@@ -149,7 +134,6 @@ const MyPageOrderHistory = ({ orders = [] }) => {
                   )}
                   <Buttons
                     size="small"
-                    state="default"
                     className="border border-primary-400 text-primary-500 font-korean"
                     onClick={() => setDetailModalOrder(order)}
                   >
@@ -161,8 +145,16 @@ const MyPageOrderHistory = ({ orders = [] }) => {
           )}
         </div>
       </div>
-      {/* ✅ 모달 렌더링 */}
-      {detailModalOrder && <OrderDetailModal order={detailModalOrder} onClose={() => setDetailModalOrder(null)} />}
+      {detailModalOrder && (
+        <OrderDetailModal
+          order={detailModalOrder}
+          onClose={() => setDetailModalOrder(null)}
+          exchangeOrders={exchangeOrders}
+          setExchangeOrders={setExchangeOrders}
+          refundOrders={refundOrders}
+          setRefundOrders={setRefundOrders}
+        />
+      )}
     </div>
   );
 };
