@@ -1,13 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Typed from 'typed.js';
 
-const ProductCharacter = ({ product, commonDetails }) => {
+const ProductCharacter = ({ product }) => {
   const { id, name, category, price, color, image, model_images } = product;
-  const { description, material, care, size_info } = commonDetails;
   const typedElement1 = useRef(null);
   const typedElement2 = useRef(null);
-  const typedElementmo1 = useRef(null);
-  const typedElementmo2 = useRef(null);
   const typedInstance1 = useRef(null);
   const typedInstance2 = useRef(null);
 
