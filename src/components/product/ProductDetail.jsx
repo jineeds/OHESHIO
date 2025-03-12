@@ -132,9 +132,16 @@ const ProductDetail = ({ product, commonDetails }) => {
   }, []);
   const onGo = (item) => {
     const selectedProduct = products.find((product) => product.id === item);
-
     if (selectedProduct) {
-      dispatch(authActions.addRecentlyViewed(selectedProduct));
+      const normalizedProduct = {
+        id: selectedProduct.id,
+        name: selectedProduct.name,
+        category: selectedProduct.category,
+        price: `KRW ${product.price.toLocaleString()}`,
+        color: selectedProduct.color,
+        imageUrl: selectedProduct.image,
+      };
+      dispatch(authActions.addRecentlyViewed(normalizedProduct));
     }
     window.scrollTo(0, 0);
     navigate(`/product/${item}`);

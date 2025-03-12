@@ -8,7 +8,19 @@ const ProductStyledWith = ({ currentProduct }) => {
   const [recommendedProducts, setRecommendedProducts] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const normalizeProductData = (product) => {
+    if (!product) return null;
 
+    return {
+      id: product.id,
+      name: product.name,
+      category: product.category,
+      price: product.price, // 숫자 형식 유지
+      color: product.color,
+      imageUrl: product.image, // 일관된 이미지 필드명 사용
+    };
+  };
+  const DEFAULT_IMAGE = '/oheshio/outer/gray/p001_round_collar_semi-crop_jacket/p001_1.png';
   useEffect(() => {
     if (currentProduct && currentProduct.category) {
       const otherCategoryProducts = products.filter(
@@ -27,7 +39,9 @@ const ProductStyledWith = ({ currentProduct }) => {
     const selectedProduct = products.find((product) => product.id === productId);
 
     if (selectedProduct) {
-      dispatch(authActions.addRecentlyViewed(selectedProduct));
+      // 정규화 함수 사용하여 일관된 데이터 형식 유지
+      const normalizedProduct = normalizeProductData(selectedProduct);
+      dispatch(authActions.addRecentlyViewed(normalizedProduct));
     }
 
     window.scrollTo(0, 0);
@@ -52,8 +66,7 @@ const ProductStyledWith = ({ currentProduct }) => {
                 className='w-full h-full object-cover'
                 onError={(e) => {
                   e.target.onerror = null;
-                  e.target.src =
-                    product.model_images?.[0] || '/oheshio/outer/gray/p001_round_collar_semi-crop_jacket/p001_1.png';
+                  e.target.src = product.model_images?.[0] || DEFAULT_IMAGE;
                 }}
               />
             </div>
