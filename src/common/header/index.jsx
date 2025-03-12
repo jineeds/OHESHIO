@@ -89,7 +89,7 @@ const Header = () => {
     <>
       {showCloudEffect && (
         <div
-          className="cloud-effect"
+          className='cloud-effect'
           style={{
             background: 'linear-gradient(180deg, rgba(231, 236, 234, 1) 10%, rgba(231, 236, 234, 0) 80%)',
             position: 'fixed',
@@ -114,30 +114,30 @@ const Header = () => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <div className="container mx-auto px-4 h-full relative">
+        <div className='container mx-auto px-4 h-full relative'>
           {/* Desktop only "home" text */}
-          <div className="hidden xl:block text-xs md:text-sm font-medium absolute top-1/2 -translate-y-1/2 left-16 text-black">
-            <Link to="/main">home</Link>
+          <div className='hidden xl:block text-xs md:text-sm font-medium absolute top-1/2 -translate-y-1/2 left-16 text-black'>
+            <Link to='/main'>home</Link>
           </div>
 
           {/* Mobile/Tablet Icon */}
-          <div className="block xl:hidden absolute top-1/2 -translate-y-1/2 left-16">
-            <div className="group relative">
-              <div className="text-sm text-black cursor-pointer font-medium hover:opacity-80 flex items-center justify-center">
-                <SiOperagx className="text-lg" />
+          <div className='block xl:hidden absolute top-1/2 -translate-y-1/2 left-16'>
+            <div className='group relative'>
+              <div className='text-sm text-black cursor-pointer font-medium hover:opacity-80 flex items-center justify-center'>
+                <SiOperagx className='text-lg' />
               </div>
-              <div className="absolute  flex flex-col left-1/2 -translate-x-1/2 mt-1 w-32 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 pt-2">
+              <div className='absolute  flex flex-col left-1/2 -translate-x-1/2 mt-1 w-32 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 pt-2'>
                 {authed ? (
                   <>
                     <button
                       onClick={onLogout}
-                      className="py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center "
+                      className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '
                     >
                       logout
                     </button>
                     <button
                       onClick={onMypage}
-                      className="py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center "
+                      className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '
                     >
                       my page
                     </button>
@@ -146,13 +146,13 @@ const Header = () => {
                   <>
                     <button
                       onClick={onGo}
-                      className="py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center "
+                      className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '
                     >
                       sign up
                     </button>
                     <button
                       onClick={onMypage}
-                      className="py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center "
+                      className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '
                     >
                       my page
                     </button>
@@ -163,32 +163,32 @@ const Header = () => {
           </div>
 
           {/* Logo (always centered) */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 top-1/2 -translate-y-1/2">
-            <Link to="/">
-              <img src="/public/images/logo.png" alt="logo" width={144} />
+          <div className='absolute left-1/2 transform -translate-x-1/2 top-1/2 -translate-y-1/2'>
+            <Link to='/'>
+              <img src='/images/logo.png' alt='logo' width={144} />
             </Link>
           </div>
 
           {/* Desktop only collection dropdown */}
-          <div className="hidden xl:block absolute top-1/2 -translate-y-1/2 right-36">
-            <div className="group">
-              <div className="text-sm text-black cursor-pointer font-medium hover:opacity-80 mr-32 relative">
+          <div className='hidden xl:block absolute top-1/2 -translate-y-1/2 right-36'>
+            <div className='group'>
+              <div className='text-sm text-black cursor-pointer font-medium hover:opacity-80 mr-32 relative'>
                 collection
               </div>
               {/* Dropdown Menu */}
-              <div className="absolute left-0 mt-1 w-32 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 pt-2">
-                <Link to="/main" className="block">
-                  <div className="py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 ">
+              <div className='absolute left-0 mt-1 w-32 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 pt-2'>
+                <Link to='/main' className='block'>
+                  <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 '>
                     uniform
                   </div>
                 </Link>
-                <Link to="/kbrand" className="block">
-                  <div className="py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 ">
+                <Link to='/kbrand' className='block'>
+                  <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 '>
                     k-brand
                   </div>
                 </Link>
-                <Link to="/about" className="block">
-                  <div className="py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 ">
+                <Link to='/about' className='block'>
+                  <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 '>
                     about
                   </div>
                 </Link>
@@ -197,23 +197,23 @@ const Header = () => {
           </div>
 
           {/* Desktop only SiOperagx icon */}
-          <div className="hidden xl:block absolute top-1/2 -translate-y-1/2 right-44">
-            <div className="group relative">
-              <div className="text-sm text-black cursor-pointer font-medium hover:opacity-80 flex items-center justify-center">
-                <SiOperagx className="text-lg" />
+          <div className='hidden xl:block absolute top-1/2 -translate-y-1/2 right-44'>
+            <div className='group relative'>
+              <div className='text-sm text-black cursor-pointer font-medium hover:opacity-80 flex items-center justify-center'>
+                <SiOperagx className='text-lg' />
               </div>
-              <div className="absolute flex flex-col justify-center left-1/2 -translate-x-1/2 mt-1 w-32 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 pt-2">
+              <div className='absolute flex flex-col justify-center left-1/2 -translate-x-1/2 mt-1 w-32 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 pt-2'>
                 {authed ? (
                   <>
                     <button
                       onClick={onLogout}
-                      className="py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center "
+                      className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '
                     >
                       logout
                     </button>
                     <button
                       onClick={onMypage}
-                      className="py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center "
+                      className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '
                     >
                       my page
                     </button>
@@ -222,7 +222,7 @@ const Header = () => {
                   <>
                     <button
                       onClick={onGo}
-                      className="py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center "
+                      className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '
                     >
                       sign up
                     </button>
@@ -233,16 +233,16 @@ const Header = () => {
           </div>
 
           {/* Shopping bag button with dropdown */}
-          <div className="absolute top-1/2 -translate-y-1/2 right-16">
-            <div className="group relative">
-              <Link to={'/cart'} className="block">
+          <div className='absolute top-1/2 -translate-y-1/2 right-16'>
+            <div className='group relative'>
+              <Link to={'/cart'} className='block'>
                 <div
-                  className="text-xs md:text-sm text-black cursor-pointer font-medium hover:opacity-80"
+                  className='text-xs md:text-sm text-black cursor-pointer font-medium hover:opacity-80'
                   onClick={() => setShowRecentlyViewed(!showRecentlyViewed)}
                 >
                   bag
                   {hasRecentlyViewed && (
-                    <span className="absolute -top-1 -right-2 w-2 h-2 bg-red-500 rounded-full"></span>
+                    <span className='absolute -top-1 -right-2 w-2 h-2 bg-red-500 rounded-full'></span>
                   )}
                 </div>
               </Link>
@@ -256,13 +256,13 @@ const Header = () => {
                                         : 'opacity-0 invisible max-h-0'
                                     }`}
               >
-                <div className="p-4">
-                  <div className="flex justify-between items-center mb-3">
-                    <h3 className="text-sm font-medium">최근 본 상품</h3>
+                <div className='p-4'>
+                  <div className='flex justify-between items-center mb-3'>
+                    <h3 className='text-sm font-medium'>최근 본 상품</h3>
                     {hasRecentlyViewed && (
                       <button
                         onClick={clearRecentlyViewed}
-                        className="text-xs text-gray-500 hover:text-black transition-colors"
+                        className='text-xs text-gray-500 hover:text-black transition-colors'
                       >
                         전체 삭제
                       </button>
@@ -270,23 +270,23 @@ const Header = () => {
                   </div>
 
                   {hasRecentlyViewed ? (
-                    <div className="space-y-3 max-h-60 overflow-y-auto">
+                    <div className='space-y-3 max-h-60 overflow-y-auto'>
                       {recentlyViewedProducts.map((product, index) => (
-                        <div key={index} className="flex items-center space-x-3">
-                          <div className="w-12 h-12 bg-gray-100">
+                        <div key={index} className='flex items-center space-x-3'>
+                          <div className='w-12 h-12 bg-gray-100'>
                             {product.imageUrl && (
-                              <img src={product.imageUrl} alt={product.name} className="w-full h-full object-cover" />
+                              <img src={product.imageUrl} alt={product.name} className='w-full h-full object-cover' />
                             )}
                           </div>
-                          <div className="flex-1">
-                            <p className="text-xs font-medium">{product.name}</p>
-                            <p className="text-xs text-gray-500">{product.price}원</p>
+                          <div className='flex-1'>
+                            <p className='text-xs font-medium'>{product.name}</p>
+                            <p className='text-xs text-gray-500'>{product.price}원</p>
                           </div>
                         </div>
                       ))}
                     </div>
                   ) : (
-                    <p className="text-xs text-gray-500 text-center py-4">최근 본 상품이 없습니다.</p>
+                    <p className='text-xs text-gray-500 text-center py-4'>최근 본 상품이 없습니다.</p>
                   )}
                 </div>
               </div>
@@ -297,26 +297,26 @@ const Header = () => {
 
       {/* Bottom navigation bar (mobile/tablet only - shows on screens smaller than xl) */}
       {!isDesktop && (
-        <div className="fixed bottom-0 left-0 w-full h-14 shadow-lg z-50">
-          <div className="container mx-auto h-full flex justify-center items-center">
-            <div className="w-full max-w-md flex justify-around items-center">
+        <div className='fixed bottom-0 left-0 w-full h-14 shadow-lg z-50'>
+          <div className='container mx-auto h-full flex justify-center items-center'>
+            <div className='w-full max-w-md flex justify-around items-center'>
               {/* Collection button */}
-              <div className="group relative">
-                <div className="text-sm text-black cursor-pointer font-medium hover:opacity-80">collection</div>
+              <div className='group relative'>
+                <div className='text-sm text-black cursor-pointer font-medium hover:opacity-80'>collection</div>
                 {/* Dropdown Menu (opens upward) */}
-                <div className="absolute left-1/2 -translate-x-1/2 bottom-12 w-32 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500">
-                  <Link to="/main" className="block">
-                    <div className="py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600">
+                <div className='absolute left-1/2 -translate-x-1/2 bottom-12 w-32 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500'>
+                  <Link to='/main' className='block'>
+                    <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600'>
                       uniform
                     </div>
                   </Link>
-                  <Link to="/kbrand" className="block">
-                    <div className="py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600">
+                  <Link to='/kbrand' className='block'>
+                    <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600'>
                       k-brand
                     </div>
                   </Link>
-                  <Link to="/about" className="block">
-                    <div className="py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600">
+                  <Link to='/about' className='block'>
+                    <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600'>
                       about
                     </div>
                   </Link>
@@ -324,9 +324,9 @@ const Header = () => {
               </div>
 
               {/* Refine button (bottom navigation) */}
-              <div className="relative">
+              <div className='relative'>
                 <div
-                  className="text-sm text-black cursor-pointer font-medium hover:opacity-80"
+                  className='text-sm text-black cursor-pointer font-medium hover:opacity-80'
                   onClick={() => setIsBottomMenuVisible(!isBottomMenuVisible)}
                 >
                   refine
@@ -340,44 +340,44 @@ const Header = () => {
                                             : 'max-h-0 opacity-0 pointer-events-none'
                                         }`}
                 >
-                  <div className="py-2 text-right pr-4 ">
-                    <div className="text-xs md:text-sm text-black py-2 cursor-pointer font-medium hover:opacity-80">
+                  <div className='py-2 text-right pr-4 '>
+                    <div className='text-xs md:text-sm text-black py-2 cursor-pointer font-medium hover:opacity-80'>
                       all
                     </div>
-                    <div className="text-xs md:text-sm text-black py-2 cursor-pointer font-medium hover:opacity-80">
+                    <div className='text-xs md:text-sm text-black py-2 cursor-pointer font-medium hover:opacity-80'>
                       outer
                     </div>
-                    <div className="text-xs md:text-sm text-black py-2 cursor-pointer font-medium hover:opacity-80">
+                    <div className='text-xs md:text-sm text-black py-2 cursor-pointer font-medium hover:opacity-80'>
                       tops
                     </div>
-                    <div className="text-xs md:text-sm text-black py-2 cursor-pointer font-medium hover:opacity-80">
+                    <div className='text-xs md:text-sm text-black py-2 cursor-pointer font-medium hover:opacity-80'>
                       bottoms
                     </div>
-                    <div className="text-xs md:text-sm text-black py-2 cursor-pointer font-medium hover:opacity-80">
+                    <div className='text-xs md:text-sm text-black py-2 cursor-pointer font-medium hover:opacity-80'>
                       acc
                     </div>
 
                     {/* Color selection section */}
-                    <div className="bg-[#cbd5e1] border-primary-500 shadow-md p-4 mt-2 border">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="w-4 h-4 rounded-full bg-[#B7B7B7]"></div>
-                        <span className="text-gray-700 text-xs md:text-sm">gray</span>
+                    <div className='bg-[#cbd5e1] border-primary-500 shadow-md p-4 mt-2 border'>
+                      <div className='flex items-center justify-between mb-2'>
+                        <div className='w-4 h-4 rounded-full bg-[#B7B7B7]'></div>
+                        <span className='text-gray-700 text-xs md:text-sm'>gray</span>
                       </div>
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="w-4 h-4 rounded-full bg-[#000000]"></div>
-                        <span className="text-gray-700 text-xs md:text-sm">black</span>
+                      <div className='flex items-center justify-between mb-2'>
+                        <div className='w-4 h-4 rounded-full bg-[#000000]'></div>
+                        <span className='text-gray-700 text-xs md:text-sm'>black</span>
                       </div>
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="w-4 h-4 rounded-full bg-[#FFFFFF] border border-gray-200"></div>
-                        <span className="text-gray-700 text-xs md:text-sm">white</span>
+                      <div className='flex items-center justify-between mb-2'>
+                        <div className='w-4 h-4 rounded-full bg-[#FFFFFF] border border-gray-200'></div>
+                        <span className='text-gray-700 text-xs md:text-sm'>white</span>
                       </div>
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="w-4 h-4 rounded-full bg-[#FCF2D6]"></div>
-                        <span className="text-gray-700 text-xs md:text-sm">beige</span>
+                      <div className='flex items-center justify-between mb-2'>
+                        <div className='w-4 h-4 rounded-full bg-[#FCF2D6]'></div>
+                        <span className='text-gray-700 text-xs md:text-sm'>beige</span>
                       </div>
-                      <div className="flex items-center justify-between">
-                        <div className="w-4 h-4 rounded-full bg-[#CEE3FC]"></div>
-                        <span className="text-gray-700 text-xs md:text-sm">blue</span>
+                      <div className='flex items-center justify-between'>
+                        <div className='w-4 h-4 rounded-full bg-[#CEE3FC]'></div>
+                        <span className='text-gray-700 text-xs md:text-sm'>blue</span>
                       </div>
                     </div>
                   </div>
