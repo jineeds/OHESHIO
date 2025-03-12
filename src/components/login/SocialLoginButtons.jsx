@@ -157,13 +157,13 @@ const SocialLoginButtons = () => {
 
   return (
     <div className='flex space-x-2 my-6 '>
-      <Buttons className='small flex-1' state={'default'} onClick={handleGoogleLogin}>
+      <Buttons className='small flex-1 py-0 px-0' state={'default'} onClick={handleGoogleLogin}>
         Google
       </Buttons>
-      <Buttons className='small flex-1' state={'default'} onClick={handleNaverLogin}>
+      <Buttons className='small flex-1 py-0 px-0' state={'default'} onClick={handleNaverLogin}>
         Naver
       </Buttons>
-      <Buttons className='small flex-1' state={'default'} onClick={handleKakaoLogin}>
+      <Buttons className='small flex-1 py-0 px-0 ' state={'default'} onClick={handleKakaoLogin}>
         KaKao
       </Buttons>
     </div>
