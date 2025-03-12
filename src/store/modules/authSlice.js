@@ -468,6 +468,31 @@ export const authSlice = createSlice({
         localStorage.setItem('currentUser', JSON.stringify(state.currentUser));
       }
     },
+
+    addOrderToUser: (state, action) => {
+      if (!state.currentUser) return;
+
+      const orderData = action.payload;
+      const userIndex = state.users.findIndex((user) => user.id === state.currentUser.id);
+
+      if (userIndex !== -1) {
+        // 주문 내역 배열이 없으면 초기화
+        if (!state.users[userIndex].orders) {
+          state.users[userIndex].orders = [];
+        }
+        if (!state.currentUser.orders) {
+          state.currentUser.orders = [];
+        }
+
+        // 주문 내역 추가
+        state.users[userIndex].orders.push(orderData);
+        state.currentUser.orders.push(orderData);
+
+        // 로컬 스토리지 업데이트
+        localStorage.setItem('users', JSON.stringify(state.users));
+        localStorage.setItem('currentUser', JSON.stringify(state.currentUser));
+      }
+    },
   },
 });
 

@@ -248,6 +248,10 @@ export const checkoutSlice = createSlice({
         .toString()
         .padStart(2, '0')}${timestamp.getDate().toString().padStart(2, '0')}-${randomSuffix}`;
     },
+
+    resetCheckout: (state) => {
+      return initialState;
+    },
   },
 });
 
