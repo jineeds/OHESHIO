@@ -121,9 +121,19 @@ export const cartSlice = createSlice({
 
     // 할인 금액 설정
     setDiscount: (state, action) => {
-      state.discount = action.payload;
+      const { type, value, subtotal } = action.payload;
+
+      if (type === 'fixed') {
+        state.discount = value;
+      } else if (type === 'percentage') {
+        state.discount = Math.round((subtotal * value) / 100);
+      } else {
+        state.discount = 0;
+      }
+
       state.total = state.subtotal + state.shipping - state.discount;
     },
+
     replaceCart: (state, action) => {
       state.items = action.payload;
       state.totalQuantity = action.payload.reduce((total, item) => total + item.quantity, 0);

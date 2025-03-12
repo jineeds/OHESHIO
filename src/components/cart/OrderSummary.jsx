@@ -4,7 +4,7 @@ const OrderSummary = ({ subtotal, shipping, discount, total }) => {
   const hasItems = total > 0;
 
   return (
-    <div className="basis-1/4 xl:pt-16 min-w-[282px] space-y-10">
+    <div className="basis-1/4 xl:pt-[137px] min-w-[282px] space-y-10">
       <div
         className="border border-secondary-500 rounded-lg px-6 py-10"
         style={{ boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)' }}
