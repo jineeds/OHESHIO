@@ -21,18 +21,17 @@ const CartItem = ({ id, isLast }) => {
 
   const handleQuantityChange = (e) => {
     const newValue = e.target.value;
-    // 빈 문자열이거나 숫자만 허용
+
     if (newValue === '' || /^\d+$/.test(newValue)) {
       setInputValue(newValue);
-      // 숫자인 경우에만 Redux 상태 업데이트
+
       if (newValue !== '' && parseInt(newValue, 10) > 0) {
         dispatch(cartActions.setQuantity({ id: id, quantity: parseInt(newValue, 10) }));
       }
     }
   };
-  // 포커스를 잃었을 때 처리
+
   const handleBlur = () => {
-    // 빈 값이거나 0 이하인 경우 1로 설정
     if (inputValue === '' || parseInt(inputValue, 10) <= 0) {
       setInputValue('1');
       dispatch(cartActions.setQuantity({ id: id, quantity: 1 }));
