@@ -138,7 +138,7 @@ const ProductDetail = ({ product, commonDetails }) => {
     navigate(`/product/${item}`);
   };
   return (
-    <div className='product_detail_contain w-1/3 text-black z-[99] sticky top-[100px] pr-20'>
+    <div className='product_detail_contain xl:w-1/3 max-w-[550px]  text-black  z-[99] xl:sticky xl:top-[100px] xl:pr-20 '>
       <div className='top_product_info'>
         <div className='detail_title'>
           <span ref={doc} />
