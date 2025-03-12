@@ -6,10 +6,8 @@ export const ProductContain = styled.div`
   margin: 0 auto;
   position: relative;
   display: flex;
-  align-items: flex-start;
   justify-content: space-between;
   overflow: visible;
-  flex-direction: row-reverse;
 
   .product_detail_contain {
     div {
