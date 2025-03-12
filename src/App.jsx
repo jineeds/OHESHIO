@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import NaverCallback from './components/login/NaverCallback';
 import { ToastContainer } from 'react-toastify';
+import Kbrand from './pages/kbrand';
 
 function App() {
   useEffect(() => {
@@ -19,6 +20,7 @@ function App() {
           <Routes>
             <Route index element={<Home />} />
             <Route path='/' element={<Layout />}>
+              <Route path='/kbrand' element={<Kbrand />} />
               <Route path='/about' element={<About />} />
               <Route path='/cart' element={<Cart />} />
               <Route path='/product' element={<Product />} />

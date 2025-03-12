@@ -16,13 +16,9 @@ const Product = () => {
 
   useEffect(() => {
     if (productId) {
-      // 상품 ID를 숫자로 변환 (URL 파라미터는 문자열)
       const id = productId;
-
-      // 상품 선택 액션 디스패치
       dispatch(productsActions.selectProduct(id));
 
-      // 로그인한 사용자일 경우 최근 본 상품에 추가
       if (authed && products.length > 0) {
         const product = products.find((p) => p.id === id);
 
@@ -42,15 +38,17 @@ const Product = () => {
     }
   }, [productId, dispatch, authed, products]);
   if (!selectedProduct) {
-    return <div className='text-center py-20'>로딩 중...</div>;
+    return <div className='text-center py-20'>데이터를 불러 오고 있습니다...</div>;
   }
   return (
     <>
-      <ProductContain>
-        <ProductDetail product={selectedProduct} commonDetails={commonDetails} />
-        <ProductCharacter product={selectedProduct} commonDetails={commonDetails} />
-      </ProductContain>
-      <ProductBottomSlide />
+      <div className=' flex flex-col gap-56 '>
+        <ProductContain>
+          <ProductDetail product={selectedProduct} commonDetails={commonDetails} />
+          <ProductCharacter product={selectedProduct} commonDetails={commonDetails} />
+        </ProductContain>
+        <ProductBottomSlide products={products} />
+      </div>
     </>
   );
 };

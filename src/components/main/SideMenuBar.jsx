@@ -1,8 +1,35 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { authActions } from '../../store/modules/authSlice';
+import { showToast } from '/src/ui/toast/showToast';
 
-const SideMenuBar = ({ setIsChatOpen }) => {
+// SideMenuBar 컴포넌트를 수정하여 addRecentlyViewedItem 함수를 외부로 노출합니다
+const SideMenuBar = ({ setIsChatOpen, onAddRecentItem }) => {
     const [isVisible, setIsVisible] = useState(false);
     const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    // Redux store에서 현재 사용자 정보 가져오기 (authR 리듀서 사용)
+    const currentUser = useSelector((state) => state.authR.currentUser);
+
+    // 빈 배열로 초기화 - main 페이지에서 제품을 클릭해야만 항목이 추가됨
+    const [recentlyViewed, setRecentlyViewed] = useState([]);
+    const [recentCategories, setRecentCategories] = useState([]);
+
+    // 첫 마운트 시 currentUser의 recentlyViewed 데이터 가져오기
+    useEffect(() => {
+        if (currentUser) {
+            // 카테고리 데이터 설정
+            setRecentCategories(currentUser.recentCategories || []);
+
+            // 최근 본 상품 데이터 설정 (변경: 초기화하지 않고 가져옴)
+            if (currentUser.recentlyViewed && currentUser.recentlyViewed.length > 0) {
+                setRecentlyViewed(currentUser.recentlyViewed);
+            }
+        }
+    }, [currentUser]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -30,10 +57,96 @@ const SideMenuBar = ({ setIsChatOpen }) => {
         setIsHistoryOpen(!isHistoryOpen);
     };
 
+    // 최근 본 상품 추가 (제품 페이지에서 호출)
+    const addRecentlyViewedItem = (product) => {
+        if (!product) return;
+
+        // 이미 있는 경우 제외하고 최신 항목을 앞에 추가
+        const updatedItems = [product, ...recentlyViewed.filter((item) => item.id !== product.id)];
+
+        setRecentlyViewed(updatedItems);
+
+        // Redux 액션 디스패치 (필요한 경우)
+        if (currentUser) {
+            dispatch(authActions.addRecentlyViewed(product));
+        }
+    };
+
+    // 외부에서 전달된 onAddRecentItem prop이 있으면 addRecentlyViewedItem 함수 연결
+    useEffect(() => {
+        if (onAddRecentItem) {
+            onAddRecentItem(addRecentlyViewedItem);
+        }
+    }, [onAddRecentItem]);
+
+    // 최근 본 상품 제거
+    const handleRemoveItem = (itemId) => {
+        const updatedItems = recentlyViewed.filter((item) => item.id !== itemId);
+        setRecentlyViewed(updatedItems);
+
+        // Redux 액션 디스패치
+        if (currentUser) {
+            dispatch(authActions.removeRecentlyViewed(itemId));
+        }
+    };
+
+    // 최근 본 카테고리 제거
+    const handleRemoveCategory = (categoryId) => {
+        const updatedCategories = recentCategories.filter((category) => category.id !== categoryId);
+        setRecentCategories(updatedCategories);
+
+        // Redux 액션 디스패치
+        if (currentUser) {
+            dispatch(authActions.removeRecentCategory(categoryId));
+        }
+    };
+
+    // 최근 본 상품 전체 삭제
+    const clearAllRecentlyViewed = () => {
+        // 로컬 상태 업데이트
+        setRecentlyViewed([]);
+
+        if (currentUser) {
+            try {
+                // users 배열에서 현재 사용자 찾기
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                const userIndex = users.findIndex((user) => user.id === currentUser.id);
+
+                if (userIndex !== -1) {
+                    // 해당 사용자의 recentlyViewed 배열 비우기
+                    users[userIndex].recentlyViewed = [];
+
+                    // 현재 사용자 객체 복사 및 업데이트
+                    const updatedCurrentUser = {
+                        ...currentUser,
+                        recentlyViewed: [],
+                    };
+
+                    // localStorage 업데이트
+                    localStorage.setItem('users', JSON.stringify(users));
+                    localStorage.setItem('currentUser', JSON.stringify(updatedCurrentUser));
+                }
+
+                // 성공 메시지 표시 (초기 로드 시에는 메시지 표시 안함)
+            } catch (error) {
+                console.error('Error clearing recently viewed items:', error);
+                showToast('error', { message: '삭제 중 오류가 발생했습니다.' });
+            }
+        }
+    };
+
+    // 상품 클릭 핸들러 - 상품 상세 페이지로 이동
+    const handleProductClick = (productId) => {
+        navigate(`/product/${productId}`);
+    };
+
+    // 카테고리 클릭 핸들러 - 카테고리 페이지로 이동
+    const handleCategoryClick = (category) => {
+        navigate(`/category/${category.id}`);
+    };
+
     return (
         <>
-            {/* 히스토리 패널 */}
-
             {/* 사이드 메뉴 버튼들 */}
             <div
                 className={`fixed right-4 bottom-4 bg-primary-300 rounded-lg p-3 flex flex-col gap-3 transition-all duration-300 z-40 ${
@@ -77,27 +190,25 @@ const SideMenuBar = ({ setIsChatOpen }) => {
                     </svg>
                 </button>
 
-                {/* Instagram */}
-                <button>
-                    <a
-                        href='https://www.instagram.com/oheshio/'
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        className='w-12 h-12 bg-[#F1F5F9] rounded-full flex justify-center items-center hover:bg-white transition-colors duration-200 cursor-pointer'
+                {/* Instagram - 수정된 부분: button 태그를 a 태그로 변경 */}
+                <a
+                    href='https://www.instagram.com/oheshio/'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='w-12 h-12 bg-[#F1F5F9] rounded-full flex justify-center items-center hover:bg-white transition-colors duration-200 cursor-pointer'
+                >
+                    <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        className='h-6 w-6'
+                        fill='none'
+                        viewBox='0 0 24 24'
+                        stroke='#64748B'
                     >
-                        <svg
-                            xmlns='http://www.w3.org/2000/svg'
-                            className='h-6 w-6'
-                            fill='none'
-                            viewBox='0 0 24 24'
-                            stroke='#64748B'
-                        >
-                            <rect x='2' y='2' width='20' height='20' rx='5' strokeWidth={2} />
-                            <circle cx='12' cy='12' r='4' strokeWidth={2} />
-                            <circle cx='18' cy='6' r='1' strokeWidth={2} fill='#64748B' />
-                        </svg>
-                    </a>
-                </button>
+                        <rect x='2' y='2' width='20' height='20' rx='5' strokeWidth={2} />
+                        <circle cx='12' cy='12' r='4' strokeWidth={2} />
+                        <circle cx='18' cy='6' r='1' strokeWidth={2} fill='#64748B' />
+                    </svg>
+                </a>
 
                 {/* Clock / History - 히스토리 토글 기능 추가 */}
                 <button
@@ -125,20 +236,109 @@ const SideMenuBar = ({ setIsChatOpen }) => {
                                 {/* 중간에만 표시되는 세로 구분선 */}
                                 <div className='absolute right-0 top-[20px] h-[280px] w-[1px] bg-primary-400' />
                                 <h2 className='font-mono text-2xl font-bold text-gray-800 mb-6'>History</h2>
-                                <p className='font-korean text-gray-400'>최근 본 카테고리가 없습니다.</p>
+
+                                {recentCategories && recentCategories.length > 0 ? (
+                                    <div className='space-y-4 overflow-y-auto max-h-[200px]'>
+                                        {recentCategories.map((category) => (
+                                            <div key={category.id} className='relative group'>
+                                                <div
+                                                    onClick={() => handleCategoryClick(category)}
+                                                    className='flex items-center p-1 cursor-pointer transition-colors'
+                                                >
+                                                    {/* 카테고리 이름 */}
+                                                    <span className='font-korean text-gray-500'>{category.name}</span>
+                                                </div>
+
+                                                {/* 카테고리 제거 버튼 (호버시 표시) - 위치 수정 및 X 중앙 정렬 */}
+                                                <button
+                                                    className='absolute top-1 right-1 bg-primary-500 text-white rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity'
+                                                    onClick={() => handleRemoveCategory(category.id)}
+                                                >
+                                                    <svg
+                                                        xmlns='http://www.w3.org/2000/svg'
+                                                        className='h-3 w-3'
+                                                        fill='none'
+                                                        viewBox='0 0 24 24'
+                                                        stroke='currentColor'
+                                                    >
+                                                        <path
+                                                            strokeLinecap='round'
+                                                            strokeLinejoin='round'
+                                                            strokeWidth={2}
+                                                            d='M12 6L12 18M6 12l12 0'
+                                                            transform='rotate(45 12 12)'
+                                                        />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <p className='text-gray-400'>No recent categories.</p>
+                                )}
                             </div>
+
                             {/* 오른쪽 섹션 - 최근 본 상품 */}
                             <div className='w-1/2 p-6'>
-                                <h2 className='font-korean text-base font-bold text-gray- mb-6'>최근 본 상품</h2>
-                                <div className='flex gap-4'>
-                                    {/* <div className='w-20 h-20 bg-gray-200 rounded'></div>
-                                <div className='w-20 h-20 bg-gray-200 rounded'></div>
-                                <div className='w-20 h-20 bg-gray-200 rounded'></div> */}
+                                <div className='flex justify-between items-center mb-6'>
+                                    <h2 className='text-base font-bold text-gray-800'>Recently Viewed</h2>
+
+                                    {/* 전체 삭제 버튼 */}
+                                    {recentlyViewed.length > 0 && (
+                                        <button
+                                            onClick={clearAllRecentlyViewed}
+                                            className='font-mono text-xs mt-1 text-gray-500 hover:text-gray-700 transition-colors'
+                                        >
+                                            All Delete
+                                        </button>
+                                    )}
                                 </div>
+
+                                {recentlyViewed.length > 0 ? (
+                                    <div className='flex flex-wrap gap-4 overflow-y-auto max-h-[200px]'>
+                                        {recentlyViewed.map((item) => (
+                                            <div key={item.id} className='relative group'>
+                                                <div
+                                                    className='w-20 h-20 overflow-hidden cursor-pointer'
+                                                    onClick={() => handleProductClick(item.id)}
+                                                >
+                                                    <img
+                                                        src={item.imageUrl}
+                                                        alt='Product'
+                                                        className='w-full h-full object-cover'
+                                                    />
+                                                </div>
+                                                {/* 아이템 제거 버튼 (호버시 표시) - 위치 수정 및 X 중앙 정렬 */}
+                                                <button
+                                                    className='absolute top-1 right-1 bg-primary-500 text-white rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity'
+                                                    onClick={() => handleRemoveItem(item.id)}
+                                                >
+                                                    <svg
+                                                        xmlns='http://www.w3.org/2000/svg'
+                                                        className='h-3 w-3'
+                                                        fill='none'
+                                                        viewBox='0 0 24 24'
+                                                        stroke='currentColor'
+                                                    >
+                                                        <path
+                                                            strokeLinecap='round'
+                                                            strokeLinejoin='round'
+                                                            strokeWidth={2}
+                                                            d='M12 6L12 18M6 12l12 0'
+                                                            transform='rotate(45 12 12)'
+                                                        />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <p className='text-gray-400'>No recently viewed items.</p>
+                                )}
                             </div>
                         </div>
 
-                        {/* 닫기 버튼 */}
+                        {/* 닫기 버튼 - X 중앙 정렬 */}
                         <button
                             onClick={toggleHistory}
                             className='absolute top-2 right-2 text-gray-500 hover:text-gray-700'
@@ -154,7 +354,8 @@ const SideMenuBar = ({ setIsChatOpen }) => {
                                     strokeLinecap='round'
                                     strokeLinejoin='round'
                                     strokeWidth={2}
-                                    d='M6 18L18 6M6 6l12 12'
+                                    d='M12 6L12 18M6 12l12 0'
+                                    transform='rotate(45 12 12)'
                                 />
                             </svg>
                         </button>

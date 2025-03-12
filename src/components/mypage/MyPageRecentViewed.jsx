@@ -4,6 +4,7 @@ import { authActions } from '../../store/modules/authSlice';
 import { cartActions } from '../../store/modules/cartSlice';
 import Buttons from '../../ui/Buttons';
 import { showToast } from '/src/ui/toast/showToast';
+import { IoIosClose } from 'react-icons/io';
 const MyPageRecentViewed = ({ recentlyViewed, wishlist }) => {
   const dispatch = useDispatch();
   const removeRecentlyViewed = (itemId) => {
@@ -35,49 +36,49 @@ const MyPageRecentViewed = ({ recentlyViewed, wishlist }) => {
   };
 
   return (
-    <div className='border-t border-gray-300'>
-      <div className='w-full min-h-screen bg-white flex flex-col items-center pt-10'>
-        <div className='w-full max-w-[1100px] mx-auto'>
+    <div className="border-t border-gray-300">
+      <div className="w-full min-h-screen bg-white flex flex-col items-center pt-10">
+        <div className="w-full max-w-[1100px] mx-auto">
           {recentlyViewed.length === 0 ? (
-            <div className='text-center py-10'>
-              <p className='text-gray-500'>최근 본 상품이 없습니다.</p>
+            <div className="text-center py-10">
+              <p className="text-gray-500 font-korean">최근 본 상품이 없습니다.</p>
             </div>
           ) : (
-            <div className='grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-5 mx-auto'>
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-5 mx-auto">
               {recentlyViewed.map((item) => (
                 <div
                   key={item.id}
-                  className='relative flex flex-row items-center p-5 gap-5 bg-[#FAFAFA] w-full max-w-[480px] h-auto rounded-lg shadow-md'
+                  className="relative flex flex-row items-center p-5 gap-5 bg-[#F1F5F9] w-full max-w-[480px] h-auto rounded-lg shadow-md"
                 >
-                  <img src={item.imageUrl} alt={item.name} className='w-32 h-32 object-cover' />
+                  <img src={item.imageUrl} alt={item.name} className="w-32 h-32 object-cover" />
 
-                  <div className='flex flex-col flex-grow justify-between h-full'>
-                    <div className='flex justify-between items-start'>
-                      <h3 className='text-lg font-semibold text-left'>{item.name.toUpperCase()}</h3>
-                      <button className='text-gray-600 text-xl' onClick={() => removeRecentlyViewed(item.id)}>
-                        ×
+                  <div className="flex flex-col flex-grow justify-between h-full ">
+                    <div className="flex justify-between items-start">
+                      <h3 className="text-lg font-semibold text-left">{item.name.toUpperCase()}</h3>
+                      <button className="text-gray-600 text-xl" onClick={() => removeRecentlyViewed(item.id)}>
+                        <IoIosClose />
                       </button>
                     </div>
 
-                    <div className='text-left'>
-                      <p className='text-gray-500 text-sm'>{item.color.toUpperCase()}</p>
-                      <p className='text-gray-500 text-sm'>QUANTITY {item.quantity}</p>
-                      <p className='text-gray-900 font-semibold mt-2'>{item.price}</p>
+                    <div className="text-left">
+                      <p className="text-gray-500 text-sm">{item.color.toUpperCase()}</p>
+                      <p className="text-gray-500 text-sm">QUANTITY {item.quantity}</p>
+                      <p className="text-gray-900 font-semibold mt-2">{item.price}</p>
                     </div>
 
-                    <div className='flex justify-end gap-4'>
+                    <div className="flex justify-end gap-2 mt-5">
                       <Buttons
-                        size='small'
-                        state='default'
-                        className='border border-primary-400 text-primary-500 px-4 py-2'
+                        size="small"
+                        state="default"
+                        className="border border-primary-400 text-primary-500 px-4 py-2 font-korean"
                         onClick={() => addCart(item)}
                       >
                         장바구니
                       </Buttons>
                       <Buttons
-                        size='small'
-                        state='default'
-                        className='border border-primary-400 text-primary-500 px-4 py-2'
+                        size="small"
+                        state="default"
+                        className="border border-primary-400 text-primary-500 px-4 py-2 font-korean"
                         onClick={() => addWishlist(item)}
                       >
                         찜하기
