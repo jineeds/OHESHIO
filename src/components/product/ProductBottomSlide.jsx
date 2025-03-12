@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ProductBottomSlideContainer } from './style/style';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { authActions } from '../../store/modules/authSlice';
+import Typed from 'typed.js';
 
 const ProductBottomSlide = ({ products }) => {
   const [hoveredProductId, setHoveredProductId] = useState(null);
   const [isPaused, setIsPaused] = useState(false);
   const dispatch = useDispatch();
   const [selectedProducts, setSelectedProducts] = useState([]);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     const uniqueProducts = Array.from(new Map(products.map((product) => [product.id, product])).values());
@@ -53,42 +51,35 @@ const ProductBottomSlide = ({ products }) => {
   };
 
   return (
-    <ProductBottomSlideContainer>
-      <div
-        className={`slide_inner w-[800vw] md:w-[400vw] mt-20 flex ${isPaused ? 'paused' : ''}`}
-        onMouseOut={handleMouseOut}
-      >
-        {selectedProducts.map((product, index) => {
-          const displayImageUrl = getImageForProduct(product);
+    <div className='w-full  py-8 md:py-12 lg:py-16 md:mt-[-100px]'>
+      <ProductBottomSlideContainer className='relative'>
+        <div
+          className={`slide_inner flex ${
+            isPaused ? 'paused' : ''
+          } w-[800vw] sm:w-[600vw] md:w-[400vw] lg:w-[300vw] xl:w-[600vw]`}
+          onMouseOut={handleMouseOut}
+        >
+          {selectedProducts.map((product, index) => {
+            const displayImageUrl = getImageForProduct(product);
 
-          return (
-            <div
-              key={`${product.id}-${index}`}
-              className='slide_img_1 w-[26.66%] m-0 relative z-10 '
-              onMouseOver={() => handleMouseOver(product.id)}
-              onClick={(e) => onGo(product.id, e)}
-            >
-              <a href={`#/product/${product.id}`} style={{ width: '100%', height: '100%', display: 'block' }}>
-                <div
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    position: 'relative',
-                  }}
-                >
+            return (
+              <div
+                key={`${product.id}-${index}`}
+                className='slide_item w-[400px]  relative cursor-pointer '
+                onMouseOver={() => handleMouseOver(product.id)}
+                onClick={(e) => onGo(product.id, e)}
+              >
+                <div className=''>
                   <img
                     src={displayImageUrl}
-                    alt={`${product.name} 이미지`}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      transition: 'transform 0.3s ease-in-out',
-                    }}
+                    alt={`${product.name}`}
+                    className='w-full h-full object-cover transition-transform duration-300'
                     onError={(e) => {
                       e.target.onerror = null;
                       e.target.src = '/oheshio/outer/gray/p001_round_collar_semi-crop_jacket/p001_1.png';
                     }}
                   />
+
                   <div
                     className='product-info'
                     style={{
@@ -105,15 +96,15 @@ const ProductBottomSlide = ({ products }) => {
                     }}
                   >
                     <div>{product.name}</div>
-                    <div>{product.price?.toLocaleString?.() || ''}원</div>
+                    <div> KRW {product.price?.toLocaleString?.() || ''}</div>
                   </div>
                 </div>
-              </a>
-            </div>
-          );
-        })}
-      </div>
-    </ProductBottomSlideContainer>
+              </div>
+            );
+          })}
+        </div>
+      </ProductBottomSlideContainer>
+    </div>
   );
 };
 

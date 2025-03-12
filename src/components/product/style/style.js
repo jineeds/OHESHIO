@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const ProductContain = styled.div`
-  padding: 101px 0 20px;
   width: 100%;
   margin: 0 auto;
   position: relative;
