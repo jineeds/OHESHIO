@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom'; // ✅ 추가
 import Buttons from '../../ui/Buttons';
 import { authActions } from '../../store/modules/authSlice';
 import { cartActions } from '../../store/modules/cartSlice';
@@ -7,6 +8,7 @@ import { IoIosClose } from 'react-icons/io';
 
 const MyPageWishlist = ({ wishlist }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const removeWishlist = (itemId) => {
     dispatch(authActions.removeWishlist(itemId));
@@ -23,6 +25,12 @@ const MyPageWishlist = ({ wishlist }) => {
         image: item.imageUrl,
       })
     );
+  };
+
+  // 주문클릭시 페이지이동처리
+  const handleOrder = (item) => {
+    addToCart(item);
+    navigate('/checkout');
   };
 
   return (
@@ -69,6 +77,7 @@ const MyPageWishlist = ({ wishlist }) => {
                         size="small"
                         state="default"
                         className="border border-primary-400 text-primary-500 px-4 py-2 font-korean"
+                        onClick={() => handleOrder(item)}
                       >
                         주문하기
                       </Buttons>

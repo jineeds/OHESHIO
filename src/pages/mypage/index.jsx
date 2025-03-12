@@ -13,6 +13,8 @@ const MyPage = () => {
   const currentUser = useSelector((state) => state.authR.currentUser);
   const isAuthed = useSelector((state) => state.authR.authed);
 
+  console.log(currentUser.orders);
+
   if (!isAuthed) {
     return (
       <div className="max-w-7xl mx-auto py-10 text-center">
