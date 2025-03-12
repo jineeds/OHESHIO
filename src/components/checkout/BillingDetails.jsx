@@ -67,7 +67,6 @@ const BillingDetails = () => {
           placeholder="받는사람"
           value={billingDetails.receiverName}
           onChange={handleChange}
-          // error={errors.receiverName}
           error={formErrors?.receiverName || errors.receiverName}
           success={false}
         />

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { authActions } from '../../store/modules/authSlice';
 import ProductSizing from './ProductSizing';
+import { cartActions } from '../../store/modules/cartSlice';
 const ProductDetail = ({ product, commonDetails }) => {
   const { id, name, category, price, color, image, model_images } = product;
   const { description, material, care, size_info, model_info } = commonDetails;
@@ -137,20 +138,34 @@ const ProductDetail = ({ product, commonDetails }) => {
     window.scrollTo(0, 0);
     navigate(`/product/${item}`);
   };
+
+  const handleAddToCart = () => {
+    const itemToAdd = {
+      id: `${id}_${size}`,
+      productId: id,
+      name: name,
+      price: price,
+      size: size,
+      color: color,
+      image: image,
+    };
+    dispatch(cartActions.addItemToCart(itemToAdd));
+    navigate('/cart');
+  };
   return (
-    <div className='product_detail_contain w-1/3 text-black z-[99] sticky top-[100px] pr-20'>
-      <div className='top_product_info'>
-        <div className='detail_title'>
+    <div className="product_detail_contain xl:w-1/3 max-w-[550px]  text-black  z-[99] xl:sticky xl:top-[100px] xl:pr-20 ">
+      <div className="top_product_info">
+        <div className="detail_title">
           <span ref={doc} />
         </div>
-        <div className='detail_price'>
+        <div className="detail_price">
           <span ref={doc2} />
         </div>
       </div>
-      <div className='w-[calc(100%-20px)] flex flex-wrap '>
+      <div className="w-[calc(100%-20px)] flex flex-wrap ">
         {colorsProduct.length > 0 && (
-          <div className='w-full mb-3'>
-            <div className='flex flex-wrap gap-2'>
+          <div className="w-full mb-3">
+            <div className="flex flex-wrap gap-2">
               {colorsProduct.map((item) => (
                 <button
                   key={item.id}
@@ -159,15 +174,15 @@ const ProductDetail = ({ product, commonDetails }) => {
                   }`}
                   title={item.color}
                 >
-                  <img src={item.image} alt={`${item.name} - ${item.color}`} className='w-full h-full object-cover' />
+                  <img src={item.image} alt={`${item.name} - ${item.color}`} className="w-full h-full object-cover" />
                 </button>
               ))}
             </div>
           </div>
         )}
       </div>
-      <div className='lower_product_info flex flex-col gap-5'>
-        <div className='w-full flex mt-5 flex-wrap relative'>
+      <div className="lower_product_info flex flex-col gap-5">
+        <div className="w-full flex mt-5 flex-wrap relative">
           {['XS', 'S', 'M', 'L', 'XL'].map((sizeOption) => (
             <button
               key={sizeOption}
@@ -182,13 +197,16 @@ const ProductDetail = ({ product, commonDetails }) => {
         </div>
         <div>
           {selectedSize ? (
-            <div className='shadow-[0_1px_6px_0_rgba(32,33,36,0.6)] px-5 py-[15px] w-[60%] flex justify-between items-center rounded-[2.5em] bg-[#CBD5E1]'>
+            <button
+              onClick={handleAddToCart}
+              className=" shadow-[0_1px_6px_0_rgba(32,33,36,0.6)] px-5 py-[15px] w-[60%] flex justify-between items-center rounded-[2.5em] bg-[#CBD5E1] my-[10px]"
+            >
               <span></span>
               <span>add to bag</span>
               <span>→</span>
-            </div>
+            </button>
           ) : (
-            <div className='shadow-[0_1px_6px_0_rgba(32,33,36,0.6)] px-5 py-[15px] w-[60%] flex justify-between items-center opacity-70 rounded-[2.5em] bg-[#F8FAFC] text-[#9CA3AF]'>
+            <div className="shadow-[0_1px_6px_0_rgba(32,33,36,0.6)] px-5 py-[15px] w-[60%] flex justify-between items-center opacity-70 rounded-[2.5em] bg-[#F8FAFC] text-[#9CA3AF]">
               <span></span>
               <span>select your size</span>
               <span>→</span>
@@ -197,12 +215,12 @@ const ProductDetail = ({ product, commonDetails }) => {
         </div>
 
         <div className={`product_details_toggle ${isVisible ? 'clicked' : ''}`}>
-          <span className='details_toggle_description cursor-pointer text-gray-700' onClick={toggleDetails}>
+          <span className="details_toggle_description cursor-pointer text-gray-700" onClick={toggleDetails}>
             product details
           </span>
 
           {isVisible && (
-            <div className='product_details_document select-none text-gray-700'>
+            <div className="product_details_document select-none text-gray-700">
               <p ref={product_detail1}></p>
               <p ref={product_detail2}></p>
               <p ref={product_detail3}></p>
@@ -210,16 +228,16 @@ const ProductDetail = ({ product, commonDetails }) => {
             </div>
           )}
         </div>
-        <div className='sizing_chart_toggle text-gray-700'>
+        <div className="sizing_chart_toggle text-gray-700">
           <>
-            <button onClick={() => setIsModalOpen(true)} className='sizing_toggle_description'>
+            <button onClick={() => setIsModalOpen(true)} className="sizing_toggle_description">
               sizing chart +
             </button>
 
             <ProductSizing isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} category={category} name={name} />
           </>
         </div>
-        <div className='text-gray-700'>
+        <div className="text-gray-700">
           <span>styled with ↓</span>
         </div>
       </div>

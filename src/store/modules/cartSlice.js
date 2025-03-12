@@ -2,57 +2,21 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   items: [
-    {
-      id: 1,
-      name: 'TRENCH COLLAR JUMPER',
-      color: 'BEIGE',
-      size: 'XS',
-      price: 215000,
-      quantity: 1,
-      image: '/images/RTBTANKROCK.png',
-    },
-    {
-      id: 2,
-      name: 'SHIRT HOODED ZIP-UP',
-      color: 'BLACK',
-      size: 'S',
-      price: 189000,
-      quantity: 2,
-      image: '/images/RTBTANKROCK.png',
-    },
-    {
-      id: 3,
-      name: 'ROUND COLLAR BLOUSON JACKET',
-      color: 'BLUE',
-      size: 'M',
-      price: 189000,
-      quantity: 1,
-      image: '/images/RTBTANKROCK.png',
-    },
-    {
-      id: 4,
-      name: 'TRENCH COLLAR JUMPER2',
-      color: 'BLUE',
-      size: 'L',
-      price: 189000,
-      quantity: 1,
-      image: '/images/RTBTANKROCK.png',
-    },
-    {
-      id: 5,
-      name: 'TRENCH COLLAR JUMPER2',
-      color: 'BLUE',
-      size: 'XL',
-      price: 189000,
-      quantity: 1,
-      image: '/images/RTBTANKROCK.png',
-    },
+    // {
+    //   id: 1,
+    //   name: 'TRENCH COLLAR JUMPER2',
+    //   color: 'BLUE',
+    //   size: 'XL',
+    //   price: 189000,
+    //   quantity: 1,
+    //   image: '/images/RTBTANKROCK.png',
+    // },
   ],
-  totalQuantity: 6,
-  subtotal: 971000,
+  totalQuantity: 0,
+  subtotal: 0,
   shipping: 0,
   discount: 0,
-  total: 971000,
+  total: 0,
 };
 
 export const cartSlice = createSlice({
@@ -121,9 +85,19 @@ export const cartSlice = createSlice({
 
     // 할인 금액 설정
     setDiscount: (state, action) => {
-      state.discount = action.payload;
+      const { type, value, subtotal } = action.payload;
+
+      if (type === 'fixed') {
+        state.discount = value;
+      } else if (type === 'percentage') {
+        state.discount = Math.round((subtotal * value) / 100);
+      } else {
+        state.discount = 0;
+      }
+
       state.total = state.subtotal + state.shipping - state.discount;
     },
+
     replaceCart: (state, action) => {
       state.items = action.payload;
       state.totalQuantity = action.payload.reduce((total, item) => total + item.quantity, 0);
