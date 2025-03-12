@@ -21,7 +21,7 @@ const Kbrand = () => {
       </section>
 
       <div className="w-full">
-        <img src="/kbrand/pick-01.png" alt="cover" className="w-full h-auto rounded-md" />
+        <img src="/kbrand/pick-01.png" alt="cover" className="h-auto rounded-md" />
       </div>
 
       {/* Minji Section */}
@@ -32,13 +32,14 @@ const Kbrand = () => {
             <img src="/kbrand/minji.jpg" alt="model" className="relative z-10 rounded-md w-full" />
           </div>
           <div className="relative w-full max-w-[500px] h-[300px] mt-6 md:mt-0">
-            <div className="absolute top-4 sm:top-6 left-1/2 sm:left-[300px] transform sm:transform-none -translate-x-1/2 sm:translate-x-0 rotate-[-14deg] bg-primary-200 text-xs px-3 py-1 rounded shadow z-20 text-gray-800">
+            <div className="absolute top-7 sm:top-6 right-[30px] sm:right-auto sm:left-[300px] transform sm:transform-none translate-x-0 sm:-translate-x-1/2 rotate-[-30deg] bg-primary-200 text-xs px-3 py-1 rounded shadow z-20 text-gray-800">
               MinJi Pick
             </div>
+
             <img
               src="/kbrand/roy_2.png"
               alt="glasses"
-              className="absolute top-[80px] left-1/2 sm:left-[40px] transform -translate-x-1/2 sm:translate-x-0 rotate-[-14deg] w-[250px] sm:w-[300px] z-10"
+              className="absolute top-[80px] left-1/2 sm:left-[40px]transform -translate-x-1/2 sm:translate-x-0 rotate-[-14deg] w-[250px] sm:w-[300px] z-10"
             />
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 sm:left-12 sm:translate-x-0 text-sm text-gray-700 font-mono z-20">
               Feather-Fit
@@ -53,7 +54,7 @@ const Kbrand = () => {
       <section className="scroll-show opacity-0 translate-y-10 transition-all duration-700 ease-in-out w-full px-4 sm:px-6 md:px-16 pb-16">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 p-6 justify-items-center items-center">
           <div className="relative w-full max-w-[500px] h-[300px]">
-            <div className="absolute top-6 left-1/2 sm:left-[50px] transform -translate-x-1/2 sm:translate-x-0 bg-primary-200 text-xs px-3 py-1 rounded shadow z-20 text-gray-800">
+            <div className="absolute top-7 sm:top-6 right-[30px] sm:right-auto sm:left-[300px] transform sm:transform-none translate-x-0 sm:-translate-x-1/2 rotate-[-30deg] bg-primary-200 text-xs px-3 py-1 rounded shadow z-20 text-gray-800">
               Hanni Pick
             </div>
             <img
@@ -82,7 +83,7 @@ const Kbrand = () => {
             <img src="/kbrand/hearin.jpg" alt="hearin" className="relative z-10 rounded-md w-full" />
           </div>
           <div className="relative w-full max-w-[500px] h-[300px]">
-            <div className="absolute top-6 left-1/2 sm:left-[300px] transform -translate-x-1/2 sm:translate-x-0 rotate-[-14deg] bg-primary-200 text-xs px-3 py-1 rounded shadow z-20 text-gray-800">
+            <div className="absolute top-7 sm:top-6 right-[30px] sm:right-auto sm:left-[300px] transform sm:transform-none translate-x-0 sm:-translate-x-1/2 rotate-[-20deg] bg-primary-200 text-xs px-3 py-1 rounded shadow z-20 text-gray-800">
               Haerin Pick
             </div>
             <img
@@ -103,7 +104,7 @@ const Kbrand = () => {
       <section className="scroll-show opacity-0 translate-y-10 transition-all duration-700 ease-in-out w-full px-4 sm:px-6 md:px-16 pb-16">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 p-6 justify-items-center items-center">
           <div className="relative w-full max-w-[500px] h-[300px]">
-            <div className="absolute top-6 left-1/2 sm:left-[250px] transform -translate-x-1/2 sm:translate-x-0 rotate-[-14deg] bg-primary-200 text-xs px-3 py-1 rounded shadow z-20 text-gray-800">
+            <div className="absolute top-7 sm:top-6 right-[10px] sm:right-auto sm:left-[300px] transform sm:transform-none translate-x-0 sm:-translate-x-1/2 rotate-[-20deg] bg-primary-200 text-xs px-3 py-1 rounded shadow z-20 text-gray-800">
               Danielle Pick
             </div>
             <img
@@ -131,7 +132,7 @@ const Kbrand = () => {
             <img src="/kbrand/hyein.jpg" alt="hyein" className="relative z-10 rounded-md w-full" />
           </div>
           <div className="relative w-full max-w-[500px] h-[300px]">
-            <div className="absolute top-6 left-1/2 sm:left-[300px] transform -translate-x-1/2 sm:translate-x-0 rotate-[-14deg] bg-primary-200 text-xs px-3 py-1 rounded shadow z-20 text-gray-800">
+            <div className="absolute top-7 sm:top-6 right-[30px] sm:right-auto sm:left-[300px] transform sm:transform-none translate-x-0 sm:-translate-x-1/2 rotate-[-30deg] bg-primary-200 text-xs px-3 py-1 rounded shadow z-20 text-gray-800">
               Hyein Pick
             </div>
             <img
