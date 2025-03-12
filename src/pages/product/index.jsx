@@ -38,12 +38,12 @@ const Product = () => {
     }
   }, [productId, dispatch, authed, products]);
   if (!selectedProduct) {
-    return <div className='text-center py-20'>데이터를 불러 오고 있습니다...</div>;
+    return <div className="text-center py-20">데이터를 불러 오고 있습니다...</div>;
   }
   return (
     <>
-      <div className=' flex flex-col gap-56 '>
-        <ProductContain className='flex-col-reverse xl:flex-row-reverse xl:items-start '>
+      <div className=" flex flex-col gap-56 ">
+        <ProductContain className="flex-col-reverse xl:flex-row-reverse xl:items-start ">
           <ProductDetail product={selectedProduct} commonDetails={commonDetails} />
           <ProductCharacter product={selectedProduct} commonDetails={commonDetails} />
         </ProductContain>

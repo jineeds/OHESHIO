@@ -1,17 +1,17 @@
 import { Link } from 'react-router-dom';
 import InputCustom from '../../ui/InputCustom';
 import { useSelector, useDispatch } from 'react-redux';
-import { cartActions } from '../../store/modules/cartSlice'; // 경로는 실제 프로젝트 구조에 맞게 조정해주세요
+import { cartActions } from '../../store/modules/cartSlice';
 import { checkoutActions } from '../../store/modules/checkoutSlice';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
 const OrderDetails = () => {
-  // 필요한 상태 가져오기
   const { discountType, discountValue, discountError } = useSelector((state) => state.checkoutR);
   const { subtotal, shipping, discount, total, totalQuantity } = useSelector((state) => state.cartR);
   const cartItems = useSelector((state) => state.cartR.items);
   const dispatch = useDispatch();
+  console.log(cartItems);
 
   // 할인 코드 상태
   const [discountCode, setDiscountCode] = useState('');
@@ -57,9 +57,7 @@ const OrderDetails = () => {
           {cartItems.map((item) => (
             <div key={item.id} className="flex items-center gap-4">
               <div className="relative w-[20%] min-w-16 max-w-16 bg-gray-100 rounded-lg border border-gray-200">
-                <Link to={'#'}>
-                  <img src={item.image} alt={item.name} className="block aspect-square object-cover" />
-                </Link>
+                <img src={item.image} alt={item.name} className="block aspect-square object-cover" />
                 <div className="absolute top-0 right-0 -mt-2 -mr-2 bg-gray-800/70 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
                   {item.quantity}
                 </div>
