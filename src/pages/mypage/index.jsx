@@ -18,7 +18,6 @@ const MyPage = () => {
   const [exchangeOrders, setExchangeOrders] = useState([]);
   const [refundOrders, setRefundOrders] = useState([]);
 
-  // ✅ 주문 리스트에 상태(displayStatus) 가공 처리
   const updatedOrders =
     currentUser?.orders?.map((order) => {
       const displayStatus = [];

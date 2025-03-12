@@ -26,15 +26,7 @@ const MyPageCoupons = ({ coupons = [] }) => {
                     <td className="py-5 px-6 text-center">{index + 1}</td>
                     <td className="py-5 px-6 text-center font-korean">{coupon.name}</td>
                     <td className="py-5 px-6 text-center font-korean">{coupon.purchaseAmount.toLocaleString()}원</td>
-                    <td className="py-6 px-10 text-center">
-                      <Buttons
-                        size="large"
-                        state="default"
-                        className="border border-primary-400 text-primary-500 rounded-md font-korean text-sm"
-                      >
-                        {coupon.code}
-                      </Buttons>
-                    </td>
+                    <td className="py-6 px-10 text-center">{coupon.code}</td>
                     <td className="py-5 px-6 text-center font-korean">
                       {coupon.discountType === 'percentage'
                         ? `${coupon.discountValue}% 할인`
