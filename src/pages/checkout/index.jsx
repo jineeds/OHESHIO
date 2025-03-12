@@ -22,6 +22,8 @@ const Checkout = () => {
   );
   const { items, subtotal, shipping, discount, total } = useSelector((state) => state.cartR);
   const { currentUser, authed } = useSelector((state) => state.authR);
+  // 무통ㅏㅇ입금
+  const { payment } = useSelector((state) => state.checkoutR);
 
   const handleCardChange = (e) => {
     setSelectedCard(e.target.value);
@@ -76,7 +78,11 @@ const Checkout = () => {
         shipping,
         discount,
         total,
-        status: 'processing',
+        // status: 'processing',
+        // 결제완료
+        status: payment.method === 'creditCard' ? 'paid' : 'pending',
+        // 무통장입금 연ㅕ 추
+        paymentMethod: payment.method,
       };
 
       // authSlice orders 주문 데이터 추가, 사용한 쿠폰 삭제
