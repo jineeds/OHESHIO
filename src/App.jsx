@@ -9,14 +9,9 @@ import Kbrand from './pages/kbrand';
 import OrderComplete from './components/checkout/OrderComplete';
 
 function App() {
-  useEffect(() => {
-    if (window.Kakao && !window.Kakao.isInitialized()) {
-      window.Kakao.init('f7aadc98e379d0346b134b21cb45c732');
-    }
-  }, []);
   return (
     <>
-      <GoogleOAuthProvider clientId="61932039197-uvv3mbu0bs9j03idqgtgorgo8gtlvr84.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
         <BrowserRouter>
           <Routes>
             <Route index element={<Home />} />

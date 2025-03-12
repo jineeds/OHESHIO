@@ -453,6 +453,21 @@ export const authSlice = createSlice({
         localStorage.setItem('currentUser', JSON.stringify(state.currentUser));
       }
     },
+    clearAllRecentlyViewed: (state) => {
+      if (!state.currentUser) return;
+
+      const userIndex = state.users.findIndex((user) => user.id === state.currentUser.id);
+
+      if (userIndex !== -1) {
+        // Clear the recentlyViewed array
+        state.users[userIndex].recentlyViewed = [];
+        state.currentUser.recentlyViewed = [];
+
+        // Update localStorage
+        localStorage.setItem('users', JSON.stringify(state.users));
+        localStorage.setItem('currentUser', JSON.stringify(state.currentUser));
+      }
+    },
 
     addOrderToUser: (state, action) => {
       if (!state.currentUser) return;

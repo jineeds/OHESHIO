@@ -56,7 +56,7 @@ const LoginForm = () => {
 
         dispatch(cartActions.replaceCart(cartItems));
       }
-      navigate('/');
+      navigate('/main');
     }
   }, [authed]);
 

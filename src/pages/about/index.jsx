@@ -140,9 +140,7 @@ const About = () => {
 
         {/* 브랜드 소개글 */}
         <FadeUpSection>
-          {/* <section className="flex flex-nowrap lg:flex-row  items-center justify-center px-4 lg:px-16 py-16"> */}
-
-          <section className="flex flex-nowrap lg:flex-row  items-center justify-center px-4 lg:px-16 py-16">
+          <section className="flex flex-col lg:flex-row items-center justify-center px-4 lg:px-16 py-16">
             <div className="lg:w-1/2 flex justify-center mb-8 lg:mb-0">
               <img
                 src={images[currentIndex]}
