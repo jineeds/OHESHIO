@@ -8,6 +8,7 @@ const CartItem = ({ id, isLast }) => {
   const dispatch = useDispatch();
   const item = useSelector((state) => state.cartR.items.find((item) => item.id === id));
   const [inputValue, setInputValue] = useState(item?.quantity?.toString() || '1');
+  const productId = item.id.split('_')[0];
 
   useEffect(() => {
     if (item && item.quantity) {
@@ -43,19 +44,19 @@ const CartItem = ({ id, isLast }) => {
       <div className="flex items-center py-5 md:py-0 md:block border-b border-secondary-300">
         {/* 모바일용 이미지 */}
         <div className="w-1/3 max-w-[120px] md:hidden">
-          <Link to={'#'}>
+          <Link to={`/product/${productId}`}>
             <img src={image} alt={name} className="" />
           </Link>
         </div>
         <div className="relative flex flex-col flex-1 pl-[4%] md:flex-row md:items-center md:p-5 ">
           {/* 데스크탑용 이미지 */}
           <div className="hidden md:block w-1/6 pr-10">
-            <Link to={'#'}>
+            <Link to={`/product/${productId}`}>
               <img src={image} alt={name} className="" />
             </Link>
           </div>
           <div className="w-full md:w-2/6 pr-6 flex flex-col md:gap-2">
-            <Link to={'#'}>
+            <Link to={`/product/${productId}`}>
               <strong className="text-sm xl:text-base line-clamp-2 overflow-hidden text-ellipsis font-normal md:mb-1 xl:mb-2">
                 {name}
               </strong>

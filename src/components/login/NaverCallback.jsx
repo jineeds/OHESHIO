@@ -15,41 +15,41 @@ const NaverCallback = () => {
     const state = params.get('state');
 
     const savedState = sessionStorage.getItem('naverState');
-
     sessionStorage.removeItem('naverState');
 
-    if (!accessToken) {
-      navigate('/');
+    if (!accessToken || state !== savedState) {
+      navigate('/login');
       return;
     }
 
-    if (state !== savedState) {
-      navigate('/');
-      return;
-    }
-    dispatch(
-      authActions.socialLogin({
-        provider: 'naver',
-        profile: {
-          id: 'naver_' + new Date().getTime(),
-          name: '네이버 user1',
-          email: 'naver_user@example.com',
-          profileImage: 'https://via.placeholder.com/150',
-        },
-      })
-    );
+    // 사용자 데이터
+    const userData = {
+      provider: 'naver',
+      profile: {
+        id: 'naver_' + new Date().getTime(),
+        name: '네이버 user1',
+        email: 'naver_user@example.com',
+        profileImage: 'https://via.placeholder.com/150',
+      },
+    };
+
+    dispatch(authActions.socialLogin(userData));
+
+    localStorage.setItem('naverLoginSuccess', JSON.stringify(userData));
+
     if (window.opener) {
       window.opener.postMessage(
         {
           type: 'naver-login-success',
-          data: {},
+          data: userData,
         },
         window.location.origin
       );
-
       window.close();
     } else {
+      console.log('리다이렉트 시도: /main');
       navigate('/main');
+      console.log('리다이렉트 후');
     }
   }, [dispatch, navigate]);
 

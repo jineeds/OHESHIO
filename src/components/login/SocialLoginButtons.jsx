@@ -1,20 +1,47 @@
 import { useDispatch } from 'react-redux';
 import Buttons from '../../ui/Buttons';
 import { useGoogleLogin } from '@react-oauth/google';
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authActions } from '../../store/modules/authSlice';
+import { useEffect } from 'react';
 
 const SocialLoginButtons = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  useEffect(() => {
+    if (window.Kakao && !window.Kakao.isInitialized()) {
+      window.Kakao.init(import.meta.env.VITE_KAKAO_CLIENT_ID);
+    }
+  }, []);
+  useEffect(() => {
+    const naverUserData = localStorage.getItem('naverUserData');
+    if (naverUserData) {
+      try {
+        const userData = JSON.parse(naverUserData);
+
+        dispatch(
+          authActions.socialLogin({
+            provider: 'naver',
+            profile: {
+              id: userData.id,
+              name: userData.name,
+              email: userData.email,
+              profileImage: userData.profileImage,
+            },
+          })
+        );
+        localStorage.removeItem('naverUserData');
+      } catch (e) {
+        console.error('네이버 로그인 데이터 파싱 오류', e);
+      }
+    }
+  }, [dispatch]);
   const handleKakaoLogin = () => {
     window.Kakao.Auth.loginForm({
       success: (authObj) => {
         window.Kakao.API.request({
           url: '/v2/user/me',
           success: (res) => {
-            console.log('카카오 사용자 정보:', res);
             dispatch(
               authActions.socialLogin({
                 provider: 'kakao',
@@ -40,7 +67,6 @@ const SocialLoginButtons = () => {
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
-        // 액세스 토큰을 사용하여 사용자 정보 가져오기
         const userInfoResponse = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
           headers: {
             Authorization: `Bearer ${tokenResponse.access_token}`,
@@ -48,9 +74,7 @@ const SocialLoginButtons = () => {
         });
 
         const userInfo = await userInfoResponse.json();
-        console.log('구글 사용자 정보:', userInfo);
 
-        // Redux 디스패치로 로그인 처리
         dispatch(
           authActions.socialLogin({
             provider: 'google',
@@ -72,7 +96,7 @@ const SocialLoginButtons = () => {
   });
 
   const handleNaverLogin = () => {
-    const clientId = 'oUvWladVsftf_aRbFAFf';
+    const clientId = import.meta.env.VITE_NAVER_CLIENT_ID;
     const redirectUri = `${window.location.origin}/login/callback/naver`;
     const state = Math.random().toString(36).substring(2, 12);
 
@@ -91,8 +115,19 @@ const SocialLoginButtons = () => {
     const handleNaverLoginMessage = (event) => {
       if (event.origin !== window.location.origin) return;
       if (event.data.type === 'naver-login-success') {
-        navigate('/');
-        // 이벤트 리스너 제거
+        if (event.data.data) {
+          dispatch(authActions.socialLogin(event.data.data));
+        } else {
+          const savedData = localStorage.getItem('naverLoginSuccess');
+          if (savedData) {
+            try {
+              const userData = JSON.parse(savedData);
+              dispatch(authActions.socialLogin(userData));
+            } catch (e) {
+              console.error('Saved login data parsing error', e);
+            }
+          }
+        }
         window.removeEventListener('message', handleNaverLoginMessage);
       }
     };

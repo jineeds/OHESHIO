@@ -1,10 +1,8 @@
 import Buttons from '../../ui/Buttons';
 
 const OrderSummary = ({ subtotal, shipping, discount, total }) => {
-  const hasItems = total > 0;
-
   return (
-    <div className="basis-1/4 xl:pt-16 min-w-[282px] space-y-10">
+    <div className="basis-1/4 xl:pt-[137px] min-w-[282px]">
       <div
         className="border border-secondary-500 rounded-lg px-6 py-10"
         style={{ boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)' }}
@@ -29,9 +27,9 @@ const OrderSummary = ({ subtotal, shipping, discount, total }) => {
           <span>KRW {total.toLocaleString()}</span>
         </div>
       </div>
-      <Buttons className="w-full h-[60px] flex-1 !text-2xl !font-semibold" state={hasItems ? 'active' : 'disabled'}>
+      {/* <Buttons className="w-full h-[60px] flex-1 !text-2xl !font-semibold" state={hasItems ? 'active' : 'disabled'}>
         CHECK OUT
-      </Buttons>
+      </Buttons> */}
     </div>
   );
 };

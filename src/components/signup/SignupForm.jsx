@@ -291,6 +291,7 @@ const SignupForm = () => {
                 placeholder='패스워드'
                 error={errors.password}
                 success={validFields.password}
+                autoComplete='new-password'
               />
               <p className='text-caption text-right text-gray-600 py-2 font-korean select-none'>
                 영어 대/소문자 6~10, 특수문자 조합

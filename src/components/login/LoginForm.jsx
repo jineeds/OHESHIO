@@ -48,6 +48,7 @@ const LoginForm = () => {
           id: item.productId,
           name: item.name,
           color: item.color || 'DEFAULT',
+          size: item.size || 'DEFAULT',
           price: item.price,
           quantity: item.quantity,
           image: item.image,
@@ -55,7 +56,7 @@ const LoginForm = () => {
 
         dispatch(cartActions.replaceCart(cartItems));
       }
-      navigate('/');
+      navigate('/main');
     }
   }, [authed]);
 
@@ -99,61 +100,61 @@ const LoginForm = () => {
     );
   };
   return (
-    <div className='flex justify-center min-h-screen w-full  mx-auto transition-all duration-500 ease-in-out'>
-      <div className='hidden md:flex md:w-1/2 h-screen  transition-all duration-500 ease-in-out'>
+    <div className="flex justify-center min-h-screen w-full  mx-auto transition-all duration-500 ease-in-out">
+      <div className="hidden md:flex md:w-1/2 h-screen  transition-all duration-500 ease-in-out">
         <img
-          src='/images/login-bg.jpg'
-          alt='login 배경이미지'
-          className='w-full object-cover mt-[-120px] object-top transition-transform duration-500 ease-in-out'
+          src="/images/login-bg.jpg"
+          alt="login 배경이미지"
+          className="w-full object-cover mt-[-120px] object-top transition-transform duration-500 ease-in-out"
         />
       </div>
 
-      <div className='w-full md:w-1/2 px-6 flex flex-col justify-center items-center transition-all duration-500 ease-in-out'>
-        <div className='w-full max-w-lg transition-all duration-300'>
-          <div className='text-center mb-8 flex items-center justify-center transition-all duration-300'>
-            <h1 className='w-64 transition-all duration-300'>
-              <img src='/images/logo.svg' className='object-cover transition-opacity duration-300' alt='로고' />
+      <div className="w-full md:w-1/2 px-6 flex flex-col justify-center items-center transition-all duration-500 ease-in-out">
+        <div className="w-full max-w-lg transition-all duration-300">
+          <div className="text-center mb-8 flex items-center justify-center transition-all duration-300">
+            <h1 className="w-64 transition-all duration-300">
+              <img src="/images/logo.svg" className="object-cover transition-opacity duration-300" alt="로고" />
             </h1>
           </div>
 
           <form
             onSubmit={handleSubmit}
-            className='bg-white rounded-lg shadow-sm p-12 border w-full transition-all duration-300'
+            className="bg-white rounded-lg shadow-sm p-12 border w-full transition-all duration-300"
             style={{ boxShadow: '5px 5px 7px 0 rgba(0, 0, 0, 0.25)' }}
           >
-            <div className='mb-4'>
+            <div className="mb-4">
               <InputCustom
                 ref={inputRefId}
-                type='text'
-                name='userId'
+                type="text"
+                name="userId"
                 value={loginData.userId}
                 onChange={handleChange}
-                placeholder='ID'
-                className='font-korean'
+                placeholder="ID"
+                className="font-korean"
                 error={error}
                 success={validFields.userId}
               />
             </div>
 
-            <div className='mb-4'>
+            <div className="mb-4">
               <InputCustom
                 ref={inputRefPw}
-                type='password'
-                name='password'
+                type="password"
+                name="password"
                 value={loginData.password}
                 onChange={handleChange}
-                placeholder='비밀번호'
-                className='font-korean'
+                placeholder="비밀번호"
+                className="font-korean"
                 error={error}
                 success={validFields.password}
               />
-              <p className='text-xs font-korean select-none py-2 text-gray-600 text-right '>
+              <p className="text-xs font-korean select-none py-2 text-gray-600 text-right ">
                 영어 대/소문자 6-10, 특수문자 조합
               </p>
             </div>
 
-            <div className='flex justify-between items-center mb-6 transition-all duration-200'>
-              <div className='flex items-center font-korean'>
+            <div className="flex justify-between items-center mb-6 transition-all duration-200">
+              <div className="flex items-center font-korean">
                 <Checkbox
                   label={'아이디 저장'}
                   checked={rememberMe}
@@ -163,23 +164,23 @@ const LoginForm = () => {
               </div>
               <div>
                 <Link
-                  to=''
-                  className='text-sm font-korean text-gray-500 hover:text-gray-600 transition-colors duration-200'
+                  to=""
+                  className="text-sm font-korean text-gray-500 hover:text-gray-600 transition-colors duration-200"
                 >
                   아이디 / 패스워드 찾기
                 </Link>
               </div>
             </div>
 
-            <Buttons type='submit' className='w-full mb-4' state={isFormValid ? 'active' : 'disabled'}>
+            <Buttons type="submit" className="w-full mb-4" state={isFormValid ? 'active' : 'disabled'}>
               Login
             </Buttons>
             <SocialLoginButtons />
 
-            <div className='border-t border-gray-700 my-8 transition-all duration-300'></div>
+            <div className="border-t border-gray-700 my-8 transition-all duration-300"></div>
 
-            <Link to='/signup'>
-              <Buttons className='w-full flex-1' state={'default'}>
+            <Link to="/signup">
+              <Buttons className="w-full flex-1" state={'default'}>
                 Sign Up
               </Buttons>
             </Link>

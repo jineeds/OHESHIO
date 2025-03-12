@@ -1250,7 +1250,7 @@ export const products = [
     id: 'p114',
     name: 'DOT CROSS CARD WALLET',
     price: 106000,
-    category: 'ACC',
+    category: 'acc',
     color: 'black',
     image: '/oheshio/acc/black/p114_dot_cross_card_wallet/p114.png',
     model_images: [
@@ -1263,7 +1263,7 @@ export const products = [
     id: 'p113',
     name: 'DOT CROSS CARD WALLET',
     price: 106000,
-    category: 'ACC',
+    category: 'acc',
     color: 'white',
     image: '/oheshio/acc/white/p113_dot_cross_card_wallet/p113.png',
     model_images: [

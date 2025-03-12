@@ -12,11 +12,23 @@ const initialState = {
     orderMemo: '',
   },
 
-  // 결제 방법
-  paymentMethod: 'creditCard',
+  payment: {
+    method: 'creditCard',
+    // 신용카드 관련 정보
+    cardInfo: {
+      selectedCard: '',
+      installmentPeriod: 0,
+    },
+    // 무통장입금 관련 정보
+    bankTransferInfo: {
+      bankName: '',
+      depositorName: '',
+    },
+  },
 
   // 할인 코드
-  appliedDiscountCode: null,
+  discountType: 'percentage',
+  discountValue: 0,
 
   formErrors: {},
   isFormValid: false,
@@ -33,12 +45,7 @@ export const checkoutSlice = createSlice({
   name: 'checkout',
   initialState,
   reducers: {
-    // // 개별 필드 업데이트
-    // updateBillingDetail: (state, action) => {
-    //   const { field, value } = action.payload;
-    //   state.billingDetails[field] = value;
-    // },
-
+    //
     updateBillingDetail: (state, action) => {
       const { field, value } = action.payload;
       state.billingDetails[field] = value;
@@ -59,12 +66,6 @@ export const checkoutSlice = createSlice({
       }
     },
 
-    // // 주소 검색 결과 설정
-    // setAddressInfo: (state, action) => {
-    //   const { zonecode, address } = action.payload;
-    //   state.billingDetails.zipcode = zonecode;
-    //   state.billingDetails.address = address;
-    // },
     setAddressInfo: (state, action) => {
       const { zonecode, address } = action.payload;
       state.billingDetails.zipcode = zonecode;
@@ -83,48 +84,149 @@ export const checkoutSlice = createSlice({
       state.billingDetails.orderMemo = action.payload;
     },
 
-    // 결제 시작 액션
-    // startCheckout: (state) => {
-    //   state.isProcessing = true;
-    // },
-
-    // // 결제 완료 액션
-    // completeCheckout: (state, action) => {
-    //   state.isProcessing = false;
-    //   state.isComplete = true;
-    //   state.orderNumber = action.payload.orderNumber;
-    // },
-
+    // 결제 방법 선택
     setPaymentMethod: (state, action) => {
-      state.paymentMethod = action.payload;
+      state.payment.method = action.payload;
+
+      // 결제 방법 변경 시 해당 방법에 맞지 않는 정보 초기화
+      if (action.payload === 'creditCard') {
+        // 신용카드 외 결제 방법의 정보 초기화
+        state.payment.bankTransferInfo.depositorName = '';
+        state.payment.bankTransferInfo.bankName = '';
+
+        // formErrors 초기화
+        if (state.formErrors) {
+          delete state.formErrors.depositorName;
+          delete state.formErrors.bankName;
+        }
+      } else if (action.payload === 'bankTransfer') {
+        // 무통장입금 외 결제 방법의 정보 초기화
+        state.payment.cardInfo.selectedCard = '';
+        state.payment.cardInfo.installmentPeriod = 0;
+
+        // formErrors 초기화
+        if (state.formErrors) {
+          delete state.formErrors.cardSelection;
+        }
+      }
+
+      // 다른 결제 방법으로 변경 시 모든 관련 상태 초기화
+      if (action.payload !== 'creditCard') {
+        state.payment.cardInfo.selectedCard = '';
+        state.payment.cardInfo.installmentPeriod = 0;
+      }
+      if (action.payload !== 'bankTransfer') {
+        state.payment.bankTransferInfo.depositorName = '';
+        state.payment.bankTransferInfo.bankName = '';
+      }
+    },
+    setSelectedCard: (state, action) => {
+      state.payment.cardInfo.selectedCard = action.payload;
+
+      // formErrors에서 cardSelection 에러 제거
+      if (state.formErrors && state.formErrors.cardSelection) {
+        const newErrors = { ...state.formErrors };
+        delete newErrors.cardSelection;
+        state.formErrors = newErrors;
+      }
+    },
+    setInstallmentPeriod: (state, action) => {
+      state.payment.cardInfo.installmentPeriod = Number(action.payload);
     },
 
-    validateCheckoutForm: (state) => {
-      console.log('validateCheckoutForm 실행');
-      console.log('zipcode:', state.billingDetails.zipcode);
-      console.log('address:', state.billingDetails.address);
+    setDepositorName: (state, action) => {
+      state.payment.bankTransferInfo.depositorName = action.payload;
 
+      // formErrors에서 depositorName 에러 제거
+      if (state.formErrors && state.formErrors.depositorName) {
+        const newErrors = { ...state.formErrors };
+        delete newErrors.depositorName;
+        state.formErrors = newErrors;
+      }
+    },
+    setBankName: (state, action) => {
+      state.payment.bankTransferInfo.bankName = action.payload;
+
+      // formErrors에서 bankName 에러 제거
+      if (state.formErrors && state.formErrors.bankName) {
+        const newErrors = { ...state.formErrors };
+        delete newErrors.bankName;
+        state.formErrors = newErrors;
+      }
+    },
+
+    // 할인코드 검사
+    applyDiscountCode: (state, action) => {
+      const code = action.payload;
+
+      if (code === '10') {
+        state.appliedDiscountCode = code;
+        state.discountType = 'percentage';
+        state.discountValue = 10; // 10% 할인
+        state.discountError = null;
+      } else if (code === '20') {
+        state.appliedDiscountCode = code;
+        state.discountType = 'percentage';
+        state.discountValue = 20; // 20% 할인
+        state.discountError = null;
+      } else if (code === '100') {
+        state.appliedDiscountCode = code;
+        state.discountType = 'percentage';
+        state.discountValue = 100;
+        state.discountError = null;
+      } else {
+        state.appliedDiscountCode = null;
+        state.discountType = null;
+        state.discountValue = 0;
+        state.discountError = '유효하지 않은 할인 코드입니다.';
+      }
+    },
+
+    // 폼 유효성 검사
+    validateCheckoutForm: (state, action) => {
       let isValid = true;
       const newFormErrors = {};
+      const cartTotal = action.payload || 0; // 장바구니 총액을 받아옴
 
-      // 받는 사람 검증
+      // 기존 주소/수취인 검증 로직
       if (!state.billingDetails.receiverName.trim()) {
-        console.log('receiverName 실패');
         newFormErrors.receiverName = '받는사람을 입력해 주세요.';
         isValid = false;
       }
 
-      // 주소 검증
       if (!state.billingDetails.zipcode || !state.billingDetails.address) {
-        console.log('주소 검증 실패');
         newFormErrors.addressDetail = '주소검색을 진행해주세요.';
         isValid = false;
-      } else {
-        console.log('주소 검증 성공');
       }
 
-      console.log('최종 isValid:', isValid);
-      console.log('newFormErrors:', newFormErrors);
+      // 결제 방법에 따른 추가 검증
+      if (cartTotal > 0) {
+        if (state.payment.method === 'creditCard') {
+          if (!state.payment.cardInfo.selectedCard) {
+            newFormErrors.cardSelection = '카드를 선택해 주세요.';
+            isValid = false;
+            state.payment.cardInfo.isCardInvalid = true;
+          } else {
+            state.payment.cardInfo.isCardInvalid = false;
+          }
+        } else if (state.payment.method === 'bankTransfer') {
+          if (!state.payment.bankTransferInfo.depositorName.trim()) {
+            newFormErrors.depositorName = '입금자명을 입력해 주세요.';
+            isValid = false;
+            state.payment.bankTransferInfo.isDepositorNameInvalid = true;
+          } else {
+            state.payment.bankTransferInfo.isDepositorNameInvalid = false;
+          }
+
+          if (!state.payment.bankTransferInfo.bankName) {
+            newFormErrors.bankName = '은행을 선택해 주세요.';
+            isValid = false;
+            state.payment.bankTransferInfo.isBankNameInvalid = true;
+          } else {
+            state.payment.bankTransferInfo.isBankNameInvalid = false;
+          }
+        }
+      }
 
       state.formErrors = newFormErrors;
       state.isFormValid = isValid;
@@ -134,15 +236,21 @@ export const checkoutSlice = createSlice({
       }
     },
 
-    // 결제 완료 처리
     completeCheckout: (state) => {
       state.isProcessing = false;
       state.isComplete = true;
 
-      // 주문번호 생성 - 현재 시간 기반 (수정 전)
-      state.orderNumber = 'ORD-' + Date.now().toString().slice(-8);
+      const timestamp = new Date();
+      const randomSuffix = Math.floor(Math.random() * 1000)
+        .toString()
+        .padStart(3, '0');
+      state.orderNumber = `ORD-${timestamp.getFullYear()}${(timestamp.getMonth() + 1)
+        .toString()
+        .padStart(2, '0')}${timestamp.getDate().toString().padStart(2, '0')}-${randomSuffix}`;
+    },
 
-      console.log('주문 완료! 주문번호:', state.orderNumber); // 디버깅용
+    resetCheckout: (state) => {
+      return initialState;
     },
   },
 });
