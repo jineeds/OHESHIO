@@ -397,9 +397,8 @@ export const products = [
     color: 'gray',
     image: '/oheshio/top/gray/p031_frill_pocket_blouse/p031.png',
     model_images: [
-      '/oheshio/top/gray/p031_frill_pocket_blouse/p031_1.png',
-      '/oheshio/top/gray/p031_frill_pocket_blouse/p031_2.png',
-      '/oheshio/top/gray/p031_frill_pocket_blouse/p031_3.png',
+      '/oheshio/outer/gray/p001_round_collar_semi-crop_jacket/p001_1.png',
+      '/oheshio/outer/gray/p001_round_collar_semi-crop_jacket/p001_2.png',
     ],
   },
   {
@@ -447,9 +446,8 @@ export const products = [
     color: 'white',
     image: '/oheshio/top/white/p035_frill_pocket_blouse/p035.png',
     model_images: [
-      '/oheshio/top/white/p035_frill_pocket_blouse/p035_1.png',
-      '/oheshio/top/white/p035_frill_pocket_blouse/p035_2.png',
-      '/oheshio/top/white/p035_frill_pocket_blouse/p035_3.png',
+      '/oheshio/top/gray/p032_layered_halter_dress/p032_1.png',
+      '/oheshio/top/gray/p032_layered_halter_dress/p032_2.png',
     ],
   },
   {
@@ -488,7 +486,6 @@ export const products = [
     model_images: [
       '/oheshio/top/white/p038_spangle_sheer_knit/p038_1.png',
       '/oheshio/top/white/p038_spangle_sheer_knit/p038_2.png',
-      '/oheshio/top/white/p038_spangle_sheer_knit/p038_3.png',
     ],
   },
   {
@@ -501,7 +498,6 @@ export const products = [
     model_images: [
       '/oheshio/top/white/p039_pocket_over-fit_shirt/p039_1.png',
       '/oheshio/top/white/p039_pocket_over-fit_shirt/p039_2.png',
-      '/oheshio/top/white/p039_pocket_over-fit_shirt/p039_3.png',
     ],
   },
   {
