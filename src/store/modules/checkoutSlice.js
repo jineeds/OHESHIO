@@ -144,20 +144,29 @@ export const checkoutSlice = createSlice({
           state.appliedDiscountCode = null;
           state.discountType = null;
           state.discountValue = 0;
-          state.discountError = `최소 구매 금액은 ${coupon.purchaseAmount.toLocaleString()}원입니다.`;
+          state.discountError = `최소 구매 금액은 ${coupon.purchaseAmount.toLocaleString()}원 입니다.`;
+          state.discountSuccess = false;
           return;
         }
-
         state.appliedDiscountCode = code;
         state.discountType = coupon.discountType || 'percentage';
         state.discountValue = coupon.discountValue;
         state.discountError = null;
+        state.discountSuccess = true;
       } else {
         state.appliedDiscountCode = null;
         state.discountType = null;
         state.discountValue = 0;
         state.discountError = '유효하지 않은 할인 코드입니다.';
+        state.discountSuccess = false;
       }
+    },
+    clearDiscountCode: (state) => {
+      state.appliedDiscountCode = null;
+      state.discountType = null;
+      state.discountValue = 0;
+      state.discountError = null;
+      state.discountSuccess = false;
     },
 
     validateCheckoutForm: (state, action) => {
@@ -224,7 +233,7 @@ export const checkoutSlice = createSlice({
         .padStart(2, '0')}${timestamp.getDate().toString().padStart(2, '0')}-${randomSuffix}`;
     },
 
-    // 초기화
+    // 전체 초기화
     resetCheckout: (state) => {
       return initialState;
     },

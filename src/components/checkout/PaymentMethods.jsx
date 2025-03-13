@@ -43,6 +43,7 @@ const PaymentMethods = () => {
             <Buttons
               state={payment.method === 'creditCard' ? 'active' : 'default'}
               onClick={() => handlePaymentMethodChange('creditCard')}
+              className="font-korean"
             >
               신용카드
             </Buttons>
@@ -55,24 +56,28 @@ const PaymentMethods = () => {
             <Buttons
               state={payment.method === 'naverPay' ? 'active' : 'default'}
               onClick={() => handlePaymentMethodChange('naverPay')}
+              className="font-korean"
             >
               네이버페이
             </Buttons>
             <Buttons
               state={payment.method === 'kakaoPay' ? 'active' : 'default'}
               onClick={() => handlePaymentMethodChange('kakaoPay')}
+              className="font-korean"
             >
               카카오페이
             </Buttons>
             <Buttons
               state={payment.method === 'easyPay' ? 'active' : 'default'}
               onClick={() => handlePaymentMethodChange('easyPay')}
+              className="font-korean"
             >
               간편결제
             </Buttons>
             <Buttons
               state={payment.method === 'phonePay' ? 'active' : 'default'}
               onClick={() => handlePaymentMethodChange('phonePay')}
+              className="font-korean"
             >
               휴대폰결제
             </Buttons>
@@ -81,7 +86,7 @@ const PaymentMethods = () => {
           {payment.method === 'creditCard' && (
             <div className="space-y-3">
               <div className="relative md:w-[calc(67%-8px)] flex items-center gap-2">
-                <label className="flex gap-1 text-sm font-medium flex-shrink-0">
+                <label className="flex gap-1 text-sm font-medium font-korean flex-shrink-0">
                   카드선택<span className="text-xs text-primary-500">*</span>
                 </label>
                 <select
@@ -103,7 +108,7 @@ const PaymentMethods = () => {
                 </div>
               </div>
               <div className="relative md:w-[calc(67%-8px)] flex items-center gap-2">
-                <label className="flex gap-1 text-sm font-medium flex-shrink-0">
+                <label className="flex gap-1 text-sm font-medium font-korean flex-shrink-0">
                   할부기간<span className="text-xs text-primary-500">*</span>
                 </label>
 
@@ -132,7 +137,7 @@ const PaymentMethods = () => {
           {payment.method === 'bankTransfer' && (
             <div className="space-y-3">
               <div className="md:w-[calc(67%-8px)] flex items-center gap-2">
-                <label className="flex gap-1 text-sm font-medium flex-shrink-0">
+                <label className="flex gap-1 text-sm font-medium font-korean flex-shrink-0">
                   입금자명<span className="text-xs text-primary-500">*</span>
                 </label>
                 <div className="w-full">
@@ -148,7 +153,7 @@ const PaymentMethods = () => {
                 </div>
               </div>
               <div className="relative md:w-[calc(67%-8px)] flex items-center gap-2">
-                <label className="flex gap-1 text-sm font-medium flex-shrink-0">
+                <label className="flex gap-1 text-sm font-medium font-korean flex-shrink-0">
                   입금은행<span className="text-xs text-primary-500">*</span>
                 </label>
                 <select

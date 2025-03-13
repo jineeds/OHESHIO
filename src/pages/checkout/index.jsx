@@ -37,6 +37,10 @@ const Checkout = () => {
     dispatch(checkoutActions.validateCheckoutForm(total));
   };
 
+  useEffect(() => {
+    dispatch(checkoutActions.resetCheckout());
+  }, []);
+
   // checkout 버튼 클릭
   useEffect(() => {
     if (isFormValid) {
