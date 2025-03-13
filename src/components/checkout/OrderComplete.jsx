@@ -54,7 +54,7 @@ const OrderComplete = () => {
             Your order is being processed, and a detailed confirmation will be sent to your registered email shortly.
           </span>
         </p>
-        <Link to={'/mypage'} className="block text-sm text-gray-500 underline mt-8 hover:text-gray-700">
+        <Link to={'/mypage'} className="inline-block text-sm text-gray-500 underline mt-8 hover:text-gray-700">
           view my orders
         </Link>
       </div>
