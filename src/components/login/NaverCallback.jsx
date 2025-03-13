@@ -13,18 +13,17 @@ const NaverCallback = () => {
     const processNaverLogin = async () => {
       try {
         let accessToken = null;
-
-        // 해시에서 토큰 추출 시도
         if (window.location.hash) {
           const hash = window.location.hash.substring(1);
           const params = new URLSearchParams(hash);
           accessToken = params.get('access_token');
-        }
 
-        // 쿼리에서 토큰 추출 시도 (해시에서 못 찾은 경우)
-        if (!accessToken && window.location.search) {
-          const params = new URLSearchParams(window.location.search);
-          accessToken = params.get('access_token');
+          const state = params.get('state');
+          const savedState = sessionStorage.getItem('naverState');
+
+          if (state && savedState && state !== savedState) {
+            throw new Error('Security validation failed: State mismatch');
+          }
         }
 
         const userData = {
@@ -33,15 +32,19 @@ const NaverCallback = () => {
             id: `naver_${new Date().getTime()}`,
             name: '네이버 사용자',
             email: 'user1@naver.com',
-            profileImage: 'https://via.placeholder.com/150',
+            profileImage: '/images/profile.gif',
           },
         };
         dispatch(authActions.socialLogin(userData));
 
         if (window.opener) {
-          const openerOrigin = window.location.origin;
-
           try {
+            const openerOrigin = window.location.origin;
+            console.log('Sending message to parent window', {
+              type: 'naver-login-success',
+              data: userData,
+            });
+
             window.opener.postMessage(
               {
                 type: 'naver-login-success',
@@ -49,11 +52,12 @@ const NaverCallback = () => {
               },
               openerOrigin
             );
+
+            setTimeout(() => window.close(), 1000);
           } catch (msgError) {
             console.error('부모 창에 메시지 전송 실패:', msgError);
+            setTimeout(() => window.close(), 1000);
           }
-
-          window.close();
         } else {
           navigate('/');
         }
@@ -66,7 +70,7 @@ const NaverCallback = () => {
             id: `naver_${new Date().getTime()}`,
             name: '네이버 사용자 (오류 복구)',
             email: null,
-            profileImage: 'https://via.placeholder.com/150',
+            profileImage: '/images/profile.gif',
           },
         };
 

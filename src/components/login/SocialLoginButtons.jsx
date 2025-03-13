@@ -51,6 +51,7 @@ const SocialLoginButtons = () => {
                 },
               })
             );
+            console.log(res);
           },
           fail: (error) => {
             console.error('카카오 사용자 정보 요청 실패', error);
@@ -101,40 +102,30 @@ const SocialLoginButtons = () => {
         return;
       }
 
-      // 리다이렉트 URI 설정
       const redirectUri = `${window.location.origin}/login/callback/naver`;
-
-      // 고유한 상태값 생성 (CSRF 방지)
       const state = Math.random().toString(36).substring(2, 12);
       sessionStorage.setItem('naverState', state);
 
-      // 인증 URL 구성
-      const naverLoginUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=token&client_id=${clientId}&redirect_uri=${encodeURIComponent(
+      const naverLoginUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(
         redirectUri
-      )}&state=${state}&auth_type=reprompt`;
+      )}&state=${state}`;
 
-      // 팝업 창 크기 및 위치 설정
       const width = 450;
       const height = 550;
       const left = window.screen.width / 2 - width / 2;
       const top = window.screen.height / 2 - height / 2;
 
-      // 팝업 창 열기
       const popup = window.open(naverLoginUrl, 'naverLogin', `width=${width},height=${height},left=${left},top=${top}`);
-
       if (!popup || popup.closed || typeof popup.closed === 'undefined') {
         console.error('팝업 창이 차단되었습니다. 브라우저 설정을 확인하세요.');
         return;
       }
 
-      // 팝업 창에서 메시지 수신
       const handleNaverLoginMessage = (event) => {
-        // 출처 확인 (보안)
         if (event.origin !== window.location.origin) {
           return;
         }
 
-        // 로그인 성공 메시지 처리
         if (event.data && event.data.type === 'naver-login-success') {
           if (event.data.data) {
             dispatch(authActions.socialLogin(event.data.data));
@@ -142,14 +133,11 @@ const SocialLoginButtons = () => {
           }
         }
       };
-
-      // 메시지 리스너 등록
       window.addEventListener('message', handleNaverLoginMessage);
 
-      // 60초 후 이벤트 리스너 자동 제거 (메모리 누수 방지)
       setTimeout(() => {
         window.removeEventListener('message', handleNaverLoginMessage);
-      }, 60000);
+      }, 50000);
     } catch (error) {
       console.error('네이버 로그인 실행 오류:', error);
     }

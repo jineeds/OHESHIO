@@ -229,7 +229,7 @@ export const authSlice = createSlice({
           userEmail: profile.email || '',
           socialId: profile.id,
           socialProvider: provider,
-          profileImg: profile.profileImage || 'images/defaultImg1.png',
+          profileImg: profile.profileImage || '/images/profile-1.jpeg',
           cart: [],
           wishlist: [],
           orders: [],
