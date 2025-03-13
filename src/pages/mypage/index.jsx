@@ -10,16 +10,11 @@ import MyPageHome from '../../components/mypage/MyPageHome';
 
 const MyPage = () => {
   const [activeTab, setActiveTab] = useState('Home');
-  // 로컬 값 !!!
-  const [cancelledOrders, setCancelledOrders] = useState(() => {
-    return JSON.parse(localStorage.getItem('cancelledOrders')) || [];
-  });
-  const [exchangeOrders, setExchangeOrders] = useState(() => {
-    return JSON.parse(localStorage.getItem('exchangeOrders')) || [];
-  });
-  const [refundOrders, setRefundOrders] = useState(() => {
-    return JSON.parse(localStorage.getItem('refundOrders')) || [];
-  });
+  const [cancelledOrders, setCancelledOrders] = useState(
+    () => JSON.parse(localStorage.getItem('cancelledOrders')) || []
+  );
+  const [exchangeOrders, setExchangeOrders] = useState(() => JSON.parse(localStorage.getItem('exchangeOrders')) || []);
+  const [refundOrders, setRefundOrders] = useState(() => JSON.parse(localStorage.getItem('refundOrders')) || []);
 
   const currentUser = useSelector((state) => state.authR.currentUser);
   const isAuthed = useSelector((state) => state.authR.authed);
@@ -27,20 +22,22 @@ const MyPage = () => {
   const updatedOrders =
     currentUser?.orders?.map((order) => {
       const displayStatus = [];
-
+      const now = new Date();
+      const createdAt = new Date(order.createdAt);
+      const diffMinutes = (now - createdAt) / (1000 * 60);
+      // 주문 시간으로 배송 과정 처리함
       if (cancelledOrders.includes(order.id)) {
         displayStatus.push('주문취소');
+      } else {
+        if (order.status === 'paid') {
+          if (diffMinutes < 1) displayStatus.push('배송준비중');
+          else if (diffMinutes < 3) displayStatus.push('배송중');
+          else displayStatus.push('배송완료');
+        }
+        if (order.status === 'pending' && order.paymentMethod === 'bankTransfer') {
+          displayStatus.push('입금대기');
+        }
       }
-      if (order.status === 'pending' && order.paymentMethod === 'bankTransfer') {
-        displayStatus.push('입금대기');
-      }
-      if (order.status === 'paid') {
-        displayStatus.push('결제완료');
-        displayStatus.push('배송준비중');
-      }
-      if (order.status === 'preparing') displayStatus.push('배송준비중');
-      if (order.status === 'shipping') displayStatus.push('배송중');
-      if (order.status === 'delivered') displayStatus.push('배송완료');
 
       return { ...order, displayStatus };
     }) || [];
@@ -58,7 +55,6 @@ const MyPage = () => {
     <div className="max-w-7xl mx-auto py-10 text-center mt-8">
       <h1 className="text-2xl font-bold my-6">My Page</h1>
       <MyPageNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
-
       <div className="mt-6">
         {activeTab === 'Home' && (
           <MyPageHome

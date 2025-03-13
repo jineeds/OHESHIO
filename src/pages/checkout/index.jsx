@@ -68,6 +68,8 @@ const Checkout = () => {
       const orderData = {
         id: orderNumber,
         date: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
+
         billingDetails: {
           receiverName: billingDetails.receiverName,
           zipcode: billingDetails.zipcode,
