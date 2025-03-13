@@ -20,22 +20,7 @@ const MyPageCoupons = ({ coupons = [] }) => {
                   <th className="py-4 px-6 text-center text-base font-semibold text-gray-700">유효기간</th>
                 </tr>
               </thead>
-              {/* <tbody>
-                {coupons.map((coupon, index) => (
-                  <tr key={coupon.id} className="border-b border-gray-200 text-gray-700 text-sm">
-                    <td className="py-5 px-6 text-center">{index + 1}</td>
-                    <td className="py-5 px-6 text-center font-korean">{coupon.name}</td>
-                    <td className="py-5 px-6 text-center font-korean">{coupon.purchaseAmount.toLocaleString()}원</td>
-                    <td className="py-6 px-10 text-center">{coupon.code}</td>
-                    <td className="py-5 px-6 text-center font-korean">
-                      {coupon.discountType === 'percentage'
-                        ? `${coupon.discountValue}% 할인`
-                        : `${coupon.discountValue.toLocaleString()}원 할인`}
-                    </td>
-                    <td className="py-5 px-6 text-center font-korean">{coupon.validity}</td>
-                  </tr>
-                ))}
-              </tbody> */}
+
               <tbody>
                 {coupons.map((coupon, index) => (
                   <tr key={coupon.id || index} className="border-b border-gray-200 text-gray-700 text-sm">
