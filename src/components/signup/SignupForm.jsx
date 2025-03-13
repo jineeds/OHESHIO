@@ -252,7 +252,7 @@ const SignupForm = () => {
   }, [authed, navigate]);
 
   return (
-    <div className='flex flex-col md:flex-row  justify-center items-center min-h-screen w-full mx-auto px-4 md:bg-[url(/images/signup-bg2.png)] bg-center  bg-no-repeat'>
+    <div className='flex flex-col md:flex-row  justify-center items-center min-h-screen w-full mx-auto px-4 md:bg-[url(/images/signup-bg.png)] bg-left  bg-no-repeat'>
       <h1 className='text-2xl font-bold text-center mb-6 mt-14 md:hidden'>Create Account</h1>
       <div className='hidden w-auto md:flex flex-1 flex-col justify-center items-center mb-8 md:mb-0'>
         <h1 className='text-4xl md:text-5xl font-bold mb-8 md:mb-10  md:text-left whitespace-nowrap'>CREATE ACCOUNT</h1>
