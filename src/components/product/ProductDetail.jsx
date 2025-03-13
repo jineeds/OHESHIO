@@ -50,17 +50,49 @@ const ProductDetail = ({ product, commonDetails }) => {
   const product_typed3 = useRef(null);
   const product_typed4 = useRef(null);
 
+  const onGo = (item) => {
+    const selectedProduct = products.find((product) => product.id === item);
+    if (selectedProduct) {
+      const normalizedProduct = {
+        id: selectedProduct.id,
+        name: selectedProduct.name,
+        category: selectedProduct.category,
+        price: `KRW ${product.price.toLocaleString()}`,
+        color: selectedProduct.color,
+        imageUrl: selectedProduct.image,
+      };
+      dispatch(authActions.addRecentlyViewed(normalizedProduct));
+    }
+    window.scrollTo(0, 0);
+    navigate(`/product/${item}`);
+  };
+
   useEffect(() => {
+    if (typed.current) {
+      typed.current.destroy();
+    }
+    if (typed2.current) {
+      typed2.current.destroy();
+    }
     typed.current = new Typed(doc.current, {
       strings: [name],
       typeSpeed: 50,
     });
 
     typed2.current = new Typed(doc2.current, {
-      strings: [`KRW  ${price.toLocaleString()}`],
+      strings: [`KRW ${price.toLocaleString()}`],
       typeSpeed: 50,
     });
-  }, []);
+
+    return () => {
+      if (typed.current) {
+        typed.current.destroy();
+      }
+      if (typed2.current) {
+        typed2.current.destroy();
+      }
+    };
+  }, [name, price]);
 
   useEffect(() => {
     if (isVisible) {
@@ -130,22 +162,6 @@ const ProductDetail = ({ product, commonDetails }) => {
       }
     };
   }, []);
-  const onGo = (item) => {
-    const selectedProduct = products.find((product) => product.id === item);
-    if (selectedProduct) {
-      const normalizedProduct = {
-        id: selectedProduct.id,
-        name: selectedProduct.name,
-        category: selectedProduct.category,
-        price: `KRW ${product.price.toLocaleString()}`,
-        color: selectedProduct.color,
-        imageUrl: selectedProduct.image,
-      };
-      dispatch(authActions.addRecentlyViewed(normalizedProduct));
-    }
-    window.scrollTo(0, 0);
-    navigate(`/product/${item}`);
-  };
 
   const handleAddToCart = () => {
     const itemToAdd = {

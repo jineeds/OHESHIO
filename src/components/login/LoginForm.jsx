@@ -7,6 +7,7 @@ import Checkbox from '../../ui/Checkbox';
 import InputCustom from '../../ui/InputCustom';
 import Buttons from '../../ui/Buttons';
 import { cartActions } from '../../store/modules/cartSlice';
+import SocialMobile from '../signup/SocialMobile';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -175,8 +176,12 @@ const LoginForm = () => {
             <Buttons type='submit' className='w-full mb-4' state={isFormValid ? 'active' : 'disabled'}>
               Login
             </Buttons>
-            <SocialLoginButtons />
-
+            <div className='hidden md:block'>
+              <SocialLoginButtons />
+            </div>
+            <div className='block md:hidden my-9'>
+              <SocialMobile />
+            </div>
             <div className='border-t border-gray-700 my-8 transition-all duration-300'></div>
 
             <Link to='/signup'>

@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import ProductBottomSlide from '../../components/product/ProductBottomSlide';
 import ProductCharacter from '../../components/product/ProductCharacter';
 import ProductDetail from '../../components/product/ProductDetail';
@@ -38,12 +38,19 @@ const Product = () => {
     }
   }, [productId, dispatch, authed, products]);
   if (!selectedProduct) {
-    return <div className="text-center py-20">데이터를 불러 오고 있습니다...</div>;
+    return (
+      <div className='flex flex-col gap-5 w-full h-screen justify-center items-center'>
+        <p>해당 상품은 없는 상품입니다.</p>
+        <Link to={'/main'} className='bg-primary-500 py-2 px-4 rounded-lg text-gray-200'>
+          메인으로
+        </Link>
+      </div>
+    );
   }
   return (
     <>
-      <div className=" flex flex-col">
-        <ProductContain className=" flex-col-reverse xl:flex-row-reverse xl:items-start items-center ">
+      <div className=' flex flex-col'>
+        <ProductContain className=' flex-col-reverse xl:flex-row-reverse xl:items-start items-center '>
           <ProductDetail product={selectedProduct} commonDetails={commonDetails} />
           <ProductCharacter product={selectedProduct} commonDetails={commonDetails} />
         </ProductContain>
