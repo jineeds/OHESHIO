@@ -76,7 +76,7 @@ const BillingDetails = () => {
         />
       </div>
       <div>
-        <label className="flex gap-1 text-sm font-medium font-korea mb-2">
+        <label className="flex gap-1 text-sm font-medium font-korean mb-2">
           주소<span className="text-xs text-primary-500">*</span>
         </label>
 
@@ -98,7 +98,7 @@ const BillingDetails = () => {
             <button
               type="button"
               onClick={() => setIsOpen(true)}
-              className="py-3 px-4 h-12 rounded bg-primary-300 text-gray-500 hover:bg-primary-500 hover:text-gray-50 duration-200 flex-shrink-0"
+              className="py-3 px-4 h-12 rounded bg-primary-300 font-korean text-gray-500 hover:bg-primary-500 hover:text-gray-50 duration-200 flex-shrink-0"
             >
               주소검색
             </button>
