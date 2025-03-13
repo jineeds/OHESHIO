@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom'; // ✅ 추가
+import { useNavigate } from 'react-router-dom';
 import Buttons from '../../ui/Buttons';
 import { authActions } from '../../store/modules/authSlice';
 import { cartActions } from '../../store/modules/cartSlice';
@@ -27,7 +27,6 @@ const MyPageWishlist = ({ wishlist }) => {
     );
   };
 
-  // 주문클릭시 페이지이동처리
   const handleOrder = (item) => {
     addToCart(item);
     navigate('/checkout');
@@ -36,13 +35,13 @@ const MyPageWishlist = ({ wishlist }) => {
   return (
     <div className="border-t border-gray-300">
       <div className="w-full min-h-screen bg-white flex flex-col items-center pt-10">
-        <div className="w-full max-w-[1100px] mx-auto">
+        <div className="w-full max-w-[1100px] px-4 sm:px-6 md:px-8 mx-auto">
           {wishlist.length === 0 ? (
             <div className="text-center py-10">
               <p className="text-gray-500 font-korean">위시리스트에 상품이 없습니다.</p>
             </div>
           ) : (
-            <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-5 mx-auto">
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-5">
               {wishlist.map((item) => (
                 <div
                   key={item.id}
