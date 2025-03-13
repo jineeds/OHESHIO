@@ -64,7 +64,7 @@ const Layout = () => {
   return (
     <>
       <Header />
-      <main>
+      <main className='bg-secondary-50'>
         <Outlet />
       </main>
       <footer>{/* 푸터 콘텐츠 */}</footer>
