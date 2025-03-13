@@ -34,7 +34,12 @@ const KakaoMaps = () => {
     loadKakaoMapScript();
   }, []);
 
-  return <div id="map" style={{ width: "200px", height: "200px" }} />;
+  return (
+    <div className="flex flex-col">
+      <h3 className="text-lg font-semibold mb-4">DIRECTION</h3>
+      <div id="map" style={{ width: "200px", height: "200px" }} />{" "}
+    </div>
+  );
 };
 
 export default KakaoMaps;
