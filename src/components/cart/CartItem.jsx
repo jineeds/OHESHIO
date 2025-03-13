@@ -54,9 +54,9 @@ const CartItem = ({ id, isLast }) => {
               <img src={image} alt={name} className="" />
             </Link>
           </div>
-          <div className="w-full md:w-2/6 pr-6 flex flex-col md:gap-2">
+          <div className="w-full md:w-2/6 pr-6 flex flex-col md:gap-2 group">
             <Link to={`/product/${productId}`}>
-              <strong className="text-sm xl:text-base line-clamp-2 overflow-hidden text-ellipsis font-normal md:mb-1 xl:mb-2">
+              <strong className="text-sm xl:text-base line-clamp-2 overflow-hidden text-ellipsis font-normal md:mb-1 xl:mb-2 group-hover:underline">
                 {name}
               </strong>
               <div className="text-xs lg:text-sm text-gray-400">

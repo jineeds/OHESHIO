@@ -25,7 +25,7 @@ const Cart = () => {
           ) : (
             <div className="py-20 text-center text-sm text-gray-500">
               <p>There is nothing in your bag.</p>
-              <Link to={'/main'} className="block mt-3 underline underline-offset-2">
+              <Link to={'/main'} className="block mt-3 underline hover:text-gray-700">
                 return to shop
               </Link>
             </div>
