@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import InputCustom from '../../ui/InputCustom';
 import { useSelector, useDispatch } from 'react-redux';
 import { cartActions } from '../../store/modules/cartSlice';
