@@ -30,6 +30,7 @@ const MyPage = () => {
         displayStatus.push('주문취소');
       } else {
         if (order.status === 'paid') {
+          displayStatus.push('결제완료');
           if (diffMinutes < 1) displayStatus.push('배송준비중');
           else if (diffMinutes < 3) displayStatus.push('배송중');
           else displayStatus.push('배송완료');

@@ -21,7 +21,7 @@ const Kbrand = () => {
       </section>
 
       <div className="w-full">
-        <img src="/kbrand/pick-01.png" alt="cover" className="h-auto rounded-md" />
+        <img src="/kbrand/pick-01.png" alt="cover" className="h-auto rounded-md px-10" />
       </div>
 
       {/* Minji Section */}
