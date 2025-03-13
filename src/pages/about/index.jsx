@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { IoMdHeadset } from 'react-icons/io';
-import { SiOperagx } from 'react-icons/si';
+import React, { useEffect, useRef, useState } from "react";
+import { IoMdHeadset } from "react-icons/io";
+import { SiOperagx } from "react-icons/si";
+import KakaoMaps from "../../components/about/KakaoMaps";
 
 const FadeUpSection = ({ children }) => {
   const ref = useRef();
@@ -21,19 +22,14 @@ const FadeUpSection = ({ children }) => {
   }, []);
 
   return (
-    <div
-      ref={ref}
-      className={`transition-all duration-700 ease-in-out transform ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-      }`}
-    >
+    <div ref={ref} className={`transition-all duration-700 ease-in-out transform ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
       {children}
     </div>
   );
 };
 
 const About = () => {
-  const images = ['/about/aboutmodel1.png', '/about/aboutmodel2.png', '/about/aboutmodel3.png'];
+  const images = ["/about/aboutmodel1.png", "/about/aboutmodel2.png", "/about/aboutmodel3.png"];
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -132,8 +128,7 @@ const About = () => {
               About us
             </button>
             <p className="text-body1 text-gray-500 leading-relaxed max-w-[1280px] mx-auto">
-              Oheshio is a brand that pursues new trends with unrefined values <br /> and allows you to freely express
-              your own values and personalities.
+              Oheshio is a brand that pursues new trends with unrefined values <br /> and allows you to freely express your own values and personalities.
             </p>
           </section>
         </FadeUpSection>
@@ -149,11 +144,7 @@ const About = () => {
               />
             </div>
             <div className="lg:w-1/2 text-center lg:text-left">
-              <img
-                src="/images/logo.png"
-                alt="OHESHIO Logo"
-                className="w-[180px] md:w-[220px] mx-auto lg:mx-0 mb-4 items-start"
-              />
+              <img src="/images/logo.png" alt="OHESHIO Logo" className="w-[180px] md:w-[220px] mx-auto lg:mx-0 mb-4 items-start" />
               <p className="text-body1 md:text-base text-gray-500 leading-relaxed max-w-[600px] mx-auto lg:mx-0 font-korean">
                 오헤시오는 정체되지 않은 가치를 담아 트렌드를 새롭게 구축하며,
                 <br />
@@ -182,10 +173,7 @@ const About = () => {
         {/* 고객센터 / 오피스 정보 */}
         <FadeUpSection>
           <section className="w-full flex flex-col md:flex-row">
-            <div
-              className="w-full md:w-1/2 h-[300px] md:h-[400px] bg-cover bg-center relative"
-              style={{ backgroundImage: "url('/about/contactimg1.jpg')" }}
-            >
+            <div className="w-full md:w-1/2 h-[300px] md:h-[400px] bg-cover bg-center relative" style={{ backgroundImage: "url('/about/contactimg1.jpg')" }}>
               <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-white text-center px-4">
                 <IoMdHeadset size={24} className="mb-4" />
                 <p className="text-xs md:text-sm font-mono tracking-wide">MON–FRI : 10:00AM – 16:00PM</p>
@@ -193,10 +181,7 @@ const About = () => {
                 <p className="text-xs md:text-sm font-mono mt-1">+82 3144-2595</p>
               </div>
             </div>
-            <div
-              className="w-full md:w-1/2 h-[300px] md:h-[400px] bg-cover bg-center relative"
-              style={{ backgroundImage: "url('/about/contactimg2.jpg')" }}
-            >
+            <div className="w-full md:w-1/2 h-[300px] md:h-[400px] bg-cover bg-center relative" style={{ backgroundImage: "url('/about/contactimg2.jpg')" }}>
               <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-white text-center px-4">
                 <SiOperagx size={24} className="mb-4" />
                 <p className="text-xs md:text-sm font-mono tracking-wide">
@@ -285,6 +270,7 @@ const About = () => {
                   <p>NUGU JAPAN</p>
                 </div>
               </div>
+              <KakaoMaps />
             </div>
           </section>
         </FadeUpSection>
