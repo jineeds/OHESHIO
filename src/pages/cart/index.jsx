@@ -16,7 +16,7 @@ const Cart = () => {
     <>
       <div className="container !max-w-[1536px] pt-20 mb-10 xl:mb-0 flex flex-col xl:flex-row gap-10 text-gray-800">
         <div className="basis-3/4">
-          <h2 className="text-2xl font-semibold text-gray-700 pb-10">Your bag</h2>
+          <h2 className="text-2xl font-semibold text-gray-700 md:pb-10">Your bag</h2>
           <CartHeader />
           {cartItems.length > 0 ? (
             cartItems.map((item, index) => (
