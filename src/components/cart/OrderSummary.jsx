@@ -1,5 +1,3 @@
-import Buttons from '../../ui/Buttons';
-
 const OrderSummary = ({ subtotal, shipping, discount, total }) => {
   return (
     <div className="basis-1/4 xl:pt-[137px] min-w-[282px]">
@@ -27,9 +25,6 @@ const OrderSummary = ({ subtotal, shipping, discount, total }) => {
           <span>KRW {total.toLocaleString()}</span>
         </div>
       </div>
-      {/* <Buttons className="w-full h-[60px] flex-1 !text-2xl !font-semibold" state={hasItems ? 'active' : 'disabled'}>
-        CHECK OUT
-      </Buttons> */}
     </div>
   );
 };

@@ -13,24 +13,24 @@ const PaymentMethods = () => {
     dispatch(checkoutActions.setPaymentMethod(method));
   };
 
-  // 카드 선택 핸들러
+  // 카드 선택
   const handleCardChange = (e) => {
     const selectedCard = e.target.value;
     dispatch(checkoutActions.setSelectedCard(selectedCard));
   };
 
-  // 할부 기간 선택 핸들러
+  // 할부 기간 선택
   const handleInstallmentChange = (e) => {
     const installmentPeriod = e.target.value;
     dispatch(checkoutActions.setInstallmentPeriod(installmentPeriod));
   };
 
-  // 입금자명 변경 핸들러
+  // 입금자명 입력
   const handleDepositorNameChange = (e) => {
     dispatch(checkoutActions.setDepositorName(e.target.value));
   };
 
-  // 은행명 변경 핸들러
+  // 은행명 선택
   const handleBankNameChange = (e) => {
     dispatch(checkoutActions.setBankName(e.target.value));
   };

@@ -11,22 +11,15 @@ const OrderDetails = () => {
   const { subtotal, shipping, discount, total, totalQuantity } = useSelector((state) => state.cartR);
   const cartItems = useSelector((state) => state.cartR.items);
   const dispatch = useDispatch();
-  console.log(cartItems);
 
-  // 할인 코드 상태
   const [discountCode, setDiscountCode] = useState('');
 
-  // 할인 코드 적용 함수
   const handleApplyDiscount = () => {
-    // 체크아웃 슬라이스에 할인 코드 검증 요청
-    dispatch(checkoutActions.applyDiscountCode(discountCode));
-    // 할인은 useEffect에서 자동으로 처리됨
+    dispatch(checkoutActions.applyDiscountCode({ code: discountCode, total: total }));
   };
 
-  // 할인 금액 변화 감지하여 카트에 반영
   useEffect(() => {
     if (discountType === 'percentage' && discountValue > 0) {
-      // 백분율 할인인 경우 (예: 10% 할인)
       dispatch(
         cartActions.setDiscount({
           type: 'percentage',
@@ -35,7 +28,6 @@ const OrderDetails = () => {
         })
       );
     } else {
-      // 할인이 없거나 취소된 경우
       dispatch(
         cartActions.setDiscount({
           type: null,
