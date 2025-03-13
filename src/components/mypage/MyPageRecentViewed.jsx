@@ -37,7 +37,7 @@ const MyPageRecentViewed = ({ recentlyViewed, wishlist }) => {
 
   return (
     <div className="border-t border-gray-300">
-      <div className="w-full min-h-screen bg-white flex flex-col items-center pt-10">
+      <div className="w-full min-h-screen  flex flex-col items-center pt-10">
         <div className="w-full max-w-[1100px] px-4 sm:px-6 md:px-8 mx-auto">
           {recentlyViewed.length === 0 ? (
             <div className="text-center py-10">
