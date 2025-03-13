@@ -14,6 +14,7 @@ const initialState = {
       wishlist: [],
       orders: [],
       reviews: [],
+      profileImg: '/images/oheshio.webp',
       points: 1000,
       ohcoin: 1000000,
       recentlyViewed: [],
