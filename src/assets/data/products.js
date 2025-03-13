@@ -423,22 +423,20 @@ export const products = [
     color: 'gray',
     image: '/oheshio/top/gray/p033_layered_halter_sleeveless/p033.png',
     model_images: [
-      '/oheshio/top/gray/p033_layered_halter_sleeveless/p033_1.png',
-      '/oheshio/top/gray/p033_layered_halter_sleeveless/p033_2.png',
-      '/oheshio/top/gray/p033_layered_halter_sleeveless/p033_3.png',
+      '/oheshio/top/gray/p032_layered_halter_dress/p032_1.png',
+      '/oheshio/top/gray/p032_layered_halter_dress/p032_2.png',
     ],
   },
   {
     id: 'p034',
-    name: 'LAYERED HALTER SLEEVELESS_lightgray',
+    name: 'LAYERED HALTER SLEEVELESS',
     price: 49000,
     category: 'top',
     color: 'gray',
-    image: '/oheshio/top/gray/p034_layered_halter_sleeveless_lightgray/p034.png',
+    image: '/oheshio/top/gray/p034_layered_halter_sleeveless/p034.png',
     model_images: [
-      '/oheshio/top/gray/p034_layered_halter_sleeveless_lightgray/p034_1.png',
-      '/oheshio/top/gray/p034_layered_halter_sleeveless_lightgray/p034_2.png',
-      '/oheshio/top/gray/p034_layered_halter_sleeveless_lightgray/p034_3.png',
+      '/oheshio/top/white/p036_hooded_two-way_shirt/p036_1.png',
+      '/oheshio/top/white/p036_hooded_two-way_shirt/p036_2.png',
     ],
   },
   {
