@@ -21,23 +21,29 @@ const initialState = {
       coupons: [
         {
           id: 1,
-          name: '[자주배송 전용] 가입 축하 할인 쿠폰',
-          amount: '10,000원',
-          discount: '70% 할인',
+          name: 'OHESHIO X NJZ',
+          discountType: 'percentage',
+          discountValue: 100,
+          code: '100',
+          purchaseAmount: 100000,
           validity: '2025-03-09 - 2025-03-16',
         },
         {
           id: 2,
-          name: '회원 가입 축하 할인 쿠폰',
-          amount: '50,000원',
-          discount: '15% 할인',
+          name: '공홈 리뉴얼 기념 쿠폰',
+          discountType: 'percentage',
+          discountValue: 50,
+          code: '50',
+          purchaseAmount: 10000,
           validity: '2025-03-09 - 2025-03-16',
         },
         {
           id: 3,
           name: '회원 가입 축하 할인 쿠폰',
-          amount: '300,000원',
-          discount: '10% 할인',
+          discountType: 'percentage',
+          discountValue: 70,
+          code: '70',
+          purchaseAmount: 50000,
           validity: '2025-03-09 - 2025-03-16',
         },
       ],
@@ -100,23 +106,29 @@ export const authSlice = createSlice({
         coupons: [
           {
             id: 1,
-            name: '[자주배송 전용] 가입 축하 할인 쿠폰',
-            amount: '10,000원',
-            discount: '70% 할인',
+            name: 'OHESHIO X NJZ',
+            discountType: 'percentage',
+            discountValue: 100,
+            code: '100',
+            purchaseAmount: 100000,
             validity: validityPeriod,
           },
           {
             id: 2,
-            name: '회원 가입 축하 할인 쿠폰',
-            amount: '50,000원',
-            discount: '15% 할인',
+            name: '공홈 리뉴얼 기념 쿠폰',
+            discountType: 'percentage',
+            discountValue: 50,
+            code: '50',
+            purchaseAmount: 10000,
             validity: validityPeriod,
           },
           {
             id: 3,
             name: '회원 가입 축하 할인 쿠폰',
-            amount: '300,000원',
-            discount: '10% 할인',
+            discountType: 'percentage',
+            discountValue: 70,
+            code: '70',
+            purchaseAmount: 50000,
             validity: validityPeriod,
           },
         ],
@@ -226,23 +238,29 @@ export const authSlice = createSlice({
           coupons: [
             {
               id: 1,
-              name: '[자주배송 전용] 가입 축하 할인 쿠폰',
-              amount: '10,000원',
-              discount: '70% 할인',
+              name: 'OHESHIO X NJZ',
+              discountType: 'percentage',
+              discountValue: 100,
+              code: '100',
+              purchaseAmount: 100000,
               validity: validityPeriod,
             },
             {
               id: 2,
-              name: '회원 가입 축하 할인 쿠폰',
-              amount: '50,000원',
-              discount: '15% 할인',
+              name: '공홈 리뉴얼 기념 쿠폰',
+              discountType: 'percentage',
+              discountValue: 50,
+              code: '50',
+              purchaseAmount: 10000,
               validity: validityPeriod,
             },
             {
               id: 3,
               name: '회원 가입 축하 할인 쿠폰',
-              amount: '300,000원',
-              discount: '10% 할인',
+              discountType: 'percentage',
+              discountValue: 70,
+              code: '70',
+              purchaseAmount: 50000,
               validity: validityPeriod,
             },
           ],
@@ -472,11 +490,10 @@ export const authSlice = createSlice({
     addOrderToUser: (state, action) => {
       if (!state.currentUser) return;
 
-      const orderData = action.payload;
+      const { orderData, usedCouponCode } = action.payload;
       const userIndex = state.users.findIndex((user) => user.id === state.currentUser.id);
 
       if (userIndex !== -1) {
-        // 주문 내역 배열이 없으면 초기화
         if (!state.users[userIndex].orders) {
           state.users[userIndex].orders = [];
         }
@@ -488,7 +505,14 @@ export const authSlice = createSlice({
         state.users[userIndex].orders.push(orderData);
         state.currentUser.orders.push(orderData);
 
-        // 로컬 스토리지 업데이트
+        // 사용된 쿠폰 삭제
+        if (usedCouponCode) {
+          state.users[userIndex].coupons = state.users[userIndex].coupons.filter(
+            (coupon) => coupon.code !== usedCouponCode
+          );
+          state.currentUser.coupons = state.currentUser.coupons.filter((coupon) => coupon.code !== usedCouponCode);
+        }
+
         localStorage.setItem('users', JSON.stringify(state.users));
         localStorage.setItem('currentUser', JSON.stringify(state.currentUser));
       }

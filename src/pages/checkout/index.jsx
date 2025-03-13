@@ -2,17 +2,14 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkoutActions } from '../../store/modules/checkoutSlice';
 import { authActions } from '../../store/modules/authSlice';
-import { cartActions } from '../../store/modules/cartSlice';
 import BillingDetails from '../../components/checkout/BillingDetails';
 import PaymentMethods from '../../components/checkout/PaymentMethods';
 import OrderDetails from '../../components/checkout/OrderDetails';
 import CustomLoader from '../../ui/CustomLoader';
 import Buttons from '../../ui/Buttons';
-
 import { useNavigate } from 'react-router-dom';
 
 const Checkout = () => {
-  const [orderMemo, setOrderMemo] = useState('');
   const [selectedCard, setSelectedCard] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('creditCard');
   const [orderProcessed, setOrderProcessed] = useState(false);
@@ -20,18 +17,13 @@ const Checkout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { isProcessing, isFormValid, isComplete, orderNumber, billingDetails } = useSelector(
+  const { isProcessing, isFormValid, isComplete, orderNumber, billingDetails, appliedDiscountCode } = useSelector(
     (state) => state.checkoutR
   );
   const { items, subtotal, shipping, discount, total } = useSelector((state) => state.cartR);
   const { currentUser, authed } = useSelector((state) => state.authR);
-
-  const handleMemoChange = (e) => {
-    const text = e.target.value;
-    if (text.length <= 100) {
-      setOrderMemo(text);
-    }
-  };
+  // 무통ㅏㅇ입금
+  const { payment } = useSelector((state) => state.checkoutR);
 
   const handleCardChange = (e) => {
     setSelectedCard(e.target.value);
@@ -45,7 +37,7 @@ const Checkout = () => {
     dispatch(checkoutActions.validateCheckoutForm(total));
   };
 
-  // 폼 유효성 검사 이후 결제 진행
+  // checkout 버튼 클릭
   useEffect(() => {
     if (isFormValid) {
       const timeout = setTimeout(() => {
@@ -55,7 +47,6 @@ const Checkout = () => {
     }
   }, [isFormValid, dispatch]);
 
-  // 처리 중일 때 스크롤 방지
   useEffect(() => {
     if (isProcessing) {
       document.body.style.overflow = 'hidden';
@@ -67,7 +58,6 @@ const Checkout = () => {
     };
   }, [isProcessing]);
 
-  // 결제 완료 시 사용자 주문 내역 업데이트 및 카트 비우기
   useEffect(() => {
     if (isComplete && orderNumber && authed && currentUser && !orderProcessed) {
       // 주문 데이터 생성
@@ -81,26 +71,32 @@ const Checkout = () => {
           addressDetail: billingDetails.addressDetail,
           phone: billingDetails.phone,
           email: billingDetails.email,
-          orderMemo: orderMemo,
+          orderMemo: billingDetails.orderMemo,
         },
         items,
         subtotal,
         shipping,
         discount,
         total,
-        status: 'processing',
+        // status: 'processing',
+        // 결제완료
+        status: payment.method === 'creditCard' ? 'paid' : 'pending',
+        // 무통장입금 연ㅕ 추
+        paymentMethod: payment.method,
       };
 
-      // 주문 내역에 추가
-      dispatch(authActions.addOrderToUser(orderData));
+      // authSlice orders 주문 데이터 추가, 사용한 쿠폰 삭제
+      dispatch(
+        authActions.addOrderToUser({
+          orderData,
+          usedCouponCode: appliedDiscountCode,
+        })
+      );
 
-      // 카트 비우기
-      dispatch(cartActions.replaceCart([]));
-
-      // dispatch(authActions.clearUserCart());
+      // cart 비우기
+      // dispatch(cartActions.replaceCart([]));
 
       navigate(`/checkout/complete/${orderNumber}`);
-
       setOrderProcessed(true);
     }
   }, [isComplete, orderNumber, authed, currentUser, orderProcessed]);
@@ -117,7 +113,7 @@ const Checkout = () => {
           <div className="lg:w-[55%]">
             <h2 className="text-2xl font-semibold text-gray-700 pb-10">Billing Details</h2>
             <div className="space-y-6">
-              <BillingDetails orderMemo={orderMemo} handleMemoChange={handleMemoChange} />
+              <BillingDetails />
               <PaymentMethods
                 paymentMethod={paymentMethod}
                 handlePaymentMethodChange={handlePaymentMethodChange}
@@ -139,7 +135,6 @@ const Checkout = () => {
           </div>
         </div>
       </div>
-      s
     </>
   );
 };

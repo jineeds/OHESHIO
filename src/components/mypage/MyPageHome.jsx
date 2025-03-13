@@ -1,54 +1,83 @@
 import React from 'react';
 import Buttons from '../../ui/Buttons';
 
-const MyPageHome = () => {
+const MyPageHome = ({ orders = [], exchangeOrders = [], refundOrders = [], setActiveTab }) => {
+  const statusCount = {
+    입금대기: 0,
+    결제완료: 0,
+    배송준비중: 0,
+    배송중: 0,
+    배송완료: 0,
+    주문취소: 0,
+  };
+
+  orders.forEach((order) => {
+    const statuses = order.displayStatus || [];
+    statuses.forEach((status) => {
+      if (statusCount[status] !== undefined) {
+        statusCount[status] += 1;
+      }
+    });
+  });
+
+  const statusLabels = [
+    { label: '입금대기', key: '입금대기' },
+    { label: '배송준비중', key: '배송준비중' },
+    { label: '배송중', key: '배송중' },
+    { label: '배송완료', key: '배송완료' },
+  ];
+
   return (
     <div className="container max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 주문내역 */}
       <div className="border-t border-gray-300">
-        <div className="text-gray-800 text-sm md:text-base font-medium flex items-center justify-start mb-4 mt-4 font-korean">
-          주문내역
-        </div>
-        <div className="flex items-center justify-center gap-4 md:gap-12 flex-nowrap mt-8 mb-10 overflow-x-auto px-2 ">
-          {['입금전', '배송준비중', '배송중', '배송완료'].map((status, index, array) => (
-            <React.Fragment key={status}>
-              <div className="min-w-[80px] md:w-[100px] h-[80px] md:h-[100px] flex flex-col items-center justify-center bg-[#CBD5E1] text-center rounded-full shadow-md flex-shrink-0 mb-2">
-                <p className="text-base md:text-lg font-semibold font-korean">0</p>
-                <p className="text-xs md:text-sm text-gray-600 font-korean">{status}</p>
-              </div>
-              {index < array.length - 1 && (
-                <span className="text-sm md:text-lg text-gray-500 flex-shrink-0"> &gt; </span>
-              )}
-            </React.Fragment>
+        <div className="text-gray-800 text-base font-medium flex justify-start my-4 font-korean">주문내역</div>
+        <div className="grid grid-cols-2 md:flex md:justify-center gap-4 md:gap-12 my-8 px-2">
+          {statusLabels.map((statusObj, index) => (
+            <div
+              key={statusObj.key}
+              className="flex flex-col items-center justify-center bg-[#CBD5E1] rounded-full shadow-md w-full h-[80px] md:w-[100px] md:h-[100px]"
+            >
+              <p className="text-lg font-semibold font-korean">{statusCount[statusObj.key] || 0}</p>
+              <p className="text-sm text-gray-600 font-korean">{statusObj.label}</p>
+            </div>
           ))}
         </div>
       </div>
 
+      {/* 취소/교환/반품 내역 */}
       <div className="border-t border-gray-300">
-        <div className="text-gray-800 text-sm md:text-base font-medium flex items-center justify-start mb-4 mt-4 font-korean">
-          취소/교환/반품 내역
+        <div className="text-gray-800 text-base font-medium flex justify-start my-4 font-korean">
+          취소 / 교환 / 반품 내역
         </div>
-        <div className="flex justify-start md:justify-center gap-3 md:gap-6 mt-10 mb-12 flex-nowrap overflow-x-auto px-2">
-          {['취소 0', '교환 0', '반품 0'].map((action) => (
+        <div className="grid grid-cols-3 gap-3 my-8 px-2">
+          {[
+            { label: '취소', count: statusCount['주문취소'] },
+            { label: '교환', count: exchangeOrders.length },
+            { label: '반품', count: refundOrders.length },
+          ].map((action) => (
             <Buttons
-              key={action}
-              size="large"
-              state="default"
-              className="min-w-[140px] md:w-[250px] h-[48px] md:h-[62px] border border-[#375785] bg-[rgba(226,232,240,0.2)] text-[#375785] rounded-full px-4 py-2 text-sm md:text-base text-gray-500  flex-shrink-0 font-korean"
+              key={action.label}
+              className="w-full h-[60px] border border-[#375785] bg-gray-100 text-[#375785] rounded-full text-sm md:text-base font-korean"
             >
-              {action}
+              {`${action.label} ${action.count}`}
             </Buttons>
           ))}
         </div>
       </div>
 
-      <div className="border-t border-gray-300 pt-8 pb-12">
-        <div className="flex justify-start md:justify-center gap-3 md:gap-6 flex-nowrap overflow-x-auto px-2">
-          {['관심상품', '최근 본 상품', '나의 쿠폰'].map((label) => (
+      {/* 관심상품/최근 본 상품/나의 쿠폰 */}
+      <div className="border-t border-gray-300 pt-6 pb-8">
+        <div className="grid grid-cols-3 gap-3 px-2">
+          {[
+            { label: '관심상품', tab: 'Wishlist' },
+            { label: '최근 본 상품', tab: 'History' },
+            { label: '나의 쿠폰', tab: 'Coupon' },
+          ].map(({ label, tab }) => (
             <Buttons
               key={label}
-              size="large"
-              state="default"
-              className="min-w-[140px] md:w-[250px] h-[48px] md:h-[62px] border border-[#375785] bg-[#375785] text-gray-500 rounded-full px-4 py-2 text-sm md:text-base flex-shrink-0 font-korean"
+              className="w-full h-[60px] border border-[#375785] bg-[#375785] text-gray-50 rounded-full text-sm md:text-base font-korean"
+              onClick={() => setActiveTab(tab)}
             >
               {label}
             </Buttons>
@@ -56,9 +85,8 @@ const MyPageHome = () => {
         </div>
       </div>
 
-      <div className="text-center mt-4 mb-10 text-gray-400 text-sm md:text-base cursor-pointer hover:underline">
-        logout
-      </div>
+      {/* 로그아웃 */}
+      <div className="text-center my-6 text-gray-400 text-sm md:text-base cursor-pointer hover:underline">logout</div>
     </div>
   );
 };
