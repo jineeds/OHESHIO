@@ -27,13 +27,16 @@ const MyPageOrderHistory = ({
     if (selectedPeriod === '6개월') return days <= 180;
     return true;
   };
-
+  // ddddd
   const filteredOrders = orders.filter((order) => {
     const isInPeriod = filterByPeriod(order.date);
     const hasStatus = !selectedStatus || order.displayStatus.includes(selectedStatus);
 
     if (selectedButton === '취소/교환/반품 내역') {
-      return isInPeriod && order.displayStatus.includes('주문취소');
+      return (
+        isInPeriod &&
+        (cancelledOrders.includes(order.id) || exchangeOrders.includes(order.id) || refundOrders.includes(order.id))
+      );
     }
 
     return isInPeriod && hasStatus;
@@ -41,7 +44,11 @@ const MyPageOrderHistory = ({
 
   const handleCancel = (orderId) => {
     if (window.confirm('정말 이 주문을 취소하시겠습니까?')) {
-      setCancelledOrders((prev) => [...prev, orderId]);
+      setCancelledOrders((prev) => {
+        const updated = [...prev, orderId];
+        localStorage.setItem('cancelledOrders', JSON.stringify(updated));
+        return updated;
+      });
     }
   };
 
@@ -126,7 +133,7 @@ const MyPageOrderHistory = ({
                   {!order.displayStatus.includes('주문취소') && (
                     <Buttons
                       size="small"
-                      className="border border-red-400 text-red-500 font-korean"
+                      className="border border-primary-500 text-primary-500 font-korean"
                       onClick={() => handleCancel(order.id)}
                     >
                       주문취소

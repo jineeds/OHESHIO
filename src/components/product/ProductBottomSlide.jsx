@@ -3,13 +3,14 @@ import { ProductBottomSlideContainer } from './style/style';
 import { useDispatch } from 'react-redux';
 import { authActions } from '../../store/modules/authSlice';
 import Typed from 'typed.js';
+import { useNavigate } from 'react-router-dom';
 
 const ProductBottomSlide = ({ products }) => {
   const [hoveredProductId, setHoveredProductId] = useState(null);
   const [isPaused, setIsPaused] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [selectedProducts, setSelectedProducts] = useState([]);
-
   useEffect(() => {
     const uniqueProducts = Array.from(new Map(products.map((product) => [product.id, product])).values());
     const shuffled = [...uniqueProducts].sort(() => 0.5 - Math.random());

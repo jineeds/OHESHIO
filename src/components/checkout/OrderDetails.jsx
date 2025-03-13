@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import InputCustom from '../../ui/InputCustom';
 import { useSelector, useDispatch } from 'react-redux';
 import { cartActions } from '../../store/modules/cartSlice';
@@ -7,15 +6,26 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 
 const OrderDetails = () => {
-  const { discountType, discountValue, discountError } = useSelector((state) => state.checkoutR);
+  const {
+    discountType,
+    discountValue,
+    discountError,
+    discountSuccess = false,
+  } = useSelector((state) => state.checkoutR);
   const { subtotal, shipping, discount, total, totalQuantity } = useSelector((state) => state.cartR);
   const cartItems = useSelector((state) => state.cartR.items);
   const dispatch = useDispatch();
 
+  // 할인 코드 입력
   const [discountCode, setDiscountCode] = useState('');
 
   const handleApplyDiscount = () => {
     dispatch(checkoutActions.applyDiscountCode({ code: discountCode, total: total }));
+  };
+
+  const handleClearDiscount = () => {
+    setDiscountCode('');
+    dispatch(checkoutActions.clearDiscountCode());
   };
 
   useEffect(() => {
@@ -81,16 +91,26 @@ const OrderDetails = () => {
               value={discountCode}
               error={discountError}
               onChange={(e) => setDiscountCode(e.target.value)}
-              success={false}
+              success={discountSuccess}
             />
           </div>
-          <button
-            type="button"
-            className="py-3 px-4 h-12 rounded bg-secondary-100 text-gray-500 hover:bg-primary-500 hover:text-gray-50 duration-200 flex-shrink-0 text-sm border border-solid"
-            onClick={handleApplyDiscount}
-          >
-            Apply
-          </button>
+          {!discountSuccess ? (
+            <button
+              type="button"
+              className="py-3 px-4 h-12 rounded bg-secondary-100 text-gray-500 hover:bg-primary-500 hover:text-gray-50 duration-200 flex-shrink-0 text-sm border border-solid"
+              onClick={handleApplyDiscount}
+            >
+              Apply
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="py-3 px-4 h-12 rounded bg-primary-500 text-gray-50 duration-200 flex-shrink-0 text-sm border border-solid"
+              onClick={handleClearDiscount}
+            >
+              Clear
+            </button>
+          )}
         </div>
         <div className="mt-8">
           <div className="text-sm space-y-2">

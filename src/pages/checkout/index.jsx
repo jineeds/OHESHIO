@@ -37,6 +37,10 @@ const Checkout = () => {
     dispatch(checkoutActions.validateCheckoutForm(total));
   };
 
+  useEffect(() => {
+    dispatch(checkoutActions.resetCheckout());
+  }, []);
+
   // checkout 버튼 클릭
   useEffect(() => {
     if (isFormValid) {
@@ -64,6 +68,8 @@ const Checkout = () => {
       const orderData = {
         id: orderNumber,
         date: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
+
         billingDetails: {
           receiverName: billingDetails.receiverName,
           zipcode: billingDetails.zipcode,

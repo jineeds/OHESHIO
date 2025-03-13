@@ -8,7 +8,6 @@ const BillingDetails = () => {
   const dispatch = useDispatch();
   const { billingDetails, formErrors } = useSelector((state) => state.checkoutR);
   const { currentUser } = useSelector((state) => state.authR);
-
   const [isOpen, setIsOpen] = useState(false);
   const [errors, setErrors] = useState({
     receiverName: '',
@@ -59,12 +58,17 @@ const BillingDetails = () => {
     }
   };
 
+  const Label = ({ text, required = false }) => (
+    <label className="flex gap-1 text-sm font-medium font-korean mb-2">
+      {text}
+      {required && <span className="text-xs text-primary-500">*</span>}
+    </label>
+  );
+
   return (
     <>
       <div className="md:w-[calc(50%-8px)]">
-        <label className="flex gap-1 text-sm font-medium font-korean mb-2">
-          받는사람<span className="text-xs text-primary-500">*</span>
-        </label>
+        <Label text="받는사람" required={true} />
         <InputCustom
           type="text"
           name="receiverName"
@@ -76,10 +80,7 @@ const BillingDetails = () => {
         />
       </div>
       <div>
-        <label className="flex gap-1 text-sm font-medium font-korea mb-2">
-          주소<span className="text-xs text-primary-500">*</span>
-        </label>
-
+        <Label text="주소" required={true} />
         <div className="space-y-3">
           <div className="flex gap-2 md:gap-4">
             <div className="w-full lg:w-[calc(50%-8px)]">
@@ -98,7 +99,7 @@ const BillingDetails = () => {
             <button
               type="button"
               onClick={() => setIsOpen(true)}
-              className="py-3 px-4 h-12 rounded bg-primary-300 text-gray-500 hover:bg-primary-500 hover:text-gray-50 duration-200 flex-shrink-0"
+              className="py-3 px-4 h-12 rounded bg-primary-300 font-korean text-gray-500 hover:bg-primary-500 hover:text-gray-50 duration-200 flex-shrink-0"
             >
               주소검색
             </button>
@@ -129,9 +130,7 @@ const BillingDetails = () => {
       </div>
       <div className="flex flex-col md:flex-row gap-4">
         <div className="md:w-1/2">
-          <label className="flex gap-1 text-sm font-medium font-korean mb-2">
-            휴대폰<span className="text-xs text-primary-500">*</span>
-          </label>
+          <Label text="휴대폰" required={true} />
           <InputCustom
             type="text"
             name="phone"
@@ -142,9 +141,7 @@ const BillingDetails = () => {
           />
         </div>
         <div className="md:w-1/2">
-          <label className="flex gap-1 text-sm font-medium font-korean mb-2">
-            이메일<span className="text-xs text-primary-500">*</span>
-          </label>
+          <Label text="이메일" required={true} />
           <InputCustom
             type="email"
             name="email"
@@ -156,7 +153,7 @@ const BillingDetails = () => {
         </div>
       </div>
       <div>
-        <label className="flex gap-1 text-sm font-medium font-korean mb-2">주문메모</label>
+        <Label text="주문메모" required={false} />
         <textarea
           name="orderMemo"
           value={billingDetails.orderMemo}
@@ -167,7 +164,6 @@ const BillingDetails = () => {
         ></textarea>
         <div className="text-right text-gray-500 text-sm mt-1">{billingDetails.orderMemo.length}/100</div>
       </div>
-
       {isOpen && <PostcodeModal onClose={() => setIsOpen(false)} onComplete={handleComplete} />}
     </>
   );
