@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import MyPageOrderHistory from '../../components/mypage/MyPageOrderHistory';
 import MyPageCoupons from '../../components/mypage/MyPageCoupons';
@@ -10,8 +10,34 @@ import MyPageHome from '../../components/mypage/MyPageHome';
 
 const MyPage = () => {
   const [activeTab, setActiveTab] = useState('Home');
+  const [cancelledOrders, setCancelledOrders] = useState([]);
+
   const currentUser = useSelector((state) => state.authR.currentUser);
   const isAuthed = useSelector((state) => state.authR.authed);
+  // 주문 교환 환불 추가
+  const [exchangeOrders, setExchangeOrders] = useState([]);
+  const [refundOrders, setRefundOrders] = useState([]);
+
+  const updatedOrders =
+    currentUser?.orders?.map((order) => {
+      const displayStatus = [];
+
+      if (cancelledOrders.includes(order.id)) {
+        displayStatus.push('주문취소');
+      }
+      if (order.status === 'pending' && order.paymentMethod === 'bankTransfer') {
+        displayStatus.push('입금대기');
+      }
+      if (order.status === 'paid') {
+        displayStatus.push('결제완료');
+        displayStatus.push('배송준비중');
+      }
+      if (order.status === 'preparing') displayStatus.push('배송준비중');
+      if (order.status === 'shipping') displayStatus.push('배송중');
+      if (order.status === 'delivered') displayStatus.push('배송완료');
+
+      return { ...order, displayStatus };
+    }) || [];
 
   if (!isAuthed) {
     return (
@@ -26,9 +52,27 @@ const MyPage = () => {
     <div className="max-w-7xl mx-auto py-10 text-center mt-8">
       <h1 className="text-2xl font-bold my-6">My Page</h1>
       <MyPageNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
+
       <div className="mt-6">
-        {activeTab === 'Home' && <MyPageHome currentUser={currentUser} />}
-        {activeTab === 'Order' && <MyPageOrderHistory orders={currentUser.orders} />}
+        {activeTab === 'Home' && (
+          <MyPageHome
+            orders={updatedOrders}
+            exchangeOrders={exchangeOrders}
+            refundOrders={refundOrders}
+            setActiveTab={setActiveTab}
+          />
+        )}
+        {activeTab === 'Order' && (
+          <MyPageOrderHistory
+            orders={updatedOrders}
+            cancelledOrders={cancelledOrders}
+            setCancelledOrders={setCancelledOrders}
+            exchangeOrders={exchangeOrders}
+            setExchangeOrders={setExchangeOrders}
+            refundOrders={refundOrders}
+            setRefundOrders={setRefundOrders}
+          />
+        )}
         {activeTab === 'Coupon' && <MyPageCoupons points={currentUser.points} coupons={currentUser.coupons} />}
         {activeTab === 'Wishlist' && <MyPageWishlist wishlist={currentUser.wishlist} />}
         {activeTab === 'History' && (

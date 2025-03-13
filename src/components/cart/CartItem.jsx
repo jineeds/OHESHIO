@@ -8,6 +8,7 @@ const CartItem = ({ id, isLast }) => {
   const dispatch = useDispatch();
   const item = useSelector((state) => state.cartR.items.find((item) => item.id === id));
   const [inputValue, setInputValue] = useState(item?.quantity?.toString() || '1');
+  const productId = item.id.split('_')[0];
 
   useEffect(() => {
     if (item && item.quantity) {
@@ -20,18 +21,17 @@ const CartItem = ({ id, isLast }) => {
 
   const handleQuantityChange = (e) => {
     const newValue = e.target.value;
-    // 빈 문자열이거나 숫자만 허용
+
     if (newValue === '' || /^\d+$/.test(newValue)) {
       setInputValue(newValue);
-      // 숫자인 경우에만 Redux 상태 업데이트
+
       if (newValue !== '' && parseInt(newValue, 10) > 0) {
         dispatch(cartActions.setQuantity({ id: id, quantity: parseInt(newValue, 10) }));
       }
     }
   };
-  // 포커스를 잃었을 때 처리
+
   const handleBlur = () => {
-    // 빈 값이거나 0 이하인 경우 1로 설정
     if (inputValue === '' || parseInt(inputValue, 10) <= 0) {
       setInputValue('1');
       dispatch(cartActions.setQuantity({ id: id, quantity: 1 }));
@@ -43,19 +43,19 @@ const CartItem = ({ id, isLast }) => {
       <div className="flex items-center py-5 md:py-0 md:block border-b border-secondary-300">
         {/* 모바일용 이미지 */}
         <div className="w-1/3 max-w-[120px] md:hidden">
-          <Link to={'#'}>
+          <Link to={`/product/${productId}`}>
             <img src={image} alt={name} className="" />
           </Link>
         </div>
         <div className="relative flex flex-col flex-1 pl-[4%] md:flex-row md:items-center md:p-5 ">
           {/* 데스크탑용 이미지 */}
           <div className="hidden md:block w-1/6 pr-10">
-            <Link to={'#'}>
+            <Link to={`/product/${productId}`}>
               <img src={image} alt={name} className="" />
             </Link>
           </div>
           <div className="w-full md:w-2/6 pr-6 flex flex-col md:gap-2">
-            <Link to={'#'}>
+            <Link to={`/product/${productId}`}>
               <strong className="text-sm xl:text-base line-clamp-2 overflow-hidden text-ellipsis font-normal md:mb-1 xl:mb-2">
                 {name}
               </strong>

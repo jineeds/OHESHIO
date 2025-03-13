@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import InputCustom from '../../ui/InputCustom';
 import PostcodeModal from './PostcodeModal';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,15 +7,19 @@ import { checkoutActions } from '../../store/modules/checkoutSlice';
 const BillingDetails = () => {
   const dispatch = useDispatch();
   const { billingDetails, formErrors } = useSelector((state) => state.checkoutR);
+  const { currentUser } = useSelector((state) => state.authR);
 
-  // 로컬 상태 (유효성 검사 오류 등)
+  const [isOpen, setIsOpen] = useState(false);
   const [errors, setErrors] = useState({
     receiverName: '',
     addressDetail: '',
   });
-  const [isOpen, setIsOpen] = useState(false);
 
-  // 유효성 검사 함수
+  useEffect(() => {
+    dispatch(checkoutActions.updateBillingDetail({ field: 'phone', value: currentUser.phone }));
+    dispatch(checkoutActions.updateBillingDetail({ field: 'email', value: currentUser.userEmail }));
+  }, [currentUser, dispatch]);
+
   const validateField = (name, value) => {
     let errorMessage = '';
     switch (name) {
@@ -28,14 +32,12 @@ const BillingDetails = () => {
     setErrors((prev) => ({ ...prev, [name]: errorMessage }));
   };
 
-  // 입력 변경 핸들러
   const handleChange = (e) => {
     const { name, value } = e.target;
     dispatch(checkoutActions.updateBillingDetail({ field: name, value }));
     validateField(name, value);
   };
 
-  // 주소 검색 완료 핸들러
   const handleComplete = (data) => {
     dispatch(
       checkoutActions.setAddressInfo({
@@ -50,9 +52,11 @@ const BillingDetails = () => {
     setIsOpen(false);
   };
 
-  // 주문 메모 변경 핸들러
   const handleMemoChange = (e) => {
-    dispatch(checkoutActions.updateOrderMemo(e.target.value));
+    const text = e.target.value;
+    if (text.length <= 100) {
+      dispatch(checkoutActions.updateOrderMemo(text));
+    }
   };
 
   return (
@@ -67,7 +71,6 @@ const BillingDetails = () => {
           placeholder="받는사람"
           value={billingDetails.receiverName}
           onChange={handleChange}
-          // error={errors.receiverName}
           error={formErrors?.receiverName || errors.receiverName}
           success={false}
         />
@@ -132,7 +135,7 @@ const BillingDetails = () => {
           <InputCustom
             type="text"
             name="phone"
-            value="010-1234-5678" // 회원 정보 연동
+            value={currentUser.phone ? currentUser.phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3') : ''}
             readOnly
             success={false}
             className="pointer-events-none !bg-gray-100"
@@ -145,7 +148,7 @@ const BillingDetails = () => {
           <InputCustom
             type="email"
             name="email"
-            value="test@gmail.com" // 회원 정보 연동
+            value={currentUser.userEmail}
             readOnly
             success={false}
             className="pointer-events-none !bg-gray-100"
@@ -159,7 +162,7 @@ const BillingDetails = () => {
           value={billingDetails.orderMemo}
           onChange={handleMemoChange}
           placeholder="요청 사항 입력"
-          className="w-full px-4 py-3 font-korean rounded border border-gray-300 focus:outline-primary-600 hover:shadow-[0px_2px_4px_0_rgba(0,0,0,0.25)] resize-none"
+          className="w-full px-4 py-3 font-korean rounded bg-primary-100 focus:outline-primary-600 hover:shadow-[0px_2px_4px_0_rgba(0,0,0,0.25)] resize-none"
           rows={3}
         ></textarea>
         <div className="text-right text-gray-500 text-sm mt-1">{billingDetails.orderMemo.length}/100</div>

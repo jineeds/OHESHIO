@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { SiOperagx } from 'react-icons/si';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { authActions } from '../../store/modules/authSlice';
 import { showToast } from '/src/ui/toast/showToast';
 
@@ -10,7 +10,6 @@ const Header = () => {
     const [isBottomMenuVisible, setIsBottomMenuVisible] = useState(false);
     const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1281);
     const { authed } = useSelector((state) => state.authR);
-    const currentUser = useSelector((state) => state.authR.currentUser);
     const [showCloudEffect, setShowCloudEffect] = useState(false);
     const [isHovering, setIsHovering] = useState(false);
 
@@ -73,6 +72,11 @@ const Header = () => {
     // Check if we're in desktop view
     const isDesktop = windowWidth >= 1280;
 
+    const location = useLocation();
+    const isCheckoutCompletePage = location.pathname.includes('/checkout/complete');
+    const isCheckoutOrCartPage =
+        (location.pathname.includes('/checkout') && !isCheckoutCompletePage) || location.pathname.includes('/cart');
+
     return (
         <>
             {showCloudEffect && (
@@ -105,134 +109,160 @@ const Header = () => {
                 <div className='container mx-auto px-4 h-full relative'>
                     {/* Desktop only "home" text */}
                     <div className='hidden xl:block text-xs md:text-sm font-medium absolute top-1/2 -translate-y-1/2 left-16 text-black'>
-                        <Link to='/main'>home</Link>
+                        {isCheckoutOrCartPage ? (
+                            <button
+                                onClick={() => {
+                                    navigate(-1);
+                                }}
+                                className='text-xs md:text-sm text-black cursor-pointer font-medium hover:opacity-80'
+                            >
+                                back
+                            </button>
+                        ) : (
+                            <Link to='/main'>home</Link>
+                        )}
                     </div>
 
                     {/* Mobile/Tablet Icon */}
                     <div className='block xl:hidden absolute top-1/2 -translate-y-1/2 left-16'>
-                        <div className='group relative'>
-                            <div className='text-sm text-black cursor-pointer font-medium hover:opacity-80 flex items-center justify-center'>
-                                <SiOperagx className='text-lg' />
-                            </div>
-                            <div className='absolute  flex flex-col left-1/2 -translate-x-1/2 mt-1 w-32 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 pt-2'>
-                                {authed ? (
-                                    <>
-                                        <button
-                                            onClick={onLogout}
-                                            className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '
-                                        >
-                                            logout
-                                        </button>
-                                        <button
-                                            onClick={onMypage}
-                                            className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '
-                                        >
-                                            my page
-                                        </button>
-                                    </>
-                                ) : (
-                                    <>
-                                        <button
-                                            onClick={onGo}
-                                            className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '
-                                        >
-                                            sign up
-                                        </button>
-                                        <button
-                                            onClick={onMypage}
-                                            className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '
-                                        >
-                                            my page
-                                        </button>
-                                    </>
-                                )}
-                            </div>
-                        </div>
-                    </div>
+                        {isCheckoutOrCartPage ? (
+                            <button
+                                onClick={() => {
+                                    navigate(-1);
+                                }}
+                                className='text-xs md:text-sm text-black cursor-pointer font-medium hover:opacity-80'
+                            >
+                                back
+                            </button>
+                        ) : (
+                            <div className='group relative'>
+                                <div className='text-sm text-black cursor-pointer font-medium hover:opacity-80 flex items-center justify-center'>
+                                    <SiOperagx className='text-lg' />
+                                </div>
+                                <div className='absolute  flex flex-col left-1/2 -translate-x-1/2 mt-1 w-32 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 pt-2'>
+                                    {authed ? (
+                                        <>
+                                            <button
+                                                onClick={onLogout}
+                                                className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center'
+                                            >
+                                                logout
+                                            </button>
 
+                                            <button
+                                                onClick={onMypage}
+                                                className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '
+                                            >
+                                                my page
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <button
+                                                onClick={onGo}
+                                                className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '
+                                            >
+                                                sign up
+                                            </button>
+                                            <button
+                                                onClick={onMypage}
+                                                className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '
+                                            >
+                                                my page
+                                            </button>
+                                        </>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+                    </div>
                     {/* Logo (always centered) */}
                     <div className='absolute left-1/2 transform -translate-x-1/2 top-1/2 -translate-y-1/2'>
                         <Link to='/'>
-                            <img src='/public/images/logo.png' alt='logo' width={144} />
+                            <img src='/images/logo.png' alt='logo' width={144} />
                         </Link>
                     </div>
-
                     {/* Desktop only collection dropdown */}
-                    <div className='hidden xl:block absolute top-1/2 -translate-y-1/2 right-36'>
-                        <div className='group'>
-                            <div className='text-sm text-black cursor-pointer font-medium hover:opacity-80 mr-32 relative'>
-                                collection
-                            </div>
-                            {/* Dropdown Menu */}
-                            <div className='absolute left-0 mt-1 w-32 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 pt-2'>
-                                <Link to='/main' className='block'>
-                                    <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 '>
-                                        uniform
-                                    </div>
-                                </Link>
-                                <Link to='/kbrand' className='block'>
-                                    <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 '>
-                                        k-brand
-                                    </div>
-                                </Link>
-                                <Link to='/about' className='block'>
-                                    <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 '>
-                                        about
-                                    </div>
-                                </Link>
+                    {!isCheckoutOrCartPage && (
+                        <div className='hidden xl:block absolute top-1/2 -translate-y-1/2 right-36'>
+                            <div className='group'>
+                                <div className='text-sm text-black cursor-pointer font-medium hover:opacity-80 mr-32 relative'>
+                                    collection
+                                </div>
+                                {/* Dropdown Menu */}
+                                <div className='absolute left-0 mt-1 w-32 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 pt-2'>
+                                    <Link to='/main' className='block'>
+                                        <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 '>
+                                            uniform
+                                        </div>
+                                    </Link>
+                                    <Link to='/kbrand' className='block'>
+                                        <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 '>
+                                            oheshio-k
+                                        </div>
+                                    </Link>
+                                    <Link to='/about' className='block'>
+                                        <div className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 '>
+                                            about
+                                        </div>
+                                    </Link>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
+                    )}
                     {/* Desktop only SiOperagx icon */}
-                    <div className='hidden xl:block absolute top-1/2 -translate-y-1/2 right-44'>
-                        <div className='group relative'>
-                            <div className='text-sm text-black cursor-pointer font-medium hover:opacity-80 flex items-center justify-center'>
-                                <SiOperagx className='text-lg' />
-                            </div>
-                            <div className='absolute flex flex-col justify-center left-1/2 -translate-x-1/2 mt-1 w-32 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 pt-2'>
-                                {authed ? (
-                                    <>
-                                        <button
-                                            onClick={onLogout}
-                                            className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '
-                                        >
-                                            logout
-                                        </button>
-                                        <button
-                                            onClick={onMypage}
-                                            className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '
-                                        >
-                                            my page
-                                        </button>
-                                    </>
-                                ) : (
-                                    <>
-                                        <button
-                                            onClick={onGo}
-                                            className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '
-                                        >
-                                            sign up
-                                        </button>
-                                    </>
-                                )}
+                    {!isCheckoutOrCartPage && (
+                        <div className='hidden xl:block absolute top-1/2 -translate-y-1/2 right-44'>
+                            <div className='group relative'>
+                                <div className='text-sm text-black cursor-pointer font-medium hover:opacity-80 flex items-center justify-center'>
+                                    <SiOperagx className='text-lg' />
+                                </div>
+                                <div className='absolute flex flex-col justify-center left-1/2 -translate-x-1/2 mt-1 w-32 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 pt-2'>
+                                    {authed ? (
+                                        <>
+                                            {!isCheckoutOrCartPage && (
+                                                <button
+                                                    onClick={onLogout}
+                                                    className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center'
+                                                >
+                                                    logout
+                                                </button>
+                                            )}
+                                            <button
+                                                onClick={onMypage}
+                                                className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '
+                                            >
+                                                my page
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <button
+                                                onClick={onGo}
+                                                className='py-2 px-4 text-xs md:text-sm transition-colors cursor-pointer hover:text-gray-600 text-center '
+                                            >
+                                                sign up
+                                            </button>
+                                        </>
+                                    )}
+                                </div>
                             </div>
                         </div>
-                    </div>
-
+                    )}
                     <div className='absolute top-1/2 -translate-y-1/2 right-16'>
-                        <Link
-                            to='/cart'
-                            className='text-xs md:text-sm text-black cursor-pointer font-medium hover:opacity-80'
-                        >
-                            bag
-                        </Link>
+                        <div className='group relative'>
+                            <Link to={'/cart'} className='block'>
+                                <div className='text-xs md:text-sm text-black cursor-pointer font-medium hover:opacity-80'>
+                                    bag
+                                </div>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </header>
 
             {/* Bottom navigation bar (mobile/tablet only - shows on screens smaller than xl) */}
-            {!isDesktop && (
+            {!isDesktop && !isCheckoutOrCartPage && (
                 <div className='fixed bottom-0 left-0 w-full h-14 shadow-lg z-50'>
                     <div className='container mx-auto h-full flex justify-center items-center'>
                         <div className='w-full max-w-md flex justify-around items-center'>

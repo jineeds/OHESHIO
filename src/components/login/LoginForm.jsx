@@ -48,6 +48,7 @@ const LoginForm = () => {
           id: item.productId,
           name: item.name,
           color: item.color || 'DEFAULT',
+          size: item.size || 'DEFAULT',
           price: item.price,
           quantity: item.quantity,
           image: item.image,
@@ -55,7 +56,7 @@ const LoginForm = () => {
 
         dispatch(cartActions.replaceCart(cartItems));
       }
-      navigate('/');
+      navigate('/main');
     }
   }, [authed]);
 
@@ -118,7 +119,7 @@ const LoginForm = () => {
 
           <form
             onSubmit={handleSubmit}
-            className='bg-white rounded-lg shadow-sm p-12 border w-full transition-all duration-300'
+            className='bg-white rounded-lg shadow-sm md:p-12 p-6 border w-full transition-all duration-300'
             style={{ boxShadow: '5px 5px 7px 0 rgba(0, 0, 0, 0.25)' }}
           >
             <div className='mb-4'>

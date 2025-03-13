@@ -2,11 +2,27 @@ import React, { forwardRef, useState } from 'react';
 
 const InputCustom = forwardRef(
   (
-    { type = 'text', name, value, error = '', success = 'false', onChange, placeholder, className = '', ...props },
+    {
+      type = 'text',
+      name,
+      value,
+      error = '',
+      success = 'false',
+      onChange,
+      placeholder,
+      className = '',
+      autoComplete,
+      ...props
+    },
     ref
   ) => {
     const [showPassword, setShowPassword] = useState(false);
 
+    const getAutoComplete = () => {
+      if (autoComplete) return autoComplete;
+      if (type === 'password') return 'current-password';
+      return 'off';
+    };
     const togglePasswordVisibility = () => {
       setShowPassword(!showPassword);
     };
@@ -23,6 +39,7 @@ const InputCustom = forwardRef(
               value={value}
               onChange={onChange}
               placeholder={placeholder}
+              autoComplete={getAutoComplete()}
               className={`w-full px-4 py-3 font-korean rounded bg-primary-100 ${
                 error ? 'bg-red-50 border border-red-300' : 'bg-primary-100 border-0'
               } transition-all duration-200 focus:outline-primary-600 hover:shadow-[0px_2px_4px_0_rgba(0,0,0,0.25)] ${className}`}

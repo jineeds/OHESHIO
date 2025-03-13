@@ -1,15 +1,12 @@
 import styled from 'styled-components';
 
 export const ProductContain = styled.div`
-  padding: 101px 0 20px;
   width: 100%;
   margin: 0 auto;
   position: relative;
   display: flex;
-  align-items: flex-start;
   justify-content: space-between;
   overflow: visible;
-  flex-direction: row-reverse;
 
   .product_detail_contain {
     div {
