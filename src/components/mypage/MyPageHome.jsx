@@ -58,7 +58,7 @@ const MyPageHome = ({ orders = [], exchangeOrders = [], refundOrders = [], setAc
           ].map((action) => (
             <Buttons
               key={action.label}
-              className="w-full h-[60px] border border-[#375785] bg-gray-100 text-[#375785] rounded-full text-sm md:text-base font-korean"
+              className="w-full h-[60px] border border-[#375785] bg-gray-100  text-gray-700 text-[#375785] rounded-full text-sm md:text-base font-korean"
             >
               {`${action.label} ${action.count}`}
             </Buttons>
@@ -76,7 +76,7 @@ const MyPageHome = ({ orders = [], exchangeOrders = [], refundOrders = [], setAc
           ].map(({ label, tab }) => (
             <Buttons
               key={label}
-              className="w-full h-[60px] border border-[#375785] bg-[#375785] text-gray-50 rounded-full text-sm md:text-base font-korean"
+              className="w-full h-[60px] border border-[#375785] bg-[#375785] text-gray-700 rounded-full text-sm md:text-base font-korean"
               onClick={() => setActiveTab(tab)}
             >
               {label}
@@ -85,7 +85,6 @@ const MyPageHome = ({ orders = [], exchangeOrders = [], refundOrders = [], setAc
         </div>
       </div>
 
-      {/* 로그아웃 */}
       <div className="text-center my-6 text-gray-400 text-sm md:text-base cursor-pointer hover:underline">logout</div>
     </div>
   );

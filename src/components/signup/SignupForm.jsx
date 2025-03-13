@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SocialSignupButton from './SocialSignupButton';
 import InputCustom from '../../ui/InputCustom';
 import { authActions } from '../../store/modules/authSlice';
@@ -168,7 +168,7 @@ const SignupForm = () => {
     }
 
     if (!verificationSuccess) {
-      newErrors.verificationCode = '휴대폰 인증이 필요합니다.';
+      newErrors.verificationCode = 'Hint : 1234';
       isValid = false;
     }
 
@@ -221,7 +221,7 @@ const SignupForm = () => {
       setVerificationSuccess(true);
       setErrors((prev) => ({ ...prev, verificationCode: '' }));
     } else {
-      setErrors((prev) => ({ ...prev, verificationCode: '인증번호가 일치하지 않습니다.' }));
+      setErrors((prev) => ({ ...prev, verificationCode: 'Hint : 1234' }));
     }
   };
 
@@ -252,7 +252,7 @@ const SignupForm = () => {
   }, [authed, navigate]);
 
   return (
-    <div className='flex flex-col md:flex-row  justify-center items-center min-h-screen w-full mx-auto px-4 md:bg-[url(/images/signup-bg2.png)] bg-center  bg-no-repeat'>
+    <div className='flex flex-col md:flex-row  justify-center items-center min-h-screen w-full mx-auto px-4 md:bg-[url(/images/signup-bg.png)] bg-left  bg-no-repeat'>
       <h1 className='text-2xl font-bold text-center mb-6 mt-14 md:hidden'>Create Account</h1>
       <div className='hidden w-auto md:flex flex-1 flex-col justify-center items-center mb-8 md:mb-0'>
         <h1 className='text-4xl md:text-5xl font-bold mb-8 md:mb-10  md:text-left whitespace-nowrap'>CREATE ACCOUNT</h1>
@@ -477,8 +477,11 @@ const SignupForm = () => {
               </Buttons>
             </div>
           </form>
-          <div className='block md:hidden w-full mb-8 '>
+          <div className='flex flex-col justify-center items-center gap-10 md:hidden w-full mb-8 my-9 '>
             <SocialMobile />
+            <Link to={'/'}>
+              <img src='/images/logo-m.svg' alt='오헤시오 로고' />
+            </Link>
           </div>
         </div>
       </div>

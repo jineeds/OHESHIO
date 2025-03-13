@@ -3,6 +3,7 @@ import { IoMdHeadset } from "react-icons/io";
 import { SiOperagx } from "react-icons/si";
 import KakaoMaps from "../../components/about/KakaoMaps";
 
+
 const FadeUpSection = ({ children }) => {
   const ref = useRef();
   const [isVisible, setIsVisible] = useState(false);
@@ -104,6 +105,7 @@ const About = () => {
           }
         `}
       </style>
+
       {/* 메인페이지 유튜브 코드 가져옴 */}
       <section className="youtube">
         <div className="youtube__area">
@@ -274,6 +276,9 @@ const About = () => {
             </div>
           </section>
         </FadeUpSection>
+      </div>
+      <div>
+        <Map />
       </div>
     </div>
   );
