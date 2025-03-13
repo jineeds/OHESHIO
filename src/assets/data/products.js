@@ -708,9 +708,9 @@ export const products = [
     color: 'gray',
     image: '/oheshio/miseki/top/black/p055_pleats_one_piece/p055.png',
     model_images: [
-      '/oheshio/miseki/top/black/p054_pleats_one_piece/p055_1.png',
-      '/oheshio/miseki/top/black/p054_pleats_one_piece/p055_2.png',
-      '/oheshio/miseki/top/black/p054_pleats_one_piece/p055_3.png',
+      '/oheshio/miseki/top/black/p055_pleats_one_piece/p055_1.png',
+      '/oheshio/miseki/top/black/p055_pleats_one_piece/p055_2.png',
+      '/oheshio/miseki/top/black/p055_pleats_one_piece/p055_3.png',
     ],
   },
   {
@@ -866,7 +866,6 @@ export const products = [
     model_images: [
       '/oheshio/miseki/bottom/gray/p067_side_bow_pleats_midi_skirt_/p067_1.png',
       '/oheshio/miseki/bottom/gray/p067_side_bow_pleats_midi_skirt_/p067_2.png',
-      '/oheshio/miseki/bottom/gray/p067_side_bow_pleats_midi_skirt_/p067_3.png',
     ],
   },
   {
