@@ -10,13 +10,19 @@ import MyPageHome from '../../components/mypage/MyPageHome';
 
 const MyPage = () => {
   const [activeTab, setActiveTab] = useState('Home');
-  const [cancelledOrders, setCancelledOrders] = useState([]);
+  // 로컬 값 !!!
+  const [cancelledOrders, setCancelledOrders] = useState(() => {
+    return JSON.parse(localStorage.getItem('cancelledOrders')) || [];
+  });
+  const [exchangeOrders, setExchangeOrders] = useState(() => {
+    return JSON.parse(localStorage.getItem('exchangeOrders')) || [];
+  });
+  const [refundOrders, setRefundOrders] = useState(() => {
+    return JSON.parse(localStorage.getItem('refundOrders')) || [];
+  });
 
   const currentUser = useSelector((state) => state.authR.currentUser);
   const isAuthed = useSelector((state) => state.authR.authed);
-  // 주문 교환 환불 추가
-  const [exchangeOrders, setExchangeOrders] = useState([]);
-  const [refundOrders, setRefundOrders] = useState([]);
 
   const updatedOrders =
     currentUser?.orders?.map((order) => {

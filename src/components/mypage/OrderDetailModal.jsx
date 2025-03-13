@@ -14,7 +14,9 @@ const OrderDetailModal = ({
 
   const handleExchange = () => {
     if (!exchangeOrders.includes(order.id)) {
-      setExchangeOrders([...exchangeOrders, order.id]);
+      const updated = [...exchangeOrders, order.id];
+      setExchangeOrders(updated);
+      localStorage.setItem('exchangeOrders', JSON.stringify(updated)); // ✅ 로컬 저장 추가
       alert('교환 요청이 접수되었습니다.');
     } else {
       alert('이미 교환 요청한 주문입니다.');
@@ -23,7 +25,9 @@ const OrderDetailModal = ({
 
   const handleRefund = () => {
     if (!refundOrders.includes(order.id)) {
-      setRefundOrders([...refundOrders, order.id]);
+      const updated = [...refundOrders, order.id];
+      setRefundOrders(updated);
+      localStorage.setItem('refundOrders', JSON.stringify(updated)); // ✅ 로컬 저장 추가
       alert('반품 요청이 접수되었습니다.');
     } else {
       alert('이미 반품 요청한 주문입니다.');
