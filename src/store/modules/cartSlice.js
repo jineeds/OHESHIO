@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = (() => {
+const initialState = () => {
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
   const authed = localStorage.getItem('authed') === 'true';
 
@@ -36,7 +36,7 @@ const initialState = (() => {
     discount: 0,
     total: 0,
   };
-})();
+};
 
 export const cartSlice = createSlice({
   name: 'cart',
@@ -123,34 +123,6 @@ export const cartSlice = createSlice({
       state.subtotal = action.payload.reduce((sum, item) => sum + item.price * item.quantity, 0);
       state.discount = action.payload.discount || 0;
       state.total = state.subtotal + state.shipping - state.discount;
-    },
-
-    // auth 로컬스토리지 저장
-    updateUserCart: (state, action) => {
-      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-      const users = JSON.parse(localStorage.getItem('users')) || [];
-
-      if (!currentUser) return;
-
-      const userIndex = users.findIndex((user) => user.id === currentUser.id);
-      if (userIndex !== -1) {
-        const userCartItems = state.items.map((item) => ({
-          id: item.id,
-          productId: item.id,
-          name: item.name,
-          price: item.price,
-          quantity: item.quantity,
-          image: item.image,
-          color: item.color || 'DEFAULT',
-          size: item.size || 'DEFAULT',
-        }));
-
-        users[userIndex].cart = userCartItems;
-        currentUser.cart = userCartItems;
-
-        localStorage.setItem('users', JSON.stringify(users));
-        localStorage.setItem('currentUser', JSON.stringify(currentUser));
-      }
     },
   },
 });

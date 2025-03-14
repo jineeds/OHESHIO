@@ -13,6 +13,7 @@ const Layout = () => {
   const prevCartItemsRef = useRef(null);
   const prevAuthedRef = useRef(authed);
 
+  // 로그인 상태 변경 시 장바구니/결제 처리
   useEffect(() => {
     if (prevAuthedRef.current && !authed) {
       dispatch(cartActions.replaceCart([]));
@@ -34,29 +35,12 @@ const Layout = () => {
     prevAuthedRef.current = authed;
   }, [authed, currentUser, dispatch]);
 
+  // 장바구니 변경 시 정보 동기화
   useEffect(() => {
     const cartItemsChanged = JSON.stringify(prevCartItemsRef.current) !== JSON.stringify(cartItems);
+
     if (authed && currentUser && cartItemsChanged) {
-      dispatch(cartActions.updateUserCart(cartItems));
-
-      const userCartItems = cartItems.map((item) => ({
-        id: item.id,
-        productId: item.id,
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity,
-        image: item.image,
-        color: item.color || 'DEFAULT',
-        size: item.size || 'DEFAULT',
-      }));
-
-      dispatch(
-        authActions.updateUserInfo({
-          id: currentUser.id,
-          cart: userCartItems,
-        })
-      );
-
+      dispatch(authActions.updateUserCart(cartItems));
       prevCartItemsRef.current = [...cartItems];
     }
   }, [cartItems, authed, currentUser, dispatch]);
@@ -64,7 +48,7 @@ const Layout = () => {
   return (
     <>
       <Header />
-      <main className='bg-secondary-50'>
+      <main className="bg-secondary-50">
         <Outlet />
       </main>
       <footer>{/* 푸터 콘텐츠 */}</footer>
