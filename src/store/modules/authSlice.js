@@ -471,7 +471,7 @@ export const authSlice = createSlice({
 
         const userCartItems = cartItems.map((item) => ({
           id: item.id,
-          //productId: item.id,
+          productID: item.productID,
           name: item.name,
           price: item.price,
           quantity: item.quantity,

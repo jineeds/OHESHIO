@@ -21,7 +21,8 @@ const Layout = () => {
     } else if (!prevAuthedRef.current && authed && currentUser) {
       if (currentUser.cart && currentUser.cart.length > 0) {
         const cartItems = currentUser.cart.map((item) => ({
-          id: item.productId,
+          id: item.id,
+          productID: item.productID,
           name: item.name,
           price: item.price,
           quantity: item.quantity,

@@ -6,7 +6,8 @@ const initialState = () => {
 
   if (authed && currentUser && currentUser.cart) {
     const items = currentUser.cart.map((item) => ({
-      id: item.productId,
+      id: item.id,
+      productID: item.productID,
       name: item.name,
       price: item.price,
       quantity: item.quantity,
