@@ -8,6 +8,7 @@ import OrderDetails from '../../components/checkout/OrderDetails';
 import CustomLoader from '../../ui/CustomLoader';
 import Buttons from '../../ui/Buttons';
 import { useNavigate } from 'react-router-dom';
+import { showToast } from '../../ui/toast/showToast';
 
 const Checkout = () => {
   const [selectedCard, setSelectedCard] = useState('');
@@ -17,13 +18,10 @@ const Checkout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { isProcessing, isFormValid, isComplete, orderNumber, billingDetails, appliedDiscountCode } = useSelector(
-    (state) => state.checkoutR
-  );
+  const { isProcessing, isFormValid, isComplete, orderNumber, billingDetails, appliedDiscountCode, payment } =
+    useSelector((state) => state.checkoutR);
   const { items, subtotal, shipping, discount, total } = useSelector((state) => state.cartR);
   const { currentUser, authed } = useSelector((state) => state.authR);
-  // 무통ㅏㅇ입금
-  const { payment } = useSelector((state) => state.checkoutR);
 
   const handleCardChange = (e) => {
     setSelectedCard(e.target.value);
@@ -41,7 +39,7 @@ const Checkout = () => {
     dispatch(checkoutActions.resetCheckout());
   }, []);
 
-  // checkout 버튼 클릭
+  // checkout 버튼 클릭 시
   useEffect(() => {
     if (isFormValid) {
       const timeout = setTimeout(() => {
@@ -69,7 +67,6 @@ const Checkout = () => {
         id: orderNumber,
         date: new Date().toISOString(),
         createdAt: new Date().toISOString(),
-
         billingDetails: {
           receiverName: billingDetails.receiverName,
           zipcode: billingDetails.zipcode,
@@ -84,11 +81,10 @@ const Checkout = () => {
         shipping,
         discount,
         total,
-        // status: 'processing',
-        // 결제완료
-        status: payment.method === 'creditCard' ? 'paid' : 'pending',
-        // 무통장입금 연ㅕ 추
+
+        // status: payment.method === 'creditCard' ? 'paid' : 'pending',
         paymentMethod: payment.method,
+        status: payment.method === 'bankTransfer' ? 'pending' : 'paid',
       };
 
       // authSlice orders 주문 데이터 추가, 사용한 쿠폰 삭제
@@ -98,9 +94,6 @@ const Checkout = () => {
           usedCouponCode: appliedDiscountCode,
         })
       );
-
-      // cart 비우기
-      // dispatch(cartActions.replaceCart([]));
 
       navigate(`/checkout/complete/${orderNumber}`);
       setOrderProcessed(true);

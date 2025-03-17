@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  // 주문 정보
   billingDetails: {
     receiverName: '',
     zipcode: '',
