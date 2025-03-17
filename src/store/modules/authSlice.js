@@ -307,33 +307,6 @@ export const authSlice = createSlice({
       localStorage.setItem('authed', 'false');
     },
 
-    updateUserCart: (state, action) => {
-      if (!state.currentUser) return;
-
-      const userIndex = state.users.findIndex((user) => user.id === state.currentUser.id);
-
-      if (userIndex !== -1) {
-        const userCartItems = action.payload.map((item) => ({
-          id:
-            state.users[userIndex].cart.length > 0
-              ? Math.max(...state.users[userIndex].cart.map((cartItem) => cartItem.id)) + 1
-              : 1,
-          productId: item.id,
-          name: item.name,
-          price: item.price,
-          quantity: item.quantity,
-          image: item.image,
-          color: item.color || 'DEFAULT',
-        }));
-
-        state.users[userIndex].cart = userCartItems;
-        state.currentUser.cart = userCartItems;
-
-        localStorage.setItem('users', JSON.stringify(state.users));
-        localStorage.setItem('currentUser', JSON.stringify(state.currentUser));
-      }
-    },
-
     addWishlist: (state, action) => {
       if (!state.currentUser) return;
 
@@ -488,6 +461,34 @@ export const authSlice = createSlice({
       }
     },
 
+    // cart 관련
+    updateUserCart: (state, action) => {
+      if (!state.currentUser) return;
+
+      const userIndex = state.users.findIndex((user) => user.id === state.currentUser.id);
+      if (userIndex !== -1) {
+        const cartItems = action.payload;
+
+        const userCartItems = cartItems.map((item) => ({
+          id: item.id,
+          productID: item.productID,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          image: item.image,
+          color: item.color || 'DEFAULT',
+          size: item.size || 'DEFAULT',
+        }));
+
+        state.users[userIndex].cart = userCartItems;
+        state.currentUser.cart = userCartItems;
+
+        localStorage.setItem('users', JSON.stringify(state.users));
+        localStorage.setItem('currentUser', JSON.stringify(state.currentUser));
+      }
+    },
+
+    // checkout 관련
     addOrderToUser: (state, action) => {
       if (!state.currentUser) return;
 

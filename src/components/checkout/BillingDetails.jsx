@@ -15,8 +15,11 @@ const BillingDetails = () => {
   });
 
   useEffect(() => {
-    dispatch(checkoutActions.updateBillingDetail({ field: 'phone', value: currentUser.phone }));
-    dispatch(checkoutActions.updateBillingDetail({ field: 'email', value: currentUser.userEmail }));
+    const phoneValue = currentUser.phone || '01012345678';
+    const emailValue = currentUser.userEmail || 'abc@gmail.com';
+
+    dispatch(checkoutActions.updateBillingDetail({ field: 'phone', value: phoneValue }));
+    dispatch(checkoutActions.updateBillingDetail({ field: 'email', value: emailValue }));
   }, [currentUser, dispatch]);
 
   const validateField = (name, value) => {
@@ -64,6 +67,11 @@ const BillingDetails = () => {
       {required && <span className="text-xs text-primary-500">*</span>}
     </label>
   );
+
+  const formatPhoneNumber = (phone) => {
+    if (!phone) return '010-1234-5678';
+    return phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+  };
 
   return (
     <>
@@ -134,7 +142,7 @@ const BillingDetails = () => {
           <InputCustom
             type="text"
             name="phone"
-            value={currentUser.phone ? currentUser.phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3') : ''}
+            value={formatPhoneNumber(currentUser.phone)}
             readOnly
             success={false}
             className="pointer-events-none !bg-gray-100"
@@ -145,7 +153,7 @@ const BillingDetails = () => {
           <InputCustom
             type="email"
             name="email"
-            value={currentUser.userEmail}
+            value={currentUser.userEmail || 'abc@gmail.com'}
             readOnly
             success={false}
             className="pointer-events-none !bg-gray-100"

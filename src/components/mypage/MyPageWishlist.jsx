@@ -17,12 +17,14 @@ const MyPageWishlist = ({ wishlist }) => {
   const addToCart = (item) => {
     dispatch(
       cartActions.addItemToCart({
-        id: item.id,
+        id: `${item.id}_XS`, // id + 사이즈(기본값)
+        productID: item.id,
         name: item.name,
         color: item.color,
         price: parseInt(item.price.replace(/[^0-9]/g, '')),
         quantity: 1,
         image: item.imageUrl,
+        size: 'XS', // 사이즈 기본값 설정
       })
     );
   };
