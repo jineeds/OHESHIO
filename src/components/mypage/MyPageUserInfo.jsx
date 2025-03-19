@@ -97,7 +97,7 @@ const MyPageUserInfo = ({ userInfo }) => {
 
   return (
     <div className='border-t border-gray-300'>
-      <div className='w-full min-h-screen bg-white flex flex-col items-center pt-10'>
+      <div className='w-full min-h-screen bg-secondary-50 flex flex-col items-center pt-10'>
         <div className='container max-w-[1280px] mx-auto'>
           <div className='bg-[#F1F5F9] rounded-lg shadow-md p-6 flex items-center justify-between mb-6'>
             <div className='flex items-center gap-4'>
