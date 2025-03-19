@@ -3,7 +3,7 @@ import Typed from 'typed.js';
 import Buttons from '../../ui/Buttons';
 import { products } from '../../assets/data/products';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../store/modules/authSlice';
 import ProductSizing from './ProductSizing';
 import { cartActions } from '../../store/modules/cartSlice';
@@ -11,6 +11,7 @@ import ProductStyledWith from './ProductStyledWith';
 const ProductDetail = ({ product, commonDetails }) => {
   const { id, name, category, price, color, image, model_images } = product;
   const { description, material, care, size_info, model_info } = commonDetails;
+  const { authed } = useSelector((state) => state.authR);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedSize, setSelectedSize] = useState(false);
   const [size, setSize] = useState('');
@@ -164,42 +165,46 @@ const ProductDetail = ({ product, commonDetails }) => {
   }, []);
 
   const handleAddToCart = () => {
-    const itemToAdd = {
-      id: `${id}_${size}`,
-      productID: id,
-      name: name,
-      price: price,
-      size: size,
-      color: color,
-      image: image,
-    };
-    dispatch(cartActions.addItemToCart(itemToAdd));
-    navigate('/cart');
+    if (authed) {
+      const itemToAdd = {
+        id: `${id}_${size}`,
+        productID: id,
+        name: name,
+        price: price,
+        size: size,
+        color: color,
+        image: image,
+      };
+      dispatch(cartActions.addItemToCart(itemToAdd));
+      navigate('/cart');
+    } else {
+      navigate('/login');
+    }
   };
 
   return (
-    <div className="product_detail_contain w-full px-4 sm:px-6  md:max-w-full  xl:w-2/3 xl:max-w-[550px] text-black z-[99] mx-auto xl:mx-0 xl:sticky xl:top-[100px] xl:pr-6 2xl:pr-20">
-      <div className="top_product_info my-4 md:my-6">
-        <div className="detail_title text-lg sm:text-xl md:text-2xl font-medium mb-2">
+    <div className='product_detail_contain w-full px-4 sm:px-6  md:max-w-full  xl:w-2/3 xl:max-w-[550px] text-black z-[99] mx-auto xl:mx-0 xl:sticky xl:top-[100px] xl:pr-6 2xl:pr-20'>
+      <div className='top_product_info my-4 md:my-6'>
+        <div className='detail_title text-lg sm:text-xl md:text-2xl font-medium mb-2'>
           <span ref={doc} />
         </div>
-        <div className="detail_price  sm:text-lg text-gray-700">
+        <div className='detail_price  sm:text-lg text-gray-700'>
           <span ref={doc2} />
         </div>
       </div>
 
-      <div className="w-full">
+      <div className='w-full'>
         {colorsProduct.length > 0 && (
-          <div className="w-full mb-3 mt-6">
-            <div className="flex flex-wrap gap-2">
+          <div className='w-full mb-3 mt-6'>
+            <div className='flex flex-wrap gap-2'>
               {colorsProduct.map((item) => (
                 <button
                   key={item.id}
                   onClick={(e) => onGo(item.id, e)}
-                  className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 cursor-pointer overflow-hidden rounded detail_small_img"
+                  className='w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 cursor-pointer overflow-hidden rounded detail_small_img'
                   title={item.color}
                 >
-                  <img src={item.image} alt={`${item.name} - ${item.color}`} className="w-full h-full object-cover" />
+                  <img src={item.image} alt={`${item.name} - ${item.color}`} className='w-full h-full object-cover' />
                 </button>
               ))}
             </div>
@@ -207,8 +212,8 @@ const ProductDetail = ({ product, commonDetails }) => {
         )}
       </div>
 
-      <div className="lower_product_info flex flex-col gap-4 sm:gap-5 mt-4">
-        <div className="w-full flex mt-2 sm:mt-4 flex-wrap relative">
+      <div className='lower_product_info flex flex-col gap-4 sm:gap-5 mt-4'>
+        <div className='w-full flex mt-2 sm:mt-4 flex-wrap relative'>
           {['XS', 'S', 'M', 'L', 'XL'].map((sizeOption) => (
             <button
               key={sizeOption}
@@ -226,14 +231,14 @@ const ProductDetail = ({ product, commonDetails }) => {
           {selectedSize ? (
             <button
               onClick={handleAddToCart}
-              className="shadow-[0_1px_6px_0_rgba(32,33,36,0.6)] px-4 sm:px-5 py-3 sm:py-[15px] w-full   md:w-[40%] xl:w-[60%] flex justify-between items-center rounded-[2.5em] bg-[#CBD5E1] my-[10px] text-sm sm:text-base"
+              className='shadow-[0_1px_6px_0_rgba(32,33,36,0.6)] px-4 sm:px-5 py-3 sm:py-[15px] w-full   md:w-[40%] xl:w-[60%] flex justify-between items-center rounded-[2.5em] bg-[#CBD5E1] my-[10px] text-sm sm:text-base'
             >
               <span></span>
               <span>add to bag</span>
               <span>→</span>
             </button>
           ) : (
-            <div className="shadow-[0_1px_6px_0_rgba(32,33,36,0.6)] px-4 sm:px-5 py-3 sm:py-[15px] w-full   md:w-[40%] xl:w-[60%] flex justify-between items-center opacity-70 rounded-[2.5em] bg-[#F8FAFC] text-[#9CA3AF] text-sm sm:text-base">
+            <div className='shadow-[0_1px_6px_0_rgba(32,33,36,0.6)] px-4 sm:px-5 py-3 sm:py-[15px] w-full   md:w-[40%] xl:w-[60%] flex justify-between items-center opacity-70 rounded-[2.5em] bg-[#F8FAFC] text-[#9CA3AF] text-sm sm:text-base'>
               <span></span>
               <span>select your size</span>
               <span>→</span>
@@ -243,14 +248,14 @@ const ProductDetail = ({ product, commonDetails }) => {
 
         <div className={`product_details_toggle mt-2 sm:mt-4 ${isVisible ? 'clicked' : ''}`}>
           <span
-            className="details_toggle_description cursor-pointer text-gray-700 text-sm sm:text-base hover:underline"
+            className='details_toggle_description cursor-pointer text-gray-700 text-sm sm:text-base hover:underline'
             onClick={toggleDetails}
           >
             product details
           </span>
 
           {isVisible && (
-            <div className="product_details_document select-none text-gray-700 mt-3 text-sm sm:text-base space-y-3 pr-4">
+            <div className='product_details_document select-none text-gray-700 mt-3 text-sm sm:text-base space-y-3 pr-4'>
               <p ref={product_detail1}></p>
               <p ref={product_detail2}></p>
               <p ref={product_detail3}></p>
@@ -259,11 +264,11 @@ const ProductDetail = ({ product, commonDetails }) => {
           )}
         </div>
 
-        <div className="sizing_chart_toggle text-gray-700 mt-2">
+        <div className='sizing_chart_toggle text-gray-700 mt-2'>
           <>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="sizing_toggle_description text-sm sm:text-base hover:underline"
+              className='sizing_toggle_description text-sm sm:text-base hover:underline'
             >
               sizing chart +
             </button>
@@ -272,7 +277,7 @@ const ProductDetail = ({ product, commonDetails }) => {
           </>
         </div>
 
-        <div className="text-gray-700 mt-4 sm:mt-6 text-sm sm:text-base">
+        <div className='text-gray-700 mt-4 sm:mt-6 text-sm sm:text-base'>
           <span>styled with ↓</span>
           <ProductStyledWith currentProduct={product} />
         </div>
