@@ -18,10 +18,31 @@ const BackgroundVideo = ({ category }) => {
         about: { start: 147, end: 180 }, // about 비디오 시간 범위
     };
 
+    // 순환할 카테고리 순서 정의
+    const cycleOrder = ['default', 'uniform', 'oheshio', 'about'];
+
     // 플레이어 레퍼런스 저장
     const playersRef = useRef({});
     const activePlayerIdRef = useRef('player-default');
     const [playersReady, setPlayersReady] = useState(false);
+    const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
+    const cycleTimerRef = useRef(null);
+    const userInteractionRef = useRef(false);
+
+    // 다음 카테고리로 순환하는 함수
+    const cycleToNextCategory = () => {
+        if (userInteractionRef.current) return; // 사용자 상호작용 중이면 순환 안함
+
+        setActiveCategoryIndex((prevIndex) => (prevIndex + 1) % cycleOrder.length);
+    };
+
+    // 순환 타이머 설정/재설정 함수
+    const resetCycleTimer = () => {
+        if (cycleTimerRef.current) {
+            clearTimeout(cycleTimerRef.current);
+        }
+        cycleTimerRef.current = setTimeout(cycleToNextCategory, 4000); // 4초 후 다음 카테고리로
+    };
 
     // YouTube API 로드 및 초기화
     useEffect(() => {
@@ -47,6 +68,9 @@ const BackgroundVideo = ({ category }) => {
         // 컴포넌트 언마운트 시 정리
         return () => {
             window.onYouTubeIframeAPIReady = null;
+            if (cycleTimerRef.current) {
+                clearTimeout(cycleTimerRef.current);
+            }
 
             // 모든 플레이어 정리
             Object.values(playersRef.current).forEach((player) => {
@@ -113,6 +137,8 @@ const BackgroundVideo = ({ category }) => {
                             // 모든 플레이어가 준비되었으면 상태 업데이트
                             if (Object.keys(readyPlayers).length === Object.keys(videoIds).length) {
                                 setPlayersReady(true);
+                                // 모든 플레이어가 준비되면 순환 타이머 시작
+                                resetCycleTimer();
                             }
 
                             if (key === 'default') {
@@ -150,6 +176,29 @@ const BackgroundVideo = ({ category }) => {
         }
     };
 
+    // 외부 카테고리 prop이 변경되면 사용자 상호작용 처리
+    useEffect(() => {
+        if (category) {
+            userInteractionRef.current = true; // 사용자가 카테고리 선택함
+        } else {
+            userInteractionRef.current = false; // 사용자 상호작용 해제
+            resetCycleTimer(); // 타이머 재설정
+        }
+    }, [category]);
+
+    // 자동 순환 처리
+    useEffect(() => {
+        if (!playersReady) return;
+
+        // 순환 타이머 재설정
+        if (!userInteractionRef.current) {
+            resetCycleTimer();
+        }
+    }, [activeCategoryIndex, playersReady]);
+
+    // 현재 활성 카테고리 결정
+    const activeCategory = category || cycleOrder[activeCategoryIndex];
+
     // 카테고리 변경 시 해당 비디오 표시/숨김 처리
     useEffect(() => {
         // 플레이어가 준비되지 않았으면 실행하지 않음
@@ -166,7 +215,7 @@ const BackgroundVideo = ({ category }) => {
                 container.style.zIndex = '0';
 
                 // 현재 활성화된 것이 아니면 일시정지
-                if (key !== (category || 'default') && isPlayerReady(key)) {
+                if (key !== activeCategory && isPlayerReady(key)) {
                     try {
                         playersRef.current[key].pauseVideo();
                     } catch (e) {
@@ -177,8 +226,7 @@ const BackgroundVideo = ({ category }) => {
         });
 
         // 현재 카테고리에 맞는 비디오 컨테이너 표시
-        const currentCategory = category || 'default';
-        const currentContainerId = `video-container-${currentCategory}`;
+        const currentContainerId = `video-container-${activeCategory}`;
         const currentContainer = document.getElementById(currentContainerId);
 
         if (currentContainer) {
@@ -186,15 +234,15 @@ const BackgroundVideo = ({ category }) => {
             timeoutId = setTimeout(() => {
                 currentContainer.style.opacity = '1';
                 currentContainer.style.zIndex = '5';
-                activePlayerIdRef.current = `player-${currentCategory}`;
+                activePlayerIdRef.current = `player-${activeCategory}`;
 
                 // 현재 비디오 재생 (플레이어가 준비되었을 때만)
-                if (isPlayerReady(currentCategory)) {
+                if (isPlayerReady(activeCategory)) {
                     try {
-                        playersRef.current[currentCategory].seekTo(videoTimes[currentCategory].start);
-                        playersRef.current[currentCategory].playVideo();
+                        playersRef.current[activeCategory].seekTo(videoTimes[activeCategory].start);
+                        playersRef.current[activeCategory].playVideo();
                     } catch (e) {
-                        console.log(`Failed to play video for ${currentCategory}`, e);
+                        console.log(`Failed to play video for ${activeCategory}`, e);
                     }
                 }
             }, 300); // 페이드 아웃 시간과 맞춤
@@ -203,7 +251,7 @@ const BackgroundVideo = ({ category }) => {
         return () => {
             if (timeoutId) clearTimeout(timeoutId);
         };
-    }, [category, playersReady]);
+    }, [activeCategory, playersReady]);
 
     return (
         <>
